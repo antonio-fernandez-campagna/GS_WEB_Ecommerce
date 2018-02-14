@@ -17,11 +17,27 @@ class login_controller {
 
         if ($ok) {
             $_SESSION['usuario'] = $username;
-            
+
             return true;
         } else {
             return false;
         }
+    }
+
+    function register(){
+
+      $user = new login_model();
+
+      $user->setUserName ($_POST['username']);
+      $user->setPassword ($_POST['password']);
+      $user->setName ($_POST['name']);
+      $user->setEmail ($_POST['email']);
+      $user->setAddress ($_POST['address']);
+      $user->setPostalCode ($_POST['postalCode']);
+
+      $user->insert_user();
+
+
     }
 
     function loginFailed() {
@@ -33,11 +49,13 @@ class login_controller {
          });
          </script>";
         return $obj;
+        var_dump($obj);
+      //  die;
     }
-    
+
     function checkCart(){
         if(!empty($_SESSION['cart'])){
-            
+
         }
     }
 

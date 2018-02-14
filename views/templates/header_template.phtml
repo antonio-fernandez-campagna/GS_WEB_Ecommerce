@@ -217,30 +217,30 @@ if ($_SESSION['usuario'] != "invitado") {
 
               </div>
               <div id="menu1" class="container tab-pane fade"><br>
-                <form method="POST" action="#" role="form">
+                <form method="POST" action="?controller=log&action=register" role="form">
                   <div class="form-group">
                     <label class="control-label" for="signupName">Nombre Completo</label>
-                    <input id="signupName" type="text" maxlength="50" placeholder="" class="form-control">
+                    <input id="signupName" name="name" type="text" maxlength="50" placeholder="" class="form-control">
                   </div>
 
                   <div class="form-group">
                     <label class="control-label" for="signupName">Nombre de usuario</label>
-                    <input id="signupName" type="text" maxlength="50" placeholder="" class="form-control">
+                    <input id="signupName" name="username" type="text" maxlength="50" placeholder="" class="form-control">
                   </div>
 
                   <div class="form-group">
                     <label class="control-label" for="signupEmail">Email</label>
-                    <input id="signupEmail" type="email" maxlength="50" class="form-control">
+                    <input id="signupEmail" name="email" type="email" maxlength="50" class="form-control">
                   </div>
 
                   <div class="form-group">
                     <label class="control-label" for="signupName">Direccion</label>
-                    <input id="signupName" type="text" maxlength="50" class="form-control">
+                    <input id="signupName" name="address" type="text" maxlength="50" class="form-control">
                   </div>
 
                   <div class="form-group">
                     <label class="control-label" for="signupName">Código Postal</label>
-                    <input id="signupName" type="number" maxlength="5" placeholder="" class="form-control">
+                    <input id="signupName" name="postalCode" type="number" maxlength="5" placeholder="" class="form-control">
                   </div>
 
                   <div class="form-group">
@@ -249,10 +249,10 @@ if ($_SESSION['usuario'] != "invitado") {
                   </div>
                   <div class="form-group">
                     <label class="control-label" for="signupPasswordagain">Confirma contraseña</label>
-                    <input id="signupPasswordagain" type="password" maxlength="25" class="form-control">
+                    <input id="signupPasswordagain" name="password" type="password" maxlength="25" class="form-control">
                   </div>
                   <div class="form-group">
-                    <button id="signupSubmit" type="submit" class="btn btn-info btn-block">Create your account</button>
+                    <button id="signupSubmit" type="submit" class="btn btn-info btn-block">Registrarse</button>
                   </div>
 
                 </form>
@@ -261,10 +261,10 @@ if ($_SESSION['usuario'] != "invitado") {
           </div>
 
           <?php
-                             if (!empty($loginFailed)) {
-                                 echo "<span>{$loginFailed['message']}</span>";
-                             }
-                             ?>
+           if (!empty($loginFailed)) {
+           echo "<span>{$loginFailed['message']}</span>";
+          }
+         ?>
 
         <!-- Modal footer -->
         <div class="modal-footer">

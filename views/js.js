@@ -28,7 +28,7 @@ $(document).ready(function () {
                 $(this).parent().hide();
             } else {
                 if ($idBrands.length && jQuery.inArray($(this).attr("id"), $idBrands) === -1) {
-                    alert($prodPrice);
+                    //alert($prodPrice);
                     $(this).parent().hide();
                 } else {
                     $(this).parent().show();
