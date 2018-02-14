@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Personas</title>
+    </head>
+    <body>
+      <h1>PERSONAS</h1>
+      <table>
+           <tr><td><a href="index.php?controller=personas&action=ordnombre">Nombre</a></td><td><a href="index.php?controller=personas&action=ordedad">Edad</td><td></td></tr>
+        <?php
+            foreach ($datos as $dato) {
+                echo "<tr><td>{$dato['nombre']}</td><td>{$dato['edad']}</td>" .
+                     "<td><a href=\"index.php?controller=personas&action=delete&id={$dato['id']}\">Borrar</a><br/></td><tr/>";
+            }
+        ?>
+        </table>
+        <p><a href="index.php?controller=personas&action=add">Alta de Personas</a></p>
+        <p><a href="index.php?controller=coches&action=view">Ver Coches <a/></p>
+    </body>
+</html>

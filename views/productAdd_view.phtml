@@ -1,0 +1,64 @@
+<div class="container br-light  mt-4">
+    <form name="addProd" action="index.php?controller=products&action=insert" method="post">
+
+      <div class="mb-3">
+
+          <div class="form-row">
+            <div class="col">
+              <input type="text" class="form-control mb-3" name="name" placeholder="Nombre">
+            </div>
+            <div class="col">
+              <input type="text" class="form-control" name="descShort" placeholder="Descripción corta">
+            </div>
+          </div>
+
+          <input type="text" class="form-control mb-3" name="descLong" placeholder="Descripción Larga">
+
+          <div class="form-row">
+            <div class="col">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="inputGroupPrepend2">€</span>
+                </div>
+                <input type="number" class="form-control" name="price" placeholder="Precio">
+              </div>
+            </div>
+            <div class="col">
+              <select class="custom-select mb-3"name="brand">
+                <option value="NULL" selected>Marca</option>
+                <?php foreach ($data['brands'] as $brand) { ?>
+                <option value="<?php echo $brand['ID'] ?>"><?php echo $brand['NAME'] ?></option>
+                <?php } ?>
+              </select>
+            </div>
+          </div>
+
+          <select class="custom-select mb-3" name="subCategory">
+            <option value="NULL" selected>Subcategoria</option>
+            <?php foreach ($data['categories'] as $subCategory) { ?>
+            <option value="<?php echo $subCategory['ID'] ?>"><?php echo $subCategory['NAME'] ?></option>
+            <?php } ?>
+          </select>
+
+          <input type="number" class="form-control mb-3" name="stock" placeholder="Stock">
+
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline1" name="promotionedRadio" value="y" class="custom-control-input">
+            <label class="custom-control-label" for="customRadioInline1">Producto promocionado</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input type="radio" id="customRadioInline2" name="promotionedRadio" value="n" checked class="custom-control-input">
+            <label class="custom-control-label" for="customRadioInline2">Producto no promocionado</label>
+          </div>
+
+        </div>
+
+            <button class="btn btn-lg btn-light bg-primary text-white float-left" type="submit">Añadir</button>
+            <a href="?index.php" class="btn btn-lg btn-light text-white float-right bg-danger">Salir</a>
+
+    </form>
+</div>
+
+</body>
+
+</html>

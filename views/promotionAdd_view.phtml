@@ -1,0 +1,37 @@
+<div class="container br-light  mt-4">
+    <form name="addProd" action="index.php?controller=promotions&action=insert" class="text-center" method="post">
+
+      <div class="mb-3">
+
+          <div class="form-row">
+            <div class="col">
+              <select class="custom-select mb-3" name="product">
+                <option value="NULL" selected>Seleccione producto</option>
+                <?php foreach ($data as $product) { ?>
+                <option value="<?php echo $product['ID'] ?>"><?php echo $product['NAME'] ?></option>
+                <?php } ?>
+              </select>
+            </div>
+            <div class="col">
+              <input type="text" class="form-control mb-3" name="discount" placeholder="% de descuento">
+            </div>
+          </div>
+
+          <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                   <span class="input-group-text">Fecha fin promoción</span>
+                 </div>
+                <input type="date" class="form-control" name="fechaFinal">
+          </div>
+
+          <button class="btn btn-lg btn-light bg-primary text-white float-left" type="submit">Añadir</button>
+          <a href="?index.php" class="btn btn-lg btn-light text-white float-right bg-danger">Salir</a>
+
+
+        </div>
+    </form>
+</div>
+
+</body>
+
+</html>

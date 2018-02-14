@@ -1,0 +1,195 @@
+<?php // include 'views/templates/header_template.phtml'  ?>
+
+<body>
+
+    <div class="container ">
+
+        <div class="text-center">
+            <button type="button" class="btn btn-demo bg-danger text-white" data-toggle="modal" data-target="#myModal">
+                FILTRAR <i class="fas fa-filter"></i>
+            </button>
+        </div>
+
+
+        <!--  MODAL Filtros -->
+
+        <!-- Modal -->
+        <div class="modal left fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">FILTRAR</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <h3>MARCAS</h3>
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+
+                                <?php foreach ($data['brands'] as $brand) { ?>
+
+
+                                    <small class="text-uppercase text-muted"><b><?php echo $brand['NAME']; ?></b></small>
+                                    <div class="form-group">
+                                        <div class="checkbox checbox-switch switch-danger">
+                                            <label>
+                                                <input type="checkbox" class="filterProduct" id="<?php echo $brand['BRAND']; ?>"/>
+                                                <span></span>
+                                            </label>
+                                        </div>
+                                    </div>
+
+
+
+                                <?php } ?>
+
+                                <div data-role="rangeslider">
+                                    <label for="price-min">Precio mínimo:</label>
+                                     <output for="range" class="output"></output>
+                                    <input type="range" id="price-min" name="price-min" id="price-min" class="filterProduct" value="0" min="0" max="1000">
+                                    <label for="price-max">Price máximo:</label>
+                                    <input type="range" id="price-max"  name="price-max" id="price-max" class="filterProduct" value="1000" min="0" max="1000">
+                                </div>
+
+
+
+
+                              <!--<small class="text-uppercase text-muted"><b>Default Unchecked</b></small>
+                              <div class="form-group">
+                                  <div class="checkbox checbox-switch switch-danger">
+                                      <label>
+                                          <input type="checkbox" name="" />
+                                          <span></span>
+                                          Checkbox Label
+                                      </label>
+                                  </div>
+                              </div>
+
+                              <small class="text-uppercase text-muted"><b>Default Disabled</b></small>
+                              <div class="form-group">
+                                  <label class="checkbox-inline checbox-switch switch-danger">
+                                      <input type="checkbox" name="" disabled="" checked="" />
+                                      <span></span>
+                                      Checkbox Label
+                                  </label>
+                              </div> -->
+                            </div>
+                        </div>
+                    </div>
+
+                </div><!-- modal-content -->
+            </div><!-- modal-dialog -->
+        </div><!-- modal -->
+
+
+
+
+        <div class="container ">
+            <div class="row">
+                <?php foreach ($data['products'] as $product) { ?>
+                    <div class="col-sm- col-md-4 col-lg-4 mt-4 ">
+
+                        <div class="card" id="<?php echo $product['BRAND']; ?>">
+                            <a data-toggle="modal" href="#modal<?php echo $product['ID']; ?>"><img class="card-img-top" src="<?php echo $product['URL'];?>"></a>
+                            <div class="card-block">
+                                <h4 class="card-title mt-3"><?php echo $product['SHORTDESCRIPTION'];?></h4>
+                                <div class="meta">
+                                    <a></a>
+                                </div>
+                                <div class="card-text">
+                                    <?php echo $product['PRICE'];?>
+                                </div>
+                            </div>
+
+                            <?php if ($_SESSION['usuario'] != 'admin') { ?>
+
+                            <div class="card-footer">
+                                <small> <?php if ($product['STOCK'] == 0) { ?>
+                                        <span style="color:red"> <?php echo "No quedan productos"; ?></span>
+                                    <?php } elseif ($product['STOCK'] < 5) {
+                                        ?>
+                                        <span style="color:orange"> <?php echo "Quedan pocos en stock"; ?></span>
+                                    <?php } ?>
+
+                                </small>
+                                <form action="?controller=cart&action=addToCart" method="POST">
+
+                                <button name="id" value="<?php echo $product['ID']?>" class="btn btn-secondary float-right btn-sm jeje">Comprar</button>
+
+
+                                </form>
+
+                            </div>
+
+                            <?php } ?>
+
+                        </div>
+                        <!-- modal product profile -->
+        <div class="modal fade bd-example-modal-lg" id="modal<?php echo $product['ID']; ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+
+              <!-- product profile -->
+
+              <div class="container">
+                      <div class="row bg-light mt-2 pb-2" >
+                        <div class="col-6 h-100 border">
+                          <img src="<?php echo $product['URL']?>" style="width:70%;" alt="producto" class="rounded">
+                        </div>
+                        <div class="col-6 h-100 border ">
+                            <h3 class="mt-4 border"><?php echo $product['SHORTDESCRIPTION']?></h3>
+                            <div class="w-100"></div>
+                            <span class=""><strong>Descripción</strong></span>
+                            <p class=" border border-dark"><?php echo $product['LONGDESCRIPTION']?> </p>
+                            <div class="w-100"></div>
+                            <p class="">Precio: <?php echo $product['PRICE']?>€</p>
+                            <div class="w-100"></div>
+                            <p class=""><?php
+                              if ($product['STOCK'] == 0) { ?>
+                              <span style="color:red"> <?php echo "No quedan productos"; ?></span>
+                              <?php
+                            } elseif ($product['STOCK'] < 5) { ?>
+                                  <span style="color:orange"> <?php echo "Quedan pocos productos en stock"; ?></span>
+                                <?php } else{?>
+                                    <span style="color:green"> <?php echo "Hay productos en stock"; ?></span>
+                            </p>
+                          <?php } ?>
+                            <div class="w-100"></div>
+                            <span>Cantidad:</span> <input class="mb-4" type="number" value="1" min="1" max="<?php echo $product['STOCK']?>" id="number" style="width: 3em;">
+                            <div class="w-100"></div>
+                            <div class="row">
+                              <div class="col-6">
+                                <button type="button" name="button" class="btn btn-primary btn-block btn-lg mt-2">Añadir al carrito</button>
+                              </div>
+                              <div class="col-6">
+                                <button type="button" name="button" class="btn btn-primary btn-block btn-lg mt-2">Comprar</button>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+
+              <!-- close product profile -->
+
+            </div>
+          </div>
+        </div>
+        <!-- close modal product profile -->
+                    </div>
+                <?php } ?>
+
+
+            </div>
+        </div>
+
+    </div>
+
+    <!-- sidebar -->
+
+    <!-- cierro div bg -->
+
+</body>
+
+</html>

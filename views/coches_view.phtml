@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <title>coches</title>
+    </head>
+    <body>
+      <h1>COCHES</h1>
+      <table>
+           <tr><td> <a href="index.php?controller=coches&action=ordmarca">Marca</a></td><td>Modelo</td><td>Fabricado en</td><td></td></tr>
+        <?php
+            foreach ($datos as $dato) {
+                echo "<tr><td>{$dato['marca']}</td><td>{$dato['modelo']}</td><td>{$dato['fabricado']}</td>".
+                     "<td><a href=\"index.php?controller=coches&action=delete&id={$dato['id']}\">Borrar</a></td><tr/>";
+            }
+        ?>
+      </table>
+      <p><a href="index.php?controller=coches&action=add">Alta de Coches</a></p>
+      <p><a href="index.php?controller=personas&action=view">Volver a Personas <a/></p>
+    </body>
+</html>

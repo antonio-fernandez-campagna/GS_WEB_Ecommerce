@@ -1,0 +1,31 @@
+<div class="container br-light  mt-4">
+    <form name="addProd" action="index.php?controller=categories&action=insert" class="text-center" method="post">
+
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text bg-danger text-white" for="inputGroupSelect01">Categoria padre</label>
+          </div>
+          <select class="custom-select"name="parentcategory">
+            <option value="NULL" selected>Elige...</option>
+            <?php foreach ($data as $dato) { ?>
+            <option value="<?php echo $dato['ID'] ?>"><?php echo $dato['NAME'] ?></option>
+            <?php } ?>
+          </select>
+
+        </div>
+
+          <div class="input-group mb-3">
+            <div class="input-group-prepend ">
+              <span class="input-group-text bg-danger text-white">Nombre</span>
+            </div>
+            <input type="text" class="form-control" name="nombre">
+          </div>
+           <button class="btn btn-lg btn-light bg-primary text-white" type="submit">Añadir</button>
+           <a href="?index.php" class="btn btn-lg btn-light bg-primary text-white">Volver</a>
+
+    </form>
+</div>
+
+</body>
+
+</html>

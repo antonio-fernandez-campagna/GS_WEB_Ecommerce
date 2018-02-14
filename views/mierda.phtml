@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="views/css.css">
+  <!--<script src="https://use.fontawesome.com/fd4530cf2.js"></script>-->
+
+
+</head>
+
+<body>
+
+
+  <nav class="navbar navbar-expand  navbar-light bg-grisOscuro">
+
+    <img src="views/logo1.png" class="img-logo mr-1" alt="">
+    <a class="navbar-brand" href="#">Components Bear PC</a>
+
+    <button type="button" data-toggle="dropdown" class="btn-danger">Categorias</button>
+
+
+    <div class="dropdown-menu dropdown-mega">
+      <div class="row container">
+        <div class="col-md-4 dropdown-mega--column">
+          <h4 class="dropdown-mega--menu-header">Componentes</h4>
+          <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action">These Boots Are Made For Walking</a>
+            <a href="#" class="list-group-item list-group-item-action disabled">Eleanor, Put Your Boots On</a>
+            <a href="#" class="list-group-item list-group-item-action">Puss 'n' Boots</a>
+            <a href="#" class="list-group-item list-group-item-action">Die With Your Boots On</a>
+            <a href="#" class="list-group-item list-group-item-action">Fairies Wear Boots</a>
+          </div>
+        </div>
+        <div class="col-md-4 dropdown-mega--column">
+          <h4 class="dropdown-mega--menu-header">Periféricos</h4>
+          <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action">These Boots Are Made For Walking</a>
+            <a href="#" class="list-group-item list-group-item-action disabled">Eleanor, Put Your Boots On</a>
+            <a href="#" class="list-group-item list-group-item-action">Puss 'n' Boots</a>
+            <a href="#" class="list-group-item list-group-item-action">Die With Your Boots On</a>
+            <a href="#" class="list-group-item list-group-item-action">Fairies Wear Boots</a>
+          </div>
+        </div>
+        <div class="col-md-4 dropdown-mega--column">
+          <h4 class="dropdown-mega--menu-header">Ordenadores</h4>
+          <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action">These Boots Are Made For Walking</a>
+            <a href="#" class="list-group-item list-group-item-action disabled">Eleanor, Put Your Boots On</a>
+            <a href="#" class="list-group-item list-group-item-action">Puss 'n' Boots</a>
+            <a href="#" class="list-group-item list-group-item-action">Die With Your Boots On</a>
+            <a href="#" class="list-group-item list-group-item-action">Fairies Wear Boots</a>
+          </div>
+        </div>
+      </div>
+      <!--.row-->
+    </div>
+    <!--.dropdown-menu .dropdown-mega-->
+
+    <form class="form-inline mx-auto" action="/action_page.php">
+      <input class="form-control" type="text" placeholder="Search">
+    </form>
+
+
+
+    <span>Account</span>
+    <i class="fa fa-user-circle fa-2x mr-2 ml-2" aria-hidden="true"></i>
+
+    <li class="dropdown my">
+          <a href="#" class="text-light" data-toggle="dropdown" role="button" aria-expanded="false">
+            <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
+            <span class="badge badge-dark">4</span>
+          </a>
+          <ul class="dropdown-menu dropdown-cart" role="menu">
+            <?php for ($i=0; $i < 6 ; $i++) { ?>
+              <li>
+                  <span class="item">
+                    <span class="item-left">
+                        <img src="http://www.prepbootstrap.com/Content/images/template/menucartdropdown/item_1.jpg" alt="" />
+                        <span class="item-info">
+                            <span>Item name</span>
+                            <span>price: 27$</span>
+                        </span>
+                    </span>
+                    <span class="item-right">
+                        <button class="btn btn-danger  fa fa-close"></button>
+                    </span>
+                </span>
+              </li>
+              <?php    } ?>
+
+              <li class="divider"></li>
+              <li><a class="text-center" href="#">View Cart</a></li>
+          </ul>
+        </li>
+
+  </nav>
+
+
+
+
+<div class="bg-grisa myDiv">
+
+
+  <div class="container text-center">
+
+
+
+    <div id="demo" class="carousel slide mt-2" data-ride="carousel">
+      <ul class="carousel-indicators">
+        <li data-target="#demo" data-slide-to="0" class="active"></li>
+        <li data-target="#demo" data-slide-to="1"></li>
+        <li data-target="#demo" data-slide-to="2"></li>
+      </ul>
+      <div class="carousel-inner ">
+        <div class="carousel-item active">
+          <img src="views/imgs/p1.jpg" class="img-fluid hola" style="width:100%;">
+          <div class="carousel-caption">
+            <h3>Los Angeles</h3>
+            <p>We had such a great time in LA!</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="views/imgs/p2.png" alt="Chicago" class="img-fluid bg-dark hola" style="width:100%;">
+          <div class="carousel-caption">
+            <h3>Chicago</h3>
+            <p>Thank you, Chicago!</p>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <img src="views/imgs/4.png" alt="New York" class="img-fluid hola bg-dark" style="width:100%;">
+          <div class="carousel-caption">
+            <h3>New York</h3>
+            <p>We love the Big Apple!</p>
+          </div>
+        </div>
+      </div>
+      <a class="carousel-control-prev" href="#demo" data-slide="prev">
+  <span class="carousel-control-prev-icon"></span>
+  </a>
+      <a class="carousel-control-next" href="#demo" data-slide="next">
+  <span class="carousel-control-next-icon"></span>
+  </a>
+    </div>
+
+
+    <div class="container ">
+      <div class="row">
+        <?php foreach ($datos as $dato) { ?>
+        <div class="col-sm- col-md-4 col-lg-4 mt-4 minimo">
+
+          <div class="card">
+            <img class="card-img-top" src="http://success-at-work.com/wp-content/uploads/2015/04/free-stock-photos.gif">
+            <div class="card-block">
+              <figure class="profile">
+                <img src="http://success-at-work.com/wp-content/uploads/2015/04/free-stock-photos.gif" class="profile-avatar" alt="">
+              </figure>
+              <h4 class="card-title mt-3"><?php echo $dato['SHORTDESCRIPTION'] ?></h4>
+              <div class="meta">
+                <a></a>
+              </div>
+              <div class="card-text">
+                <?php echo $dato['PRICE'] ?>
+              </div>
+            </div>
+            <div class="card-footer">
+              <small> <?php
+
+              if ($dato['STOCK'] == 0) { ?>
+              <span style="color:red"> <?php echo "No quedan productos"; ?></span>
+              <?php
+            } elseif ($dato['STOCK'] < 5) { ?>
+                  <span style="color:orange"> <?php echo "Quedan pocos en stock"; ?></span>
+            <?php } ?>
+
+            </small>
+
+              <button class="btn btn-secondary float-right btn-sm jeje">Comprar</button>
+            </div>
+          </div>
+        </div>
+        <?php } ?>
+
+
+      </div>
+    </div>
+
+
+
+  </div>
+
+
+
+</div>
+
+<table id="cart" class="table table-hover table-condensed">
+    				<thead>
+						<tr>
+							<th style="width:50%">Product</th>
+							<th style="width:10%">Price</th>
+							<th style="width:8%">Quantity</th>
+							<th style="width:22%" class="text-center">Subtotal</th>
+							<th style="width:10%"></th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td data-th="Product">
+								<div class="row">
+									<div class="col-sm-2 hidden-xs"><img src="http://placehold.it/100x100" alt="..." class="img-responsive"/></div>
+									<div class="col-sm-10">
+										<h4 class="nomargin">Product 1</h4>
+										<p>Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet.</p>
+									</div>
+								</div>
+							</td>
+							<td data-th="Price">$1.99</td>
+							<td data-th="Quantity">
+								<input type="number" class="form-control text-center" value="1">
+							</td>
+							<td data-th="Subtotal" class="text-center">1.99</td>
+							<td class="actions" data-th="">
+								<button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
+								<button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>
+							</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr class="visible-xs">
+							<td class="text-center"><strong>Total 1.99</strong></td>
+						</tr>
+						<tr>
+							<td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+							<td colspan="2" class="hidden-xs"></td>
+							<td class="hidden-xs text-center"><strong>Total $1.99</strong></td>
+							<td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+						</tr>
+					</tfoot>
+				</table>
+
+<!-- shop 2 -->
+
+<div class="container mb-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col"> </th>
+                            <th scope="col">Product</th>
+                            <th scope="col">Available</th>
+                            <th scope="col" class="text-center">Quantity</th>
+                            <th scope="col" class="text-right">Price</th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
+                            <td>Product Name Dada</td>
+                            <td>In stock</td>
+                            <td><input class="form-control" type="text" value="1" /></td>
+                            <td class="text-right">124,90 €</td>
+                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
+                            <td>Product Name Toto</td>
+                            <td>In stock</td>
+                            <td><input class="form-control" type="text" value="1" /></td>
+                            <td class="text-right">33,90 €</td>
+                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
+                        </tr>
+                        <tr>
+                            <td><img src="https://dummyimage.com/50x50/55595c/fff" /> </td>
+                            <td>Product Name Titi</td>
+                            <td>In stock</td>
+                            <td><input class="form-control" type="text" value="1" /></td>
+                            <td class="text-right">70,00 €</td>
+                            <td class="text-right"><button class="btn btn-sm btn-danger"><i class="fa fa-trash"></i> </button> </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Sub-Total</td>
+                            <td class="text-right">255,90 €</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>Shipping</td>
+                            <td class="text-right">6,90 €</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><strong>Total</strong></td>
+                            <td class="text-right"><strong>346,90 €</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col mb-2">
+            <div class="row">
+                <div class="col-sm-12  col-md-6">
+                    <button class="btn btn-block btn-light">Continue Shopping</button>
+                </div>
+                <div class="col-sm-12 col-md-6 text-right">
+                    <button class="btn btn-lg btn-block btn-success text-uppercase">Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- sidebar -->
+
+<div class="text-center">
+		<button type="button" class="btn btn-demo" data-toggle="modal" data-target="#myModal">
+			Left Sidebar Modal
+		</button>
+
+		<button type="button" class="btn btn-demo" data-toggle="modal" data-target="#myModal2">
+			Right Sidebar Modal
+		</button>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal left fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Left Sidebar</h4>
+				</div>
+
+				<div class="modal-body">
+					<p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+					</p>
+				</div>
+
+			</div><!-- modal-content -->
+		</div><!-- modal-dialog -->
+	</div><!-- modal -->
+
+	<!-- Modal -->
+	<div class="modal right fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel2">Right Sidebar</h4>
+				</div>
+
+				<div class="modal-body">
+					<p>Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+					</p>
+				</div>
+
+			</div><!-- modal-content -->
+		</div><!-- modal-dialog -->
+	</div><!-- modal -->
+
+
+</body>
+
+</html>
