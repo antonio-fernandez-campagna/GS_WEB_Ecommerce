@@ -20,7 +20,6 @@ class cart_model {
     }
 
 
-
     function getPaymentInfo() {
         return $this->paymentInfo;
     }
@@ -132,8 +131,8 @@ class cart_model {
 
         //die($sql);
         $result = $this->db->query($sql);
-        var_dump($sql);
-        var_dump($result);
+        //var_dump($sql);
+        //var_dump($result);
         $contador ++;
 
       }
@@ -141,7 +140,7 @@ class cart_model {
       if ($this->db->error)
           return "$sql<br>{$this->db->error}";
       else {
-        $contador = $this->db->insert_id;
+        $result_id = $this->db->insert_id;
       }
 
     }

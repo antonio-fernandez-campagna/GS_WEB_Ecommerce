@@ -93,26 +93,19 @@ class products_model {
         $this->category = $category;
     }
 
-  //  public function pagination() {
-      //  $results_per_page = 3;
+    public function pagination() {
+        $results_per_page = 3;
 
-      //  $number
-        // determinate number of total pages available
-      //  $number_of_pages = ceil($number_of_results / $results_per_page);
-
-        // determinate which page number bisistor is currently on
-        // determine the sql LIMIT starrting number for the results on the displaying page
-      //  echo "$page_first_result = ($page-1)*$results_per_page";
-
-      //  $number_array = [];
-
-        //for ($page = 1; $page < $results_per_page; $page ++){
-      //      $numb
-      //  }
-
-
-    //    }
-
+        //determinate number of total pages available
+        $number_of_pages = ceil($number_of_results / $results_per_page);
+        //determinate which page number bisistor is currently on
+        //determine the sql LIMIT starrting number for the results on the displaying page
+        echo "$page_first_result = ($page-1)*$results_per_page";
+        $number_array = [];
+        for ($page = 1; $page < $results_per_page; $page ++) {
+            
+        }
+    }
 
     /**
      * Extreu totes les persones de la taula
@@ -129,14 +122,13 @@ class products_model {
         $number_products_per_page = 3;
         $final_limit_product = $number_products_per_page * $page;
         $start_limit_product = $page == 1 ? 0 : $final_limit_product - $number_products_per_page;
-        // LIMIT {$start_limit_product},{$number_products_per_page}
 
         if (!empty($subCategory)) {
             //$query = "SELECT * FROM product WHERE category = {$subCategory};";
             $query = "SELECT *, prod.ID, img.URL, promo.DISCOUNTPERCENTAGE, promo.ENDDATE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod join image img on prod.ID = img.product left join promotion promo on promo.product = prod.id WHERE prod.CATEGORY = {$subCategory};";
             //die($query);
         } else {
-            $query = "SELECT *, prod.ID, img.URL, promo.DISCOUNTPERCENTAGE, promo.ENDDATE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod join image img on prod.ID = img.product left join promotion promo on promo.product = prod.id WHERE prod.SPONSORED = 'Y';";
+            $query = "SELECT *, prod.ID, img.URL, promo.DISCOUNTPERCENTAGE, promo.ENDDATE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod join image img on prod.ID = img.product left join promotion promo on promo.product = prod.id WHERE prod.SPONSORED = 'Y' LIMIT {$start_limit_product},{$number_products_per_page};";
             //$query = "SELECT prod.* FROM PRODUCT prod WHERE prod.SPONSORED = 'Y';";
         }
 
@@ -145,6 +137,17 @@ class products_model {
             $this->products[] = $filas;
         }
         return $this->products;
+    }
+
+    public function getNumRows() {
+
+        $query = "select count(1) FROM product prod join image img on prod.ID = img.PRODUCT where SPONSORED = 'Y'";
+        
+        $consulta = $this->db->query($query);
+
+        $row = $consulta -> fetch_array();
+        
+        return $row[0];
     }
 
     public function getProductProfile($id) {
@@ -160,8 +163,17 @@ class products_model {
     public function get_shopping_cart() {
 
         if (!empty($_SESSION["cart"])) {
+
+            if (!empty($_SESSION['cart'][0])) {
+                if ($_SESSION['cart'][0] == "db") {
+                    $id_order = $_SESSION['cart'][1];
+                }
+            }
+
             $idProducts = implode(",", array_keys($_SESSION["cart"]));
             //die($idProducts);
+
+
 
             $query = "SELECT *, prod.ID, img.URL, promo.DISCOUNTPERCENTAGE, promo.ENDDATE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod join image img on prod.ID = img.product left join promotion promo on promo.product = prod.id WHERE prod.ID in ({$idProducts});";
             //die($query);
@@ -173,9 +185,6 @@ class products_model {
             return $this->products;
         }
     }
-
-
-
 
     public function get_product_searcher($word) {
 

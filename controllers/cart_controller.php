@@ -51,6 +51,8 @@ class cart_controller {
       // ultimo order delete mysql ta
         $orderItem = new cart_model();
         $orderItem->insertOrderItem($id,$data);
+        
+        
     }
 
     public function insertOrder() {
@@ -58,7 +60,11 @@ class cart_controller {
         $id = $order->insertOrder();
 
         $data = $this->shoppingCart();
+        //unset($_SESSION['cart']);
 
+        $_SESSION['cart'] = [];
+        $_SESSION['cart'][0] = "db";
+        $_SESSION['cart'][1] = $id;
 
         $this->insertOrderItem($id, $data);
 

@@ -160,8 +160,20 @@
             </div>
         </div>
 
-        <!-- cierro div container -->
+        <?php 
+            
+            for ($page = 1; $page <= $number_of_pages; $page++){
+                            //die($page);
+
+                echo '<a href="index.php?page= ' . $page . ' ">' . $page . '</a>';
+                
+            }
+        
+        ?>
+        
+        
     </div>
+        <!-- cierro div container -->
 
 </body>
 

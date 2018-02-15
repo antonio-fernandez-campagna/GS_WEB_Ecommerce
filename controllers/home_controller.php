@@ -1,19 +1,19 @@
 <?php
+
 require_once("models/categories_model.php");
 require_once("models/products_model.php");
 require_once("models/promotions_model.php");
-
 
 class home_controller {
 
     function view() {
         $promo = new promotions_model();
+        
+        $number_of_pages = $this->manyPages();
 
-        //$data = array();
         $data['products'] = $this->getProducts();
+
         $data['categories'] = $this->getCategories();
-        //echo "<pre>" .print_r($data['products'],1). "</pre>";
-        //die;
 
         $data['promo'] = $promo->get_promos();
 
@@ -26,12 +26,12 @@ class home_controller {
         return $products->get_products();
     }
 
-     function getCategories() {
+    function getCategories() {
 
-      // Creamos el objeto de la clase categorias_model
+        // Creamos el objeto de la clase categorias_model
         $categories = new categories_model();
 
-      // llamamos a la funcion get_categories y guardamos en myCategories las categorias y subcategorias de la bd
+        // llamamos a la funcion get_categories y guardamos en myCategories las categorias y subcategorias de la bd
         $myCategories = $categories->get_categories();
         // cremamos un array para guardar las categorias ordenadas (las categorías con sus subcategorías)
         $orderedCategories = array();
@@ -45,9 +45,9 @@ class home_controller {
             $name = $dato["NAME"];
             $parentCategory = $dato["PARENTCATEGORY"];
 
-          // comprobamos si es categoria principal, si el array no existe lo crea y añade el nombre de la categoria dentro de ella.
-          // Si es uina subcategoria, comprueba si la categoria principal existe, si no existe lo crea y guarda dentro de ella
-          // su subcategoria con su nombre e ID
+            // comprobamos si es categoria principal, si el array no existe lo crea y añade el nombre de la categoria dentro de ella.
+            // Si es uina subcategoria, comprueba si la categoria principal existe, si no existe lo crea y guarda dentro de ella
+            // su subcategoria con su nombre e ID
 
             if (empty($parentCategory)) {
                 if (!array_key_exists($id, $orderedCategories)) {
@@ -69,7 +69,16 @@ class home_controller {
         return $orderedCategories;
     }
 
+    public function manyPages() {
+        $row = new products_model();
+        $num_rows = $row->getNumRows();
+        $results_per_page = 3;
 
+
+       return ceil($num_rows / $results_per_page);
+        
+    }
 
 }
+
 ?>

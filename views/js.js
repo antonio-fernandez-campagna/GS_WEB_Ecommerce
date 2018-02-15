@@ -4,9 +4,14 @@ $(document).ready(function () {
         if ($(this).hasClass("activated")) {
             $(this).removeClass("activated");
         } else {
-            $(this).addClass("activated");
+            if ($(this).hasClass("range-price") === false) {
+                $(this).addClass("activated");
+            }
+
         }
         $idBrands = [];
+        console.log("lenght" + $idBrands.length);
+
         $(".activated").each(function () {
             $idBrands.push($(this).attr("id"));
         });
@@ -17,18 +22,20 @@ $(document).ready(function () {
             $priceMax = $("#price-max").val();
 
 
-            $('.output').val($priceMin +" €" );
+            $('.output').val($priceMin + " €");
 
+            //console.log("Precio: " + $prodPrice + " PrecioMin: " + $priceMin + " PrecioMax: " + $priceMax);
+            //alert($prodPrice);
+            console.log("lenght 2" + $idBrands.length);
 
-
-
-            console.log("Precio: " + $prodPrice + " PrecioMin: " + $priceMin + " PrecioMax: " + $priceMax);
             if (($prodPrice < $priceMin || $prodPrice > $priceMax)) {
-                //alert($prodPrice);
                 $(this).parent().hide();
             } else {
+                //console.log("Precio: " + $idBrands[0] + " PrecioMin: " + $priceMin + " PrecioMax: " + $priceMax);
+
                 if ($idBrands.length && jQuery.inArray($(this).attr("id"), $idBrands) === -1) {
                     //alert($prodPrice);
+
                     $(this).parent().hide();
                 } else {
                     $(this).parent().show();
@@ -38,7 +45,7 @@ $(document).ready(function () {
 
     });
 
-    $(".buyProduct").click(function(){
+    $(".buyProduct").click(function () {
         $idProduct = $(this).attr("id");
 
     });
