@@ -109,24 +109,50 @@ class cart_model {
         $this->db = Conectar::conexion();
     }
 
-    public function insertOrderItem() {
+    public function insertOrderItem($id ,$data) {
 
-        $sql = "INSERT INTO orderitem (ORDER, PRODUCT, QUANTITY, PRICE)
-                    VALUES ('{$this->order}','{$this->$product}', '{$this->$quantity}', '{$this->$price}')";
+      $contador = 1;
 
+      foreach ($data as $item) {
 
-        $result = $this->db->query($sql);
-        if ($this->db->error)
-            return "$sql<br>{$this->db->error}";
-        else {
-            return false;
+        //echo $contador;die;
+        //var_dump($data);
+
+        if (empty($item['FINALPRICE'])) {
+
+          $price = $item['PRICE'];
+
+        } else {
+
+          $price = $item['FINALPRICE'];
         }
+
+        $sql = "INSERT INTO orderitem (ORDERLINE, `ORDER`, PRODUCT, QUANTITY, PRICE)
+                    VALUES ('{$contador}','{$id}','{$item['ID']}', '{$item['nUnits']}', '{$price}')";
+
+        //die($sql);
+        $result = $this->db->query($sql);
+        var_dump($sql);
+        var_dump($result);
+        $contador ++;
+
+      }
+      
+      if ($this->db->error)
+          return "$sql<br>{$this->db->error}";
+      else {
+        $contador = $this->db->insert_id;
+      }
+
     }
 
     public function insertOrder() {
 
-        $sql = "INSERT INTO `order` (PAYMENTINFO, STATUS, SHIPPINGADDRESS, USER)
-                    VALUES ('{$this->paymentInfo}','{$this->status}', '{$this->shippingAddress}', '{$this->user}')";
+      //$user = $_SESSION['usuario'];
+      //die($user);
+
+        $sql = "INSERT INTO `order` (SHIPPINGADDRESS, USER)
+                    VALUES ('dirección ___', '{$_SESSION['usuario']}')";
 
         $result = $this->db->query($sql);
         if ($this->db->error)

@@ -29,8 +29,10 @@
 
     <nav class="navbar navbar-expand  navbar-light bg-primary" style="border-bottom:2px solid red">
 
-        <img src="views/logo1.png" class="img-logo mr-1" alt="">
-        <a class="navbar-brand" href="#" style="color:white">Components Bear PC</a>
+        <a href="index.php">
+        <img src="views/logo1.png" class="img-logo mr-1" alt="" href="index.php">
+        <span class="navbar-brand" href="#" style="color:white">Components Bear PC</span>
+        </a>
 
         <button type="button" data-toggle="dropdown" id="categoria" onmouseover="displayMenu()" class="btn-danger">Categorias</button>
 
@@ -155,7 +157,13 @@ if ($_SESSION['usuario'] != "invitado") {
                             <span class="item-info">
                                 <span><?php echo $item['NAME'] ?></span>
                                 <span><?php echo $item['nUnits'] ?></span>
-                                <span><?php echo $item['PRICE'] ?></span>
+                                <span>  <?php
+                                  if (!empty($item['FINALPRICE'])) {
+                                    echo $item['FINALPRICE']."€";
+                                  } else {
+                                    echo $item['PRICE']."€";
+                                  }
+                                  ?></span>
 
                             </span>
                         </span>

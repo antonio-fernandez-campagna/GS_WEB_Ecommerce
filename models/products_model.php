@@ -93,25 +93,25 @@ class products_model {
         $this->category = $category;
     }
 
-    public function pagination() {
-        $results_per_page = 3;
+  //  public function pagination() {
+      //  $results_per_page = 3;
 
-        $number
+      //  $number
         // determinate number of total pages available
-        $number_of_pages = ceil($number_of_results / $results_per_page);
+      //  $number_of_pages = ceil($number_of_results / $results_per_page);
 
         // determinate which page number bisistor is currently on
         // determine the sql LIMIT starrting number for the results on the displaying page
-        echo "$page_first_result = ($page-1)*$results_per_page";
+      //  echo "$page_first_result = ($page-1)*$results_per_page";
 
-        $number_array = [];
-        
-        for ($page = 1; $page < $results_per_page; $page ++){
-            $numb
-        }
-        
-        
-        }
+      //  $number_array = [];
+
+        //for ($page = 1; $page < $results_per_page; $page ++){
+      //      $numb
+      //  }
+
+
+    //    }
 
 
     /**
@@ -129,14 +129,14 @@ class products_model {
         $number_products_per_page = 3;
         $final_limit_product = $number_products_per_page * $page;
         $start_limit_product = $page == 1 ? 0 : $final_limit_product - $number_products_per_page;
-        
+        // LIMIT {$start_limit_product},{$number_products_per_page}
 
         if (!empty($subCategory)) {
             //$query = "SELECT * FROM product WHERE category = {$subCategory};";
-            $query = "SELECT *, img.URL, promo.DISCOUNTPERCENTAGE, promo.ENDDATE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod join image img on prod.ID = img.product left join promotion promo on promo.product = prod.id WHERE prod.CATEGORY = {$subCategory} LIMIT {$start_limit_product},{$number_products_per_page};";
+            $query = "SELECT *, prod.ID, img.URL, promo.DISCOUNTPERCENTAGE, promo.ENDDATE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod join image img on prod.ID = img.product left join promotion promo on promo.product = prod.id WHERE prod.CATEGORY = {$subCategory};";
             //die($query);
         } else {
-            $query = "SELECT *, img.URL, promo.DISCOUNTPERCENTAGE, promo.ENDDATE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod join image img on prod.ID = img.product left join promotion promo on promo.product = prod.id WHERE prod.SPONSORED = 'Y';";
+            $query = "SELECT *, prod.ID, img.URL, promo.DISCOUNTPERCENTAGE, promo.ENDDATE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod join image img on prod.ID = img.product left join promotion promo on promo.product = prod.id WHERE prod.SPONSORED = 'Y';";
             //$query = "SELECT prod.* FROM PRODUCT prod WHERE prod.SPONSORED = 'Y';";
         }
 
@@ -160,8 +160,11 @@ class products_model {
     public function get_shopping_cart() {
 
         if (!empty($_SESSION["cart"])) {
-            $idProducts = substr(implode(",", array_keys($_SESSION["cart"])), 0, -1);
-            $query = "SELECT prod.*, img.URL FROM product prod join image img on prod.ID = img.product WHERE ID in ({$idProducts});";
+            $idProducts = implode(",", array_keys($_SESSION["cart"]));
+            //die($idProducts);
+
+            $query = "SELECT *, prod.ID, img.URL, promo.DISCOUNTPERCENTAGE, promo.ENDDATE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod join image img on prod.ID = img.product left join promotion promo on promo.product = prod.id WHERE prod.ID in ({$idProducts});";
+            //die($query);
             $consulta = $this->db->query($query);
             while ($filas = $consulta->fetch_assoc()) {
                 $this->products[] = $filas;
@@ -170,6 +173,9 @@ class products_model {
             return $this->products;
         }
     }
+
+
+
 
     public function get_product_searcher($word) {
 

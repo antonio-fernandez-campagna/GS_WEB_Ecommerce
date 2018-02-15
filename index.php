@@ -10,7 +10,6 @@ require_once("controllers/products_controller.php");
 require_once("controllers/cart_controller.php");
 require_once("controllers/view_controller.php");
 require_once("controllers/promotion_controller.php");
-require_once("models/cart_model.php");
 
 //$ej = new cart_model();
 //$ej->setPaymentInfo(2);
@@ -45,8 +44,20 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
         if ($_GET["action"] == "login") {
             $login = new login_controller();
             $loged = $login->login();
+
             if (!$loged) {
+
                 $loginFailed = $login->loginFailed();
+
+            } else {
+              if (!empty($data['cart'])) {
+
+                $cataToDb = new cart_controller();
+                $cataToDb -> insertOrder();
+
+              } else {
+
+              }
             }
         }
         if ($_GET['action'] == "logout") {
@@ -57,10 +68,8 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
             $register = new login_controller();
             //$register ->
         }
-
-        require_once "views/templates/header_template.phtml";
-        $homeController->view();
-
+        //require_once "views/templates/header_template.phtml";
+        header('location: index.php');
     }
 
     //Mostramos el default header, el cart y las categorias

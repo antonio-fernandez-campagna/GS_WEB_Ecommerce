@@ -6,37 +6,36 @@ require_once("models/cart_model.php");
 
 class cart_controller {
 
-    public function shoppingCart() {
+  public function shoppingCart(){
 
-        $product = new products_model();
+       $product  = new products_model();
 
-        $data = $product->get_shopping_cart();
+       $data = $product->get_shopping_cart();
 
-        if (is_array($data) || is_object($data)) {
-            foreach ($data as $key => $producto) {
-                $nUnits = $_SESSION['cart'][$producto["ID"]];
-                $data[$key]["nUnits"] = $nUnits;
-            }
-
-            return $data;
-        }
-    }
+       if(is_array($data) || is_object($data)){
+            foreach ($data as $key => $producto ){
+           $nUnits = $_SESSION['cart'][$producto["ID"]];
+           $data[$key]["nUnits"] = $nUnits;
+       }
+       return $data;
+       }
+   }
 
    public function addItemToCart($id, $nUnits=1){
-        
-        $item = array($id,$nUnits);
-        
-        if (empty($_SESSION['cart'])){
-        $_SESSION['cart'] = array();
-        
-        } 
-        
-        if (array_key_exists($id, $_SESSION['cart'])) {
-            $_SESSION['cart'][$id] += $nUnits;
-        } else {
-            $_SESSION['cart'][$id] = $nUnits;
-        }
-    }
+
+       $item = array($id,$nUnits);
+
+       if (empty($_SESSION['cart'])){
+       $_SESSION['cart'] = array();
+
+       }
+
+       if (array_key_exists($id, $_SESSION['cart'])) {
+           $_SESSION['cart'][$id] += $nUnits;
+       } else {
+           $_SESSION['cart'][$id] = $nUnits;
+       }
+   }
 
     public function deleteItemFromCart($id) {
 
@@ -48,14 +47,21 @@ class cart_controller {
         }
     }
 
-    public function insertOrderItem($data) {
+    public function insertOrderItem($id,$data) {
+      // ultimo order delete mysql ta
         $orderItem = new cart_model();
-        $orderItem->insertOrderItem();
+        $orderItem->insertOrderItem($id,$data);
     }
 
-    public function insertOrder($data) {
+    public function insertOrder() {
         $order = new cart_model();
-        $order->insertOrder($data);
+        $id = $order->insertOrder();
+
+        $data = $this->shoppingCart();
+
+
+        $this->insertOrderItem($id, $data);
+
     }
 
 }
