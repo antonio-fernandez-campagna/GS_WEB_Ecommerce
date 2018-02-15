@@ -22,27 +22,14 @@ class cart_controller {
         }
     }
 
-    public function addItemToCart($id, $nUnits = 1) {
-
-        $item = array($id, $nUnits);
-
-        if (empty($_SESSION['cart'])) {
-            $_SESSION['cart'] = array();
-        }
-
-        if($_SESSION['usuario'] != 'admin' && $_SESSION['usuario'] != 'invitado'){
-            $date = date('YmdHis');
-            if(empty($_SESSION['cart']['cartId'])){
-                $_SESSION['cart']['cartId'] = $date.$_SESSION['usuario'];
-                $this->insertOrder($data);
-            }
-            $data['id'] = $_SESSION['cart']['cartId'];
-            $data['date'] = $date;
-            $data['payInfo'] = 2;
-            $data['status'] = 2;
-            $data['shippingAddress'] = 2;
-            $this->insertOrderItem($data);
-        }
+   public function addItemToCart($id, $nUnits=1){
+        
+        $item = array($id,$nUnits);
+        
+        if (empty($_SESSION['cart'])){
+        $_SESSION['cart'] = array();
+        
+        } 
         
         if (array_key_exists($id, $_SESSION['cart'])) {
             $_SESSION['cart'][$id] += $nUnits;
@@ -63,7 +50,7 @@ class cart_controller {
 
     public function insertOrderItem($data) {
         $orderItem = new cart_model();
-        $orderItem->insertOrderItem($data);
+        $orderItem->insertOrderItem();
     }
 
     public function insertOrder($data) {

@@ -2,135 +2,117 @@
 
 class products_model {
 
-  private $db;
-  private $products;
-  private $id;
-  private $name;
-  private $stock;
-  private $price;
-  private $sponsored;
-  private $shortDescription;
-  private $longDescription;
-  private $brand;
-  private $category;
+    private $db;
+    private $products;
+    private $id;
+    private $name;
+    private $stock;
+    private $price;
+    private $sponsored;
+    private $shortDescription;
+    private $longDescription;
+    private $brand;
+    private $category;
 
-  public function __construct(){
-      $this->db=Conectar::conexion();
-      $this->products=array();
-  }
+    public function __construct() {
+        $this->db = Conectar::conexion();
+        $this->products = array();
+    }
 
-  /* GETTERS & SETTERS */
-  public function getId() {
-    return $this->id;
-  }
+    /* GETTERS & SETTERS */
 
-  public function setId($id) {
-    $this->id = $id;
-  }
+    public function getId() {
+        return $this->id;
+    }
 
-  public function getName() {
-    return $this->name;
-  }
+    public function setId($id) {
+        $this->id = $id;
+    }
 
-  public function setName($name) {
-    $this->name = $name;
-  }
+    public function getName() {
+        return $this->name;
+    }
 
-  public function getStock() {
-    return $this->stock;
-  }
+    public function setName($name) {
+        $this->name = $name;
+    }
 
-  public function setStock($stock) {
-    $this->stock = $stock;
-  }
+    public function getStock() {
+        return $this->stock;
+    }
 
-  public function getPrice() {
-    return $this->price;
-  }
+    public function setStock($stock) {
+        $this->stock = $stock;
+    }
 
-  public function setPrice($price) {
-    $this->price = $price;
-  }
+    public function getPrice() {
+        return $this->price;
+    }
 
-  public function getSponsored() {
-    return $this->sponsored;
-  }
+    public function setPrice($price) {
+        $this->price = $price;
+    }
 
-  public function setSponsored($sponsored) {
-    $this->sponsored = $sponsored;
-  }
+    public function getSponsored() {
+        return $this->sponsored;
+    }
 
-  public function getShortDescription() {
-    return $this->shortdescription;
-  }
+    public function setSponsored($sponsored) {
+        $this->sponsored = $sponsored;
+    }
 
-  public function setShortDescription($shortdescription) {
-    $this->shortDescription = $shortdescription;
-  }
+    public function getShortDescription() {
+        return $this->shortdescription;
+    }
 
-  public function getLongDesc() {
-    return $this->longdescription;
-  }
+    public function setShortDescription($shortdescription) {
+        $this->shortDescription = $shortdescription;
+    }
 
-  public function setLongDescription($longdescription) {
-    $this->longDescription = $longdescription;
-  }
+    public function getLongDesc() {
+        return $this->longdescription;
+    }
 
-  public function getBrand() {
-    return $this->brand;
-  }
+    public function setLongDescription($longdescription) {
+        $this->longDescription = $longdescription;
+    }
 
-  public function setBrand($brand) {
-    $this->brand = $brand;
-  }
+    public function getBrand() {
+        return $this->brand;
+    }
 
-  public function getCategory() {
-    return $this->category;
-  }
+    public function setBrand($brand) {
+        $this->brand = $brand;
+    }
 
-  public function setCategory($category) {
-    $this->category = $category;
-  }
+    public function getCategory() {
+        return $this->category;
+    }
 
+    public function setCategory($category) {
+        $this->category = $category;
+    }
 
-  public function pagination(){
-    // $results_per_page = 5;
-    //
-    // $number_of_results = mysqli_num_rows($result);
-    //
-    // while ($row = mysql_fetch_array($result)) {
-    //   echo "$row'";
-    // }
-    //
-    // // determinate number of total pages available
-    // $number_of_pages = ceil($number_of_results/$results_per_page);
-    //
-    // //determinate which page number bisistor is currently on
-    //
-    // if (!isset($_GET['page'])) {
-    //   $page = 1;
-    // } else {
-    //   $page = $_GET['page'];
-    // }
-    //
-    //
-    // // determine the sql LIMIT starrting number for the results on the displaying page
-    // echo "$page_first_result = ($page-1)*$results_per_page";
-    //
-    // // retrieve selected results from database and display hem on page
-    // $sql = "select LIMIT" . $page_first_result . "," . $results_per_page;
-    // $result = $this->db->query($query);
-    //
-    // while ($row = mysqli_fetch_array($result) {
-    //   "datos..."
-    // }
+    public function pagination() {
+        $results_per_page = 3;
 
-    // display the links to the page
-    //for ($page=0; $page <=$number_of_pages ; $page++) {
-    //  echo '<a href="index.php?page= ' .$page. ' ">' . $page . '</a>';
-    //}
+        $number
+        // determinate number of total pages available
+        $number_of_pages = ceil($number_of_results / $results_per_page);
 
-  }
+        // determinate which page number bisistor is currently on
+        // determine the sql LIMIT starrting number for the results on the displaying page
+        echo "$page_first_result = ($page-1)*$results_per_page";
+
+        $number_array = [];
+        
+        for ($page = 1; $page < $results_per_page; $page ++){
+            $numb
+        }
+        
+        
+        }
+
 
     /**
      * Extreu totes les persones de la taula
@@ -138,11 +120,21 @@ class products_model {
      */
     public function get_products($subCategory = "") {
 
-        //echo "<pre>" .print_r($subCategory,1)."</pre>";
-        //die();
+        if (!isset($_GET['page'])) {
+            $page = 1;
+        } else {
+            $page = $_GET['page'];
+        }
+
+        $number_products_per_page = 3;
+        $final_limit_product = $number_products_per_page * $page;
+        $start_limit_product = $page == 1 ? 0 : $final_limit_product - $number_products_per_page;
+        
+
         if (!empty($subCategory)) {
             //$query = "SELECT * FROM product WHERE category = {$subCategory};";
-            $query = "SELECT *, img.URL, promo.DISCOUNTPERCENTAGE, promo.ENDDATE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod join image img on prod.ID = img.product left join promotion promo on promo.product = prod.id WHERE prod.CATEGORY = {$subCategory};";
+            $query = "SELECT *, img.URL, promo.DISCOUNTPERCENTAGE, promo.ENDDATE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod join image img on prod.ID = img.product left join promotion promo on promo.product = prod.id WHERE prod.CATEGORY = {$subCategory} LIMIT {$start_limit_product},{$number_products_per_page};";
+            //die($query);
         } else {
             $query = "SELECT *, img.URL, promo.DISCOUNTPERCENTAGE, promo.ENDDATE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod join image img on prod.ID = img.product left join promotion promo on promo.product = prod.id WHERE prod.SPONSORED = 'Y';";
             //$query = "SELECT prod.* FROM PRODUCT prod WHERE prod.SPONSORED = 'Y';";
@@ -168,9 +160,8 @@ class products_model {
     public function get_shopping_cart() {
 
         if (!empty($_SESSION["cart"])) {
-            $idProducts = implode(",", array_keys($_SESSION["cart"]));
+            $idProducts = substr(implode(",", array_keys($_SESSION["cart"])), 0, -1);
             $query = "SELECT prod.*, img.URL FROM product prod join image img on prod.ID = img.product WHERE ID in ({$idProducts});";
-
             $consulta = $this->db->query($query);
             while ($filas = $consulta->fetch_assoc()) {
                 $this->products[] = $filas;
@@ -207,9 +198,9 @@ class products_model {
     public function get_brands($subCategory = "") {
 
         if (empty($subCategory)) {
-          $consulta = $this->db->query("SELECT * from brand;");
+            $consulta = $this->db->query("SELECT * from brand;");
         } else {
-          $consulta = $this->db->query("SELECT distinct p.BRAND, b.NAME FROM product p, brand b where p.category = $subCategory and p.BRAND = b.ID");
+            $consulta = $this->db->query("SELECT distinct p.BRAND, b.NAME FROM product p, brand b where p.category = $subCategory and p.BRAND = b.ID");
         }
 
         while ($filas = $consulta->fetch_assoc()) {
@@ -221,13 +212,13 @@ class products_model {
 
     public function insert_product() {
 
-      //echo $this->shortDescription;die;
+        //echo $this->shortDescription;die;
 
         $sql = "INSERT INTO product (NAME, STOCK, PRICE, SPONSORED, SHORTDESCRIPTION, LONGDESCRIPTION, BRAND, CATEGORY)
                     VALUES ('{$this->name}','{$this->stock}', '{$this->price}', '{$this->sponsored}','{$this->shortDescription}','{$this->longDescription}',
                     '{$this->brand}','{$this->category}')";
 
-die($sql);
+        die($sql);
         $result = $this->db->query($sql);
         if ($this->db->error)
             return "$sql<br>{$this->db->error}";
@@ -236,7 +227,7 @@ die($sql);
         }
     }
 
-    public function get_all_products($data) {
+    public function get_all_products() {
         $query = "SELECT ID, NAME from product;";
 
         $consulta = $this->db->query($query);
@@ -245,7 +236,6 @@ die($sql);
         }
         return $this->products;
     }
-
 
 }
 

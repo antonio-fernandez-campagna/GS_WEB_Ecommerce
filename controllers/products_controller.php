@@ -150,6 +150,13 @@ class products_controller {
 
         return $orderedCategories;
     }
+    
+    public function pagination(){
+        
+        $algo = new products_model();
+        $algo -> pagination(); 
+        
+    }
 
 }
 

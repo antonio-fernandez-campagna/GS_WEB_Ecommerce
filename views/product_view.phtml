@@ -184,6 +184,11 @@
             </div>
         </div>
 
+        <?php 
+             foreach ($page = 0; $page <= $number_of_pages; $page++) {
+            echo '<a href="index.php?page= ' . $page . ' ">' . $page . '</a>';
+        }
+        ?>
     </div>
 
     <!-- sidebar -->
