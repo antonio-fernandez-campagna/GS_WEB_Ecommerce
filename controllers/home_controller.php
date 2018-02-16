@@ -8,7 +8,7 @@ class home_controller {
 
     function view() {
         $promo = new promotions_model();
-        
+
         $number_of_pages = $this->manyPages();
 
         $data['products'] = $this->getProducts();
@@ -76,7 +76,7 @@ class home_controller {
 
 
        return ceil($num_rows / $results_per_page);
-        
+
     }
 
 }

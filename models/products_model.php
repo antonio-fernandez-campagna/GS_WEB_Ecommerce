@@ -103,7 +103,7 @@ class products_model {
         echo "$page_first_result = ($page-1)*$results_per_page";
         $number_array = [];
         for ($page = 1; $page < $results_per_page; $page ++) {
-            
+
         }
     }
 
@@ -142,11 +142,11 @@ class products_model {
     public function getNumRows() {
 
         $query = "select count(1) FROM product prod join image img on prod.ID = img.PRODUCT where SPONSORED = 'Y'";
-        
+
         $consulta = $this->db->query($query);
 
         $row = $consulta -> fetch_array();
-        
+
         return $row[0];
     }
 
@@ -164,19 +164,31 @@ class products_model {
 
         if (!empty($_SESSION["cart"])) {
 
+          echo "<pre>" .print_r($_SESSION["cart"],1). "</pre>";
+
+
             if (!empty($_SESSION['cart'][0])) {
                 if ($_SESSION['cart'][0] == "db") {
                     $id_order = $_SESSION['cart'][1];
+                    $user = $_SESSION['usuario'];
+
+                    $query = "SELECT prod.ID ,prod.NAME, prod.SHORTDESCRIPTION, ord.ID as ID_ORDER, ordIt.PRODUCT as ID_PROD, ordIt.QUANTITY, ordIt.PRICE, img.URL from `order` ord JOIN product prod JOIN orderitem ordIt JOIN user JOIN image img WHERE user.USERNAME = 'user' AND ord.ID = ordIt.`ORDER` AND img.PRODUCT = ordIt.PRODUCT AND ordIt.PRODUCT = prod.ID AND ord.PAYMENTINFO = 2 AND ord.ID = (SELECT MAX(ID) from `order`);";
+                    //die($query);
                 }
-            }
+
+                unset($_SESSION['cart'][0]);
+
+            } else {
 
             $idProducts = implode(",", array_keys($_SESSION["cart"]));
-            //die($idProducts);
+            $query = "SELECT *, prod.ID, img.URL, promo.DISCOUNTPERCENTAGE, promo.ENDDATE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE
+                          FROM product prod join image img on prod.ID = img.product
+                          left join promotion promo on promo.product = prod.id
+                           WHERE prod.ID in ({$idProducts});";
 
-
-
-            $query = "SELECT *, prod.ID, img.URL, promo.DISCOUNTPERCENTAGE, promo.ENDDATE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod join image img on prod.ID = img.product left join promotion promo on promo.product = prod.id WHERE prod.ID in ({$idProducts});";
+            }
             //die($query);
+
             $consulta = $this->db->query($query);
             while ($filas = $consulta->fetch_assoc()) {
                 $this->products[] = $filas;
@@ -185,6 +197,46 @@ class products_model {
             return $this->products;
         }
     }
+
+    public function get_shopping_cart_db() {
+
+        if (!empty($_SESSION["cart"])) {
+
+          echo "<pre>" .print_r($_SESSION["cart"],1). "</pre>";
+
+
+            if (!empty($_SESSION['cart'][0])) {
+                if ($_SESSION['cart'][0] == "db") {
+                    $id_order = $_SESSION['cart'][1];
+                    $user = $_SESSION['usuario'];
+
+                    $query = "SELECT prod.ID ,prod.NAME, prod.SHORTDESCRIPTION, ord.ID as ID_ORDER, ordIt.PRODUCT as ID_PROD, ordIt.QUANTITY, ordIt.PRICE, img.URL from `order` ord JOIN product prod JOIN orderitem ordIt JOIN user JOIN image img WHERE user.USERNAME = 'user' AND ord.ID = ordIt.`ORDER` AND img.PRODUCT = ordIt.PRODUCT AND ordIt.PRODUCT = prod.ID AND ord.PAYMENTINFO = 2 AND ord.ID = (SELECT MAX(ID) from `order`);";
+                    //die($query);
+                }
+
+                unset($_SESSION['cart'][0]);
+
+            } else {
+
+            $idProducts = implode(",", array_keys($_SESSION["cart"]));
+            $query = "SELECT *, prod.ID, img.URL, promo.DISCOUNTPERCENTAGE, promo.ENDDATE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE
+                          FROM product prod join image img on prod.ID = img.product
+                          left join promotion promo on promo.product = prod.id
+                           WHERE prod.ID in ({$idProducts});";
+
+            }
+            //die($query);
+
+            $consulta = $this->db->query($query);
+            while ($filas = $consulta->fetch_assoc()) {
+                $this->products[] = $filas;
+            }
+
+            return $this->products;
+        }
+    }
+
+
 
     public function get_product_searcher($word) {
 
@@ -233,7 +285,7 @@ class products_model {
                     VALUES ('{$this->name}','{$this->stock}', '{$this->price}', '{$this->sponsored}','{$this->shortDescription}','{$this->longDescription}',
                     '{$this->brand}','{$this->category}')";
 
-        die($sql);
+        //die($sql);
         $result = $this->db->query($sql);
         if ($this->db->error)
             return "$sql<br>{$this->db->error}";

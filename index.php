@@ -62,14 +62,15 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
         }
         if ($_GET['action'] == "logout") {
             $_SESSION['usuario'] = "invitado";
+            
         }
 
         if ($_GET['action'] == "register") {
             $register = new login_controller();
             //$register ->
         }
-        //require_once "views/templates/header_template.phtml";
-        header('location: index.php');
+          require_once "views/templates/header_template.phtml";
+        //header('location: index.php');
     }
 
     //Mostramos el default header, el cart y las categorias
@@ -96,7 +97,6 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
 
              if ($_GET['action'] == "cartToDB") {
 
-                 // insert code aitor
             }
         }
 

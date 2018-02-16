@@ -136,7 +136,7 @@ class cart_model {
         $contador ++;
 
       }
-      
+
       if ($this->db->error)
           return "$sql<br>{$this->db->error}";
       else {
