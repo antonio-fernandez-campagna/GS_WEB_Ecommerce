@@ -1,6 +1,8 @@
 <?php
 
 require_once("models/login_model.php");
+require_once("models/cart_model.php");
+
 
 class login_controller {
 
@@ -53,7 +55,12 @@ class login_controller {
 
     function checkCart() {
         if (!empty($_SESSION['cart'])) {
-            
+          if ($_SESSION['usuario'] != "invitado" &&) $_SESSION['usuario'] != {
+
+            $cart = new cart_model();
+            $data = $cart -> get_shopping_cart_db();
+            return $data;
+          }
         }
     }
 

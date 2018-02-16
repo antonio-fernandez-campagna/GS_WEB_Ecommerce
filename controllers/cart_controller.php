@@ -2,7 +2,7 @@
 
 // require_once("models/categories_model.php");
 require_once("models/products_model.php");
-require_once("models/cart_model.php");
+require_once("models/products_model.php");
 
 class cart_controller {
 
@@ -88,14 +88,8 @@ class cart_controller {
         $order = new cart_model();
         $id = $order->insertOrder();
 
-
-
         $data = $this->shoppingCart();
         //unset($_SESSION['cart']);
-        $_SESSION['cart'] = [];
-        $_SESSION['cart'][0] = "db";
-        $_SESSION['cart'][1] = $id;
-
 
         $this->insertOrderItem($id, $data);
 

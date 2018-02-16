@@ -198,34 +198,23 @@ class products_model {
         }
     }
 
-    public function get_shopping_cart_db() {
+    public function get_shopping_cart_db($algo) {
 
-        if (!empty($_SESSION["cart"])) {
+        if ($algo == 1) {
 
-          echo "<pre>" .print_r($_SESSION["cart"],1). "</pre>";
-
-
-            if (!empty($_SESSION['cart'][0])) {
-                if ($_SESSION['cart'][0] == "db") {
-                    $id_order = $_SESSION['cart'][1];
+            //if (!empty($_SESSION['cart'][0])) {
+              //  if ($_SESSION['cart'][0] == "db") {
+                    $id_order = $_SESSION['cart'][0];
                     $user = $_SESSION['usuario'];
 
                     $query = "SELECT prod.ID ,prod.NAME, prod.SHORTDESCRIPTION, ord.ID as ID_ORDER, ordIt.PRODUCT as ID_PROD, ordIt.QUANTITY, ordIt.PRICE, img.URL from `order` ord JOIN product prod JOIN orderitem ordIt JOIN user JOIN image img WHERE user.USERNAME = 'user' AND ord.ID = ordIt.`ORDER` AND img.PRODUCT = ordIt.PRODUCT AND ordIt.PRODUCT = prod.ID AND ord.PAYMENTINFO = 2 AND ord.ID = (SELECT MAX(ID) from `order`);";
                     //die($query);
-                }
+              //  }
 
-                unset($_SESSION['cart'][0]);
+                //unset($_SESSION['cart'][0]);
 
-            } else {
-
-            $idProducts = implode(",", array_keys($_SESSION["cart"]));
-            $query = "SELECT *, prod.ID, img.URL, promo.DISCOUNTPERCENTAGE, promo.ENDDATE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE
-                          FROM product prod join image img on prod.ID = img.product
-                          left join promotion promo on promo.product = prod.id
-                           WHERE prod.ID in ({$idProducts});";
-
-            }
-            //die($query);
+          //  } else {
+              //die($query);
 
             $consulta = $this->db->query($query);
             while ($filas = $consulta->fetch_assoc()) {
