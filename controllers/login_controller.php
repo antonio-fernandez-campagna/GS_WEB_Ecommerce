@@ -3,7 +3,6 @@
 require_once("models/login_model.php");
 require_once("models/cart_model.php");
 
-
 class login_controller {
 
     function login() {
@@ -54,16 +53,24 @@ class login_controller {
     }
 
     function checkCart() {
+        
+        $cart = new cart_controller();
+        $cartDb = new cart_controller();
+
         if (!empty($_SESSION['cart'])) {
-          if ($_SESSION['usuario'] != "invitado" &&) $_SESSION['usuario'] != {
-
-            $cart = new cart_model();
-            $data = $cart -> get_shopping_cart_db();
+            
+            $data = $cart->shoppingCart();
             return $data;
-          }
         }
+
+        if ($_SESSION['usuario'] != "invitado" && $_SESSION['usuario'] != "admin") {
+            
+            $id = $cartDb-> insertOrder();
+            $data = $cartDb ->shoppingCartDB($id);
+            return $data;
+        }
+        
+        
     }
-
 }
-
 ?>

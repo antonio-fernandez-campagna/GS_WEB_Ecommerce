@@ -103,7 +103,7 @@ class products_model {
         echo "$page_first_result = ($page-1)*$results_per_page";
         $number_array = [];
         for ($page = 1; $page < $results_per_page; $page ++) {
-
+            
         }
     }
 
@@ -145,7 +145,7 @@ class products_model {
 
         $consulta = $this->db->query($query);
 
-        $row = $consulta -> fetch_array();
+        $row = $consulta->fetch_array();
 
         return $row[0];
     }
@@ -160,32 +160,29 @@ class products_model {
         //echo "<pre>".print_r($fila, 1)."</pre>"; die;
     }
 
-    public function get_shopping_cart() {
+    public function get_shopping_cart($id = null) {
+
+        //var_dump($id);
 
         if (!empty($_SESSION["cart"])) {
 
-          echo "<pre>" .print_r($_SESSION["cart"],1). "</pre>";
+            //echo "<pre>" .print_r($_SESSION["cart"],1). "</pre>";
+            if ($id != null) {
 
+                $user = $_SESSION['usuario'];
 
-            if (!empty($_SESSION['cart'][0])) {
-                if ($_SESSION['cart'][0] == "db") {
-                    $id_order = $_SESSION['cart'][1];
-                    $user = $_SESSION['usuario'];
-
-                    $query = "SELECT prod.ID ,prod.NAME, prod.SHORTDESCRIPTION, ord.ID as ID_ORDER, ordIt.PRODUCT as ID_PROD, ordIt.QUANTITY, ordIt.PRICE, img.URL from `order` ord JOIN product prod JOIN orderitem ordIt JOIN user JOIN image img WHERE user.USERNAME = 'user' AND ord.ID = ordIt.`ORDER` AND img.PRODUCT = ordIt.PRODUCT AND ordIt.PRODUCT = prod.ID AND ord.PAYMENTINFO = 2 AND ord.ID = (SELECT MAX(ID) from `order`);";
-                    //die($query);
-                }
-
-                unset($_SESSION['cart'][0]);
-
+                $query = "SELECT prod.ID ,prod.NAME, prod.SHORTDESCRIPTION, ord.ID as ID_ORDER, ordIt.PRODUCT as ID_PROD, ordIt.QUANTITY, ordIt.PRICE, img.URL from `order` ord JOIN product prod JOIN orderitem ordIt JOIN user JOIN image img WHERE user.USERNAME = 'user' AND ord.ID = ordIt.`ORDER` AND img.PRODUCT = ordIt.PRODUCT AND ordIt.PRODUCT = prod.ID AND ord.PAYMENTINFO = 2 AND ord.ID = {$id};";
+                //die($query);
             } else {
 
-            $idProducts = implode(",", array_keys($_SESSION["cart"]));
-            $query = "SELECT *, prod.ID, img.URL, promo.DISCOUNTPERCENTAGE, promo.ENDDATE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE
+
+                $idProducts = implode(",", array_keys($_SESSION["cart"]));
+                echo "<pre>" .print_r($idProducts,1). "</pre>";
+
+                $query = "SELECT *, prod.ID, img.URL, promo.DISCOUNTPERCENTAGE, promo.ENDDATE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE
                           FROM product prod join image img on prod.ID = img.product
                           left join promotion promo on promo.product = prod.id
                            WHERE prod.ID in ({$idProducts});";
-
             }
             //die($query);
 
@@ -203,18 +200,16 @@ class products_model {
         if ($algo == 1) {
 
             //if (!empty($_SESSION['cart'][0])) {
-              //  if ($_SESSION['cart'][0] == "db") {
-                    $id_order = $_SESSION['cart'][0];
-                    $user = $_SESSION['usuario'];
+            //  if ($_SESSION['cart'][0] == "db") {
+            $id_order = $_SESSION['cart'][0];
+            $user = $_SESSION['usuario'];
 
-                    $query = "SELECT prod.ID ,prod.NAME, prod.SHORTDESCRIPTION, ord.ID as ID_ORDER, ordIt.PRODUCT as ID_PROD, ordIt.QUANTITY, ordIt.PRICE, img.URL from `order` ord JOIN product prod JOIN orderitem ordIt JOIN user JOIN image img WHERE user.USERNAME = 'user' AND ord.ID = ordIt.`ORDER` AND img.PRODUCT = ordIt.PRODUCT AND ordIt.PRODUCT = prod.ID AND ord.PAYMENTINFO = 2 AND ord.ID = (SELECT MAX(ID) from `order`);";
-                    //die($query);
-              //  }
-
-                //unset($_SESSION['cart'][0]);
-
-          //  } else {
-              //die($query);
+            $query = "SELECT prod.ID ,prod.NAME, prod.SHORTDESCRIPTION, ord.ID as ID_ORDER, ordIt.PRODUCT as ID_PROD, ordIt.QUANTITY, ordIt.PRICE, img.URL from `order` ord JOIN product prod JOIN orderitem ordIt JOIN user JOIN image img WHERE user.USERNAME = 'user' AND ord.ID = ordIt.`ORDER` AND img.PRODUCT = ordIt.PRODUCT AND ordIt.PRODUCT = prod.ID AND ord.PAYMENTINFO = 2 AND ord.ID = (SELECT MAX(ID) from `order`);";
+            //die($query);
+            //  }
+            //unset($_SESSION['cart'][0]);
+            //  } else {
+            //die($query);
 
             $consulta = $this->db->query($query);
             while ($filas = $consulta->fetch_assoc()) {
@@ -224,8 +219,6 @@ class products_model {
             return $this->products;
         }
     }
-
-
 
     public function get_product_searcher($word) {
 

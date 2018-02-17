@@ -8,8 +8,12 @@ class home_controller {
 
     function view() {
         $promo = new promotions_model();
+        $cart = new login_controller();
 
         $number_of_pages = $this->manyPages();
+
+        $data['cart'] = $cart->checkCart();
+
 
         $data['products'] = $this->getProducts();
 
@@ -75,8 +79,7 @@ class home_controller {
         $results_per_page = 3;
 
 
-       return ceil($num_rows / $results_per_page);
-
+        return ceil($num_rows / $results_per_page);
     }
 
 }

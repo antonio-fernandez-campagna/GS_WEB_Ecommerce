@@ -29,10 +29,10 @@ if (empty($_SESSION['usuario'])) {
 //echo "<pre>" .print_r($_SESSION['usuario'],1). "</pre>";die;
 
 $homeController = new home_controller();
-$cart = new cart_controller();
+//$cart = new cart_controller();
 $category = new categories_controller();
 
-$data['cart'] = $cart->shoppingCart();
+//$data['cart'] = $cart->shoppingCart();
 $data['categories'] = $category->getCategories();
 //$homeController->view();
 if (isset($_GET['controller']) && isset($_GET['action'])) {
@@ -80,6 +80,8 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
     if ($_SESSION['usuario'] != "admin") {
 
         if ($_GET['controller'] == "cart") {
+            
+            $cart = new cart_controller();
 
             if ($_GET['action'] == "addToCart") {
                 $id = $_POST["id"];
@@ -181,8 +183,8 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
 
     //Mostramos el default header
     $category = new categories_controller();
-    $cart = new cart_controller();
-    $data['cart'] = $cart->shoppingCart();
+    //$cart = new cart_controller();
+    //$data['cart'] = $cart->shoppingCart();
     $data['categories'] = $category->getCategories();
     require_once "views/templates/header_template.phtml";
 
