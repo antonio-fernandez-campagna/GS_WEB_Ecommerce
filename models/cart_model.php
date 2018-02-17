@@ -3,22 +3,11 @@
 class cart_model {
 
     private $db;
-    private $orderItem;
-    private $order;
-    private $orderline;
-    private $orderItemOrder;
-    private $product;
-    private $quantity;
-    private $price;
-    private $paymentInfo;
-    private $status;
-    private $shippingAddress;
-    private $user;
+    private $orderId;
 
     function getOrderItemOrder() {
         return $this->orderItemOrder;
     }
-
 
     function getPaymentInfo() {
         return $this->paymentInfo;
@@ -108,47 +97,44 @@ class cart_model {
         $this->db = Conectar::conexion();
     }
 
-    public function insertOrderItem($id ,$data) {
+    public function insertOrderItem($id, $data) {
 
-      $contador = 1;
+        $contador = 1;
 
-      foreach ($data as $item) {
+        foreach ($data as $item) {
 
-        //echo $contador;die;
-        //var_dump($data);
+            //echo $contador;die;
+            //var_dump($data);
 
-        if (empty($item['FINALPRICE'])) {
+            if (empty($item['FINALPRICE'])) {
 
-          $price = $item['PRICE'];
+                $price = $item['PRICE'];
+            } else {
 
-        } else {
+                $price = $item['FINALPRICE'];
+            }
 
-          $price = $item['FINALPRICE'];
-        }
-
-        $sql = "INSERT INTO orderitem (ORDERLINE, `ORDER`, PRODUCT, QUANTITY, PRICE)
+            $sql = "INSERT INTO orderitem (ORDERLINE, `ORDER`, PRODUCT, QUANTITY, PRICE)
                     VALUES ('{$contador}','{$id}','{$item['ID']}', '{$item['nUnits']}', '{$price}')";
 
-        //die($sql);
-        $result = $this->db->query($sql);
-        //var_dump($sql);
-        //var_dump($result);
-        $contador ++;
+            //die($sql);
+            $result = $this->db->query($sql);
+            //var_dump($sql);
+            //var_dump($result);
+            $contador ++;
+        }
 
-      }
-
-      if ($this->db->error)
-          return "$sql<br>{$this->db->error}";
-      else {
-        $result_id = $this->db->insert_id;
-      }
-
+        if ($this->db->error)
+            return "$sql<br>{$this->db->error}";
+        else {
+            $result_id = $this->db->insert_id;
+        }
     }
 
     public function insertOrder() {
 
-      //$user = $_SESSION['usuario'];
-      //die($user);
+        //$user = $_SESSION['usuario'];
+        //die($user);
 
         $sql = "INSERT INTO `order` (SHIPPINGADDRESS, USER)
                     VALUES ('dirección ___', '{$_SESSION['usuario']}')";
@@ -158,6 +144,74 @@ class cart_model {
             return "$sql<br>{$this->db->error}";
         else {
             return $this->db->insert_id;
+        }
+    }
+
+    public function deleteOrderItem($id) {
+
+        //$user = $_SESSION['usuario'];
+        //die($user);
+
+        $sql = "DELETE from orderitem where PRODUCT = {$id}";
+
+        $result = $this->db->query($sql);
+
+        if ($this->db->error)
+            return "$sql<br>{$this->db->error}";
+        else {
+            return false;
+        }
+    }
+
+    public function checkLastPending() {
+
+        //$user = $_SESSION['usuario'];
+        //die($user);
+
+        $sql = "SELECT max(id) from `order` where PAYMENTINFO = 2 and  USER = '{$_SESSION['usuario']}'";
+
+        $consulta = $this->db->query($sql);
+        $id = $consulta->fetch_assoc();
+
+
+        //echo "<pre> aa" . print_r($id, 1) . "</pre>";
+        return $id;
+    }
+
+    public function insertProduct($item, $id_pending) {
+
+        $sql = "SELECT max(ORDERLINE) FROM `orderitem` join `order` on user = '{$_SESSION['usuario']}'";
+
+        $consulta = $this->db->query($sql);
+        $maxOrderLine = $consulta->fetch_assoc();
+        $orderLine = $maxOrderLine['max(ORDERLINE)'] +1;
+        
+
+        $sql2 = "SELECT prod.PRICE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod LEFT join promotion promo on prod.ID = promo.PRODUCT where prod.ID = {$item[0]}";
+
+        $consulta = $this->db->query($sql2);
+        $price = $consulta->fetch_assoc();
+
+
+        if (empty($price['FINALPRICE'])) {
+
+            $price = $price['PRICE'];
+        } else {
+
+            $price = $price['FINALPRICE'];
+        }
+
+        
+        
+        $sql3 = "INSERT into orderitem (ORDERLINE, `ORDER`, PRODUCT, QUANTITY, PRICE) VALUES "
+                . "({$orderLine}, {$id_pending['max(id)']}, {$item[0]}, {$item[1]}, {$price} )";
+
+        $consulta = $this->db->query($sql3);
+
+        if ($this->db->error)
+            return "$consulta<br>{$this->db->error}";
+        else {
+            return false;
         }
     }
 

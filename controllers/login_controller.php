@@ -48,29 +48,41 @@ class login_controller {
          });
          </script>";
         return $obj;
-        var_dump($obj);
+        //var_dump($obj);
         //  die;
     }
 
     function checkCart() {
-        
+
         $cart = new cart_controller();
         $cartDb = new cart_controller();
 
         if (!empty($_SESSION['cart'])) {
-            
-            $data = $cart->shoppingCart();
-            return $data;
+            if ($_SESSION['usuario'] == "invitado") {
+
+                $data = $cart->shoppingCart();
+                return $data;
+            } else {
+                $_SESSION['$id'] = $cartDb->insertOrder();
+
+                $data = $cartDb->shoppingCartDB();
+                //echo "<pre>" . print_r($data, 1) . "</pre>";
+
+
+                return $data;
+            }
         }
 
         if ($_SESSION['usuario'] != "invitado" && $_SESSION['usuario'] != "admin") {
-            
-            $id = $cartDb-> insertOrder();
-            $data = $cartDb ->shoppingCartDB($id);
+
+            $cart = new cart_controller();
+            $data = $cart->shoppingCartDB();
+            //echo "<pre>" . print_r($data, 1) . "</pre>";
+
             return $data;
         }
-        
-        
     }
+
 }
+
 ?>

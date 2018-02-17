@@ -48,28 +48,24 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
             if (!$loged) {
 
                 $loginFailed = $login->loginFailed();
+            }
+            if (!empty($data['cart'])) {
 
+                $login->checkCart();
             } else {
-              if (!empty($data['cart'])) {
-
-                $cataToDb = new cart_controller();
-                $cataToDb -> insertOrder();
-
-              } else {
-
-              }
+                
             }
         }
         if ($_GET['action'] == "logout") {
             $_SESSION['usuario'] = "invitado";
-            
+            $_SESSION['cart'] = [];
         }
 
         if ($_GET['action'] == "register") {
             $register = new login_controller();
             //$register ->
         }
-          require_once "views/templates/header_template.phtml";
+        // require_once "views/templates/header_template.phtml";
         //header('location: index.php');
     }
 
@@ -80,14 +76,14 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
     if ($_SESSION['usuario'] != "admin") {
 
         if ($_GET['controller'] == "cart") {
-            
+
             $cart = new cart_controller();
 
             if ($_GET['action'] == "addToCart") {
                 $id = $_POST["id"];
                 $cart->addItemToCart($id);
                 // muestro la pantalla principal para que cargue por primera vez el carrito (modal)
-                header('location: index.php');
+                //header('location: index.php');
             }
 
             if ($_GET['action'] == "deleteFromCart") {
@@ -97,8 +93,14 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
                 $cart->deleteItemFromCart($id);
             }
 
-             if ($_GET['action'] == "cartToDB") {
+            if ($_GET['action'] == "deleteFromDB") {
+ 
+                $cart->deleteOrderItem();
+            }
+            
 
+            if ($_GET['action'] == "cartToDB") {
+                
             }
         }
 
@@ -116,69 +118,61 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
             $controller->view($id);
         }
 
-        if ($_GET['action'] == "profileProduct"){
-          $id = $_GET['id'];
-          $controller = new products_controller();
-          $controller->profileProduct($id);
+        if ($_GET['action'] == "profileProduct") {
+            $id = $_GET['id'];
+            $controller = new products_controller();
+            $controller->profileProduct($id);
         }
 
-        if ($_GET['action'] == "search"){
-          ob_end_clean();
-          $word = $_POST['buscador'];
-          $controller = new products_controller();
-          $controller->searchProduct($word);
-          //$controller->view();
+        if ($_GET['action'] == "search") {
+            ob_end_clean();
+            $word = $_POST['buscador'];
+            $controller = new products_controller();
+            $controller->searchProduct($word);
+            //$controller->view();
         }
 
         if ($_GET['action'] == "add") {
-          $controller = new products_controller();
-          $controller->productAdd_view();
+            $controller = new products_controller();
+            $controller->productAdd_view();
         }
 
         if ($_GET['action'] == "insert") {
-          $controller = new products_controller();
-          $controller->insertProduct();
-          require_once "views/templates/header_template.phtml";
-          $homeController->view();
-
+            $controller = new products_controller();
+            $controller->insertProduct();
+            require_once "views/templates/header_template.phtml";
+            $homeController->view();
         }
-
-
     }
 
     if ($_GET['controller'] == "categories") {
 
         if ($_GET['action'] == "insert") {
-        $category = $_POST['parentcategory'];
-        $controller = new categories_controller();
-        $controller->insert_category();
-
-    }
+            $category = $_POST['parentcategory'];
+            $controller = new categories_controller();
+            $controller->insert_category();
+        }
         if ($_GET['action'] == "add") {
-          $controller = new categories_controller();
-          $controller->categoryAdd_view();
+            $controller = new categories_controller();
+            $controller->categoryAdd_view();
+        }
+    }
+
+    if ($_GET['controller'] == "promotions") {
+
+        if ($_GET['action'] == "add") {
+            //$category = $_POST['parentcategory'];
+            $controller = new promotion_controller();
+            $controller->promotionAdd_view();
         }
 
-
-      }
-
-      if ($_GET['controller'] == "promotions") {
-
-          if ($_GET['action'] == "add") {
-          //$category = $_POST['parentcategory'];
-          $controller = new promotion_controller();
-          $controller->promotionAdd_view();
+        if ($_GET['action'] == "insert") {
+            $controller = new promotion_controller();
+            $controller->insert_promotion();
+            require_once "views/templates/header_template.phtml";
+            $homeController->view();
         }
-
-          if ($_GET['action'] == "insert") {
-          $controller = new promotion_controller();
-          $controller->insert_promotion();
-          require_once "views/templates/header_template.phtml";
-          $homeController->view();
-        }
-
-      }
-
+    }
 } else {
 
     //Mostramos el default header
@@ -186,7 +180,7 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
     //$cart = new cart_controller();
     //$data['cart'] = $cart->shoppingCart();
     $data['categories'] = $category->getCategories();
-    require_once "views/templates/header_template.phtml";
+    //require_once "views/templates/header_template.phtml";
 
 
     $homeController = new home_controller();
