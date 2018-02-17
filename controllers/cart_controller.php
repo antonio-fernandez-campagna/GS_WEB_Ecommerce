@@ -2,7 +2,12 @@
 
 // require_once("models/categories_model.php");
 require_once("models/products_model.php");
-require_once("models/products_model.php");
+require_once("models/categories_model.php");
+require_once("models/promotions_model.php");
+require_once("controllers/categories_controller.php");
+require_once("controllers/login_controller.php");
+
+
 
 class cart_controller {
 
@@ -32,6 +37,20 @@ class cart_controller {
         }
     }
 
+    public function finalCart_view() {
+
+        $cart = new login_controller();
+        $category = new categories_controller();
+
+        $data['cart'] = $cart->checkCart();
+        $data['categories'] = $category->getCategories();
+
+        echo "<pre>" .print_r($data['cart'],1). "</pre>";
+
+
+        include("views/finalCart_view.phtml");
+    }
+
     public function shoppingCartDB() {
 
         $product = new products_model();
@@ -41,6 +60,9 @@ class cart_controller {
         //echo $id;
 
         $data = $product->get_shopping_cart_db();
+
+
+
         foreach ($data as $key => $producto) {
             $bd = "yes";
             $data[$key]["db"] = $bd;
@@ -62,7 +84,7 @@ class cart_controller {
 
             if (empty($id_pending['max(id)'])) {
 
-               // insert order 
+                // insert order 
             } else {
 
                 $addItem->insertProduct($item, $id_pending);
@@ -126,6 +148,8 @@ class cart_controller {
         $id = $orderId->checkLastPending();
         return $id;
     }
+
+
 
 }
 

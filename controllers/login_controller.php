@@ -19,6 +19,7 @@ class login_controller {
         if ($ok) {
             $_SESSION['usuario'] = $username;
 
+
             return true;
         } else {
             return false;

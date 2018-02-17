@@ -67,6 +67,7 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
         }
         // require_once "views/templates/header_template.phtml";
         //header('location: index.php');
+        $homeController->view();
     }
 
     //Mostramos el default header, el cart y las categorias
@@ -84,6 +85,7 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
                 $cart->addItemToCart($id);
                 // muestro la pantalla principal para que cargue por primera vez el carrito (modal)
                 //header('location: index.php');
+                $homeController->view();
             }
 
             if ($_GET['action'] == "deleteFromCart") {
@@ -91,20 +93,25 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
                 //echo "<pre>" .print_r($id,1). "</pre>";
                 //die();
                 $cart->deleteItemFromCart($id);
+                $homeController->view();
             }
 
             if ($_GET['action'] == "deleteFromDB") {
- 
+
                 $cart->deleteOrderItem();
+                $homeController->view();
             }
-            
+
+            if ($_GET['action'] == "finalCart") {
+                ob_end_clean();
+                $cart->finalCart_view();
+            }
+
 
             if ($_GET['action'] == "cartToDB") {
                 
             }
         }
-
-        $homeController->view();
     }
 
 
