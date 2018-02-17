@@ -167,9 +167,9 @@ class products_model {
             $idProducts = implode(",", array_keys($_SESSION["cart"]));
 
             $query = "SELECT *, prod.ID, img.URL, promo.DISCOUNTPERCENTAGE, promo.ENDDATE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE
-                          FROM product prod join image img on prod.ID = img.product
-                          left join promotion promo on promo.product = prod.id
-                           WHERE prod.ID in join promot({$idProducts});";
+                            FROM product prod join image img on prod.ID = img.product
+                            left join promotion promo on promo.product = prod.id
+                             WHERE prod.ID in ({$idProducts});";
 
 
             echo "holaa1 <pre>" . print_r($query, 1) . "</pre>";

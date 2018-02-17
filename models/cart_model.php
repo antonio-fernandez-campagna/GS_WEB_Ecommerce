@@ -184,8 +184,10 @@ class cart_model {
 
         $consulta = $this->db->query($sql);
         $maxOrderLine = $consulta->fetch_assoc();
-        $orderLine = $maxOrderLine['max(ORDERLINE)'] +1;
-        
+        $orderLine = $maxOrderLine['max(ORDERLINE)'] + 1;
+
+       // echo "<pre>" .print_r($id_pending,1). "</pre>";
+
 
         $sql2 = "SELECT prod.PRICE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod LEFT join promotion promo on prod.ID = promo.PRODUCT where prod.ID = {$item[0]}";
 
@@ -201,12 +203,22 @@ class cart_model {
             $price = $price['FINALPRICE'];
         }
 
-        
-        
-        $sql3 = "INSERT into orderitem (ORDERLINE, `ORDER`, PRODUCT, QUANTITY, PRICE) VALUES "
-                . "({$orderLine}, {$id_pending['max(id)']}, {$item[0]}, {$item[1]}, {$price} )";
+        $sql3 = "SELECT product, QUANTITY FROM `orderitem` where PRODUCT = {$item[0]} and `order` = {$id_pending['max(id)']}";
 
+        //die($sql3);
         $consulta = $this->db->query($sql3);
+        $prodId = $consulta->fetch_assoc();
+
+        //echo "<pre>" .print_r($orderLine,1). "</pre>";
+        if (empty($prodId)) {
+            $sql4 = "INSERT into orderitem (ORDERLINE, `ORDER`, PRODUCT, QUANTITY, PRICE) VALUES "
+                    . "({$orderLine}, {$id_pending['max(id)']}, {$item[0]}, {$item[1]}, {$price} )";
+        } else {
+            $sql4 = "UPDATE orderitem SET QUANTITY = ({$prodId['QUANTITY']} + {$item[1]}) WHERE PRODUCT = {$item[0]} ";
+        }
+
+
+        $consulta = $this->db->query($sql4);
 
         if ($this->db->error)
             return "$consulta<br>{$this->db->error}";

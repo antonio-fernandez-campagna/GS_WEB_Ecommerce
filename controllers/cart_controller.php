@@ -41,7 +41,6 @@ class cart_controller {
         //echo $id;
 
         $data = $product->get_shopping_cart_db();
-
         foreach ($data as $key => $producto) {
             $bd = "yes";
             $data[$key]["db"] = $bd;
