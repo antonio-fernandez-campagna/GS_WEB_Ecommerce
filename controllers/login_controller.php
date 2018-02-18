@@ -2,6 +2,8 @@
 
 require_once("models/login_model.php");
 require_once("models/cart_model.php");
+require_once("controllers/home_controller.php");
+
 
 class login_controller {
 
@@ -28,6 +30,9 @@ class login_controller {
                 $cart->reject_order($id);
             }
 
+            $home = new home_controller();
+            $home -> view();
+            
             return true;
         } else {
             return false;

@@ -6,6 +6,8 @@ require_once("models/categories_model.php");
 require_once("models/promotions_model.php");
 require_once("controllers/categories_controller.php");
 require_once("controllers/login_controller.php");
+require_once("controllers/home_controller.php");
+
 
 
 class cart_controller {
@@ -68,7 +70,7 @@ class cart_controller {
     public function addItemToCart($id, $nUnits = 1) {
 
         $addItem = new cart_model();
-
+        $home = new home_controller();
         
         $item = array($id, $nUnits);
 
@@ -101,7 +103,8 @@ class cart_controller {
                 echo "<pre>" . print_r( $_SESSION['cart'], 1) . "</pre>";
 
         
-        require_once 'views/templates/header_template.phtml';
+       $home -> view();
+        
     }
 
     public function deleteItemFromCart($id) {
