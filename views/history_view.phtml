@@ -1,0 +1,101 @@
+<?php include('views/templates/header_template.phtml') ?>
+
+<body>
+
+    <div class="container text-center bg-light">
+
+        <button type="submit" name="id" disabled class="btn btn-danger btn-block btn-lg mt-2 mb-6">historial de compras</button>
+
+        <table id="cart" class="table table-hover table-condensed">
+            <?php if (!empty($data)) { ?>
+
+                <thead>
+                    <tr>
+                        <th style="width:50%">Product</th>
+                        <th style="width:10%">Price</th>
+                        <th style="width:8%">Quantity</th>
+                        <th style="width:10%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+
+
+
+
+                    <?php
+                    foreach ($data as $item) { ?>
+
+                    <fieldset >    	
+                        <legend>Fieldset Title</legend>
+                        
+                        
+                        <div class="row">
+                            <div class="col-2">
+                                
+                                
+                            </div>
+                            
+                            
+                        </div>
+
+                        <tr>
+                            <td data-th="Product">
+                                <div class="row">
+                                    <div class="col-sm-4 hidden-xs"><img src="<?php echo $item['URL'] ?>"  style="width: 30%" class="img-responsive"/></div>
+                                    <div class="col-sm-6">
+                                        <h4 class="nomargin"><?php echo $item['NAME'] ?></h4>
+                                    </div>
+                                </div>
+                            </td>
+                            <td data-th="Price"> <?php
+                                if (!empty($item['FINALPRICE'])) {
+                                    echo $item['FINALPRICE'] . "€";
+                                } else {
+                                    echo $item['PRICE'] . "€";
+                                }
+                                ?>
+                            </td>
+                            <td data-th="Quantity">
+                                <div class="input-group">
+
+
+
+                                    <input type="text" class="form-control input-number bg-white" disabled style="width:20px" value="<?php echo $item['nUnits'] ?>">
+
+
+                                </div>
+
+                            </td>
+
+
+                        </tr>
+                    </fieldset>	
+
+
+                <?php }
+                ?>
+
+                </tbody>
+                <tfoot>
+
+                    <tr>
+                        <td><a href="?index.php" class="btn btn-warning"><i class="fa fa-angle-left"></i>Volver</a></td>
+                        <td colspan="2" class="hidden-xs"></td>
+                    </tr>
+                </tfoot>
+            <?php } else { ?>
+
+                <h4 class="nomargin">No has comprado nada</h4>
+
+            <?php } ?>
+
+        </table>
+
+
+    </div>
+    <!-- cierro div container -->
+
+</body>
+
+</html>

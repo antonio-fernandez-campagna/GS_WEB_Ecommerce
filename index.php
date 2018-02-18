@@ -137,6 +137,11 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
                 $cart->buyComplete();
                 $cart->purchased_view();
             }
+            
+             if ($_GET['action'] == "history") {
+                $cart->historyCart();
+                
+            }
         }
     }
 

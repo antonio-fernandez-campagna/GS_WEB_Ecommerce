@@ -22,11 +22,13 @@ $(document).ready(function () {
             $priceMax = $("#price-max").val();
 
 
-            $('.output').val($priceMin + " €");
+            $('.price-min-output').text($priceMin + " €");
+            $('.price-max-output').text($priceMax + " €");
+
 
             //console.log("Precio: " + $prodPrice + " PrecioMin: " + $priceMin + " PrecioMax: " + $priceMax);
             //alert($prodPrice);
-            console.log("lenght 2" + $idBrands.length);
+            //console.log("lenght 2" + $idBrands.length);
 
             if (($prodPrice < $priceMin || $prodPrice > $priceMax)) {
                 $(this).parent().hide();

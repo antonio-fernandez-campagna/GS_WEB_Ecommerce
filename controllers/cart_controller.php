@@ -29,7 +29,6 @@ class cart_controller {
 
 
             return $data;
-  
         }
     }
 
@@ -130,6 +129,14 @@ class cart_controller {
         }
 
         $this->finalCart_view();
+    }
+
+    public function historyCart() {
+
+        $cart = new cart_model();
+        $data = $cart->get_history_cart();
+
+        include 'views/history_view.phtml';
     }
 
     public function deleteItemFromCart($id) {

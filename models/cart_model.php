@@ -329,6 +329,18 @@ class cart_model {
             return false;
         }
     }
+    
+       public function get_history_cart() {
+
+        $sql = "SELECT DISTINCT prod.NAME, prod.SHORTDESCRIPTION, orderitem.QUANTITY as nUnits, orderitem.PRICE, ord.DATE, img.URL from product PROD JOIN orderitem on prod.ID = orderitem.PRODUCT JOIN `order` ord on orderitem.`ORDER` = ord.ID JOIN user on ord.USER = '{$_SESSION['usuario']}' JOIN image img on prod.ID = img.PRODUCT WHERE ord.PAYMENTINFO = 1 ORDER BY ord.DATE ASC";
+
+        $consulta = $this->db->query($sql);
+        while ($filas = $consulta->fetch_assoc()) {
+            $this->products[] = $filas;
+        }
+
+        return $this->products;
+    }
 
 }
 

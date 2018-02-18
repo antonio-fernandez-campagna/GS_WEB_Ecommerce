@@ -1,4 +1,4 @@
-<?php // include 'views/templates/header_template.phtml'  ?>
+<?php // include 'views/templates/header_template.phtml'      ?>
 
 <body>
 
@@ -47,13 +47,14 @@
 
                                 <div data-role="rangeslider">
                                     <label for="price-min">Precio mínimo:</label>
-                                     <output for="range" class="output"></output>
+                                        <output class="price-min-output">0 €</output>
                                     <input type="range"  id="price-min" name="price-min" id="price-min" class="filterProduct range-price" value="0" min="0" max="1000">
-                                    <label for="price-max">Price máximo:</label>
+                                    <label for="price-max">precio máximo:</label>
+                                        <output class="price-max-output">3000 €</output>
                                     <input type="range" id="price-max"  name="price-max" id="price-max" class="filterProduct range-price" value="1000" min="0" max="1000">
                                 </div>
 
-                             
+
                             </div>
                         </div>
                     </div>
@@ -70,34 +71,56 @@
                 <?php foreach ($data['products'] as $product) { ?>
                     <div class="col-sm- col-md-4 col-lg-4 mt-4 ">
 
-                        <div class="card" id="<?php echo $product['BRAND']; ?>">
+                        <div class="card">
                             <a data-toggle="modal" href="#modal<?php echo $product['ID']; ?>"><img class="card-img-top" src="<?php echo $product['URL'];?>"></a>
+
+
                             <div class="card-block">
+
                                 <h4 class="card-title mt-3"><?php echo $product['SHORTDESCRIPTION'];?></h4>
-                                <div class="meta">
-                                    <a></a>
+                                  <div class="card-text">
+                                    <?php
+                                    if (!empty($product['FINALPRICE'])) {
+                                      echo $product['FINALPRICE']."€";
+                                    } else {
+                                      echo $product['PRICE']."€";
+                                    }
+                                    ?>
                                 </div>
-                                <div class="card-text">
-                                    <?php echo $product['PRICE'];?>
-                                </div>
+
+
+
+                                 <?php if ($product['STOCK'] == 0) { ?>
+                                        <small><span style="color:red"> <?php echo "No quedan productos"; ?></span></small>
+                                    <?php } elseif ($product['STOCK'] < 5) {
+                                        ?>
+                                       <small><span style="color:orange"> <?php echo "Quedan pocos en stock"; ?></span></small>
+                                    <?php } ?>
+
+
                             </div>
 
                             <?php if ($_SESSION['usuario'] != 'admin') { ?>
 
                             <div class="card-footer">
-                                <small> <?php if ($product['STOCK'] == 0) { ?>
-                                        <span style="color:red"> <?php echo "No quedan productos"; ?></span>
-                                    <?php } elseif ($product['STOCK'] < 5) {
-                                        ?>
-                                        <span style="color:orange"> <?php echo "Quedan pocos en stock"; ?></span>
-                                    <?php } ?>
 
-                                </small>
+
+
                                 <form action="?controller=cart&action=addToCart" method="POST">
 
-                                <button name="id" value="<?php echo $product['ID']?>" class="btn btn-danger float-right btn-sm ">Comprar</button>
+                                  <?php
+                                  if (!empty($product['DISCOUNTPERCENTAGE'])) { ?>
+                                    <div class="badge badge-warning">
+                                      <?php
+                                    echo $product['DISCOUNTPERCENTAGE']. "%" ;
+                                   ?> </div>
+                                 <?php } ?>
 
+                                   
+                                  <button name="id" value="<?php echo $product['ID']?>" class="btn btn-danger float-right btn-sm ">Comprar</button>
 
+                                  
+                                  
                                 </form>
 
                             </div>
@@ -162,8 +185,8 @@
         </div>
 
         <?php
-             //foreach ($page = 0; $page <= $number_of_pages; $page++) {
-            //echo '<a href="index.php?page= ' . $page . ' ">' . $page . '</a>';
+        //foreach ($page = 0; $page <= $number_of_pages; $page++) {
+        //echo '<a href="index.php?page= ' . $page . ' ">' . $page . '</a>';
         //}
         ?>
     </div>
