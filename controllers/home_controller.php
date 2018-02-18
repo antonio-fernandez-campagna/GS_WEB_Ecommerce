@@ -13,7 +13,8 @@ class home_controller {
         $number_of_pages = $this->manyPages();
 
         $data['cart'] = $cart->checkCart();
-        echo "<pre>" . print_r($data['cart'], 1) . "</pre>";
+        //echo "<pre> view" . print_r($data['cart'], 1) . "</pre>";
+
 
 
         $data['products'] = $this->getProducts();
@@ -21,7 +22,7 @@ class home_controller {
         $data['categories'] = $this->getCategories();
 
         $data['promo'] = $promo->get_promos();
-    require_once "views/templates/header_template.phtml";
+        require_once "views/templates/header_template.phtml";
 
         require_once("views/home_view.phtml");
     }

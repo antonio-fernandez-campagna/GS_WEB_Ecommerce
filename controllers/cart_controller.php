@@ -8,8 +8,6 @@ require_once("controllers/categories_controller.php");
 require_once("controllers/login_controller.php");
 require_once("controllers/home_controller.php");
 
-
-
 class cart_controller {
 
     public function shoppingCart() {
@@ -62,7 +60,7 @@ class cart_controller {
             $bd = "yes";
             $data[$key]["db"] = $bd;
         }
-        //echo "<pre>" . print_r($data, 1) . "</pre>";
+        //echo "<pre> cart" . print_r($data, 1) . "</pre>";
 
         return $data;
     }
@@ -71,7 +69,7 @@ class cart_controller {
 
         $addItem = new cart_model();
         $home = new home_controller();
-        
+
         $item = array($id, $nUnits);
 
         $id_pending = $this->checkLastPending();
@@ -81,8 +79,10 @@ class cart_controller {
             if (empty($id_pending['max(id)'])) {
 
                 // insert order 
-              
+
                 $id_order = $addItem->insertOrder();
+                //echo "<pre> aaaaaaaaaaaa " . print_r($id_order, 1) . "</pre>";
+
                 $addItem->insertOrderItemNoLoged($id_order, $nUnits, $id);
             } else {
 
@@ -99,12 +99,11 @@ class cart_controller {
                 $_SESSION['cart'][$id] = $nUnits;
             }
         }
-        
-                echo "<pre>" . print_r( $_SESSION['cart'], 1) . "</pre>";
 
-        
-       $home -> view();
-        
+        //echo "<pre>" . print_r($_SESSION['cart'], 1) . "</pre>";
+
+
+        header('location: index.php');
     }
 
     public function deleteItemFromCart($id) {
@@ -115,7 +114,6 @@ class cart_controller {
             header("location:index.php");
         }
     }
-
 
     public function insertOrder() {
         $order = new cart_model();
@@ -161,7 +159,16 @@ class cart_controller {
         $home = new home_controller();
 
         $cart->buyComplete();
-        $home->view();
+        //$home->view();
+    }
+
+    public function purchased_view() {
+        $category = new categories_controller();
+
+        $data['category'] = $category->getCategories();
+
+
+        include('views/purchased_view.phtml');
     }
 
 }

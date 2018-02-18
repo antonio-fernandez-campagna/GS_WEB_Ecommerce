@@ -4,6 +4,9 @@ require_once("models/login_model.php");
 require_once("models/cart_model.php");
 require_once("controllers/home_controller.php");
 
+//require_once("controllers/cart_controller.php");
+
+
 
 class login_controller {
 
@@ -31,8 +34,8 @@ class login_controller {
             }
 
             $home = new home_controller();
-            $home -> view();
-            
+            $home->view();
+
             return true;
         } else {
             return false;
@@ -69,7 +72,7 @@ class login_controller {
     function checkCart() {
 
         $cart = new cart_controller();
-        $cartDb = new cart_controller();
+        $cartMod = new cart_model();
 
         if (!empty($_SESSION['cart'])) {
             if ($_SESSION['usuario'] == "invitado") {
@@ -79,9 +82,9 @@ class login_controller {
 
                 return $data;
             } else {
-                $_SESSION['$id'] = $cartDb->insertOrder();
+                $_SESSION['$id'] = $cart->insertOrder();
 
-                $data = $cartDb->shoppingCartDB();
+                $data = $cart->shoppingCartDB();
                 //echo "<pre>" . print_r($data, 1) . "</pre>";
 
 
@@ -90,11 +93,17 @@ class login_controller {
         }
 
         if ($_SESSION['usuario'] != "invitado" && $_SESSION['usuario'] != "admin") {
-            $cart = new cart_controller();
-            $data = $cart->shoppingCartDB();
-            //echo "<pre>" . print_r($data, 1) . "</pre>";
 
-            return $data;
+            $ordID = $cartMod->checkLastPending();
+
+            if (!empty($ordID['max(id)'])) {
+
+                $cart = new cart_controller();
+                $data = $cart->shoppingCartDB();
+                //echo "<pre>" . print_r($data, 1) . "</pre>";
+
+                return $data;
+            }
         }
     }
 

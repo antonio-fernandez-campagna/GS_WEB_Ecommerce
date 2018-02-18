@@ -245,9 +245,14 @@ class cart_model {
 
     public function insertOrderItemNoLoged($id_order, $nUnits, $id) {
 
-        $sql2 = "SELECT prod.PRICE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod LEFT join promotion promo on prod.ID = promo.PRODUCT where prod.ID = {$id}";
+        // echo "<pre>" .print_r($id,1). "</pre>";
 
-        $consulta = $this->db->query($sql2);
+
+        $sql = "SELECT prod.PRICE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod LEFT join promotion promo on prod.ID = promo.PRODUCT where prod.ID = {$id}";
+
+
+
+        $consulta = $this->db->query($sql);
         $price = $consulta->fetch_assoc();
 
         if (empty($price['FINALPRICE'])) {
@@ -258,18 +263,17 @@ class cart_model {
             $price = $price['FINALPRICE'];
         }
 
-        $sql = "INSERT INTO orderitem (ORDERLINE, `ORDER`, PRODUCT, QUANTITY, PRICE) VALUES (1,{$id_order},{$id}, {$nUnits}, {$price})";
-                    
+        $sql2 = "INSERT INTO orderitem (ORDERLINE, `ORDER`, PRODUCT, QUANTITY, PRICE) VALUES (1,{$id_order},{$id}, {$nUnits}, {$price})";
+
+
         if ($this->db->error)
-            return "$sql<br>{$this->db->error}";
+            return "$sql2<br>{$this->db->error}";
         else {
             $result_id = $this->db->insert_id;
         }
     }
-    
 
-    
-      public function reject_order($id) {
+    public function reject_order($id) {
 
         $sql = "UPDATE `ORDER` SET PAYMENTINFO = 3 WHERE ID = '{$id['max(id)']} '";
 
@@ -281,8 +285,6 @@ class cart_model {
             return false;
         }
     }
-    
-    
 
 }
 

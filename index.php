@@ -120,8 +120,9 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
             }
 
             if ($_GET['action'] == "finalbuy") {
-                ob_end_clean();
+                //ob_end_clean();
                 $cart->buyComplete();
+                $cart -> purchased_view();
             }
         }
     }
