@@ -13,10 +13,9 @@ class cart_controller {
     public function shoppingCart() {
 
         $product = new products_model();
-        //$_SESSION['cart'] = [];
-        //$_SESSION['cart'] = [];
+
         $data = $product->get_shopping_cart();
-        //echo "<pre>" . print_r($data, 1) . "</pre>";
+
         // Recogemos el número de unidades de los productos que hay en la cesta
         // para guardarlo en el array $data
         if (is_array($data) || is_object($data)) {
@@ -27,12 +26,10 @@ class cart_controller {
                 $data[$key]["db"] = $bd;
             }
 
-            // echo "<pre>" . print_r($data, 1) . "</pre>";
-            //die();
+
 
             return $data;
-            //echo "<pre>" . print_r($data, 1) . "</pre>";
-            //die;
+  
         }
     }
 
@@ -43,8 +40,6 @@ class cart_controller {
 
         $data['cart'] = $cart->checkCart();
         $data['categories'] = $category->getCategories();
-
-        //echo "<pre>" .print_r($data['cart'],1). "</pre>";
 
 
         include("views/finalCart_view.phtml");

@@ -16,7 +16,7 @@ class login_controller {
         $username = !empty($_POST['username']) ? $_POST['username'] : "";
         $password = !empty($_POST['password']) ? $_POST['password'] : "";
 
-        $usuario->setUsuario($username);
+        $usuario->setUsername($username);
         $usuario->setPassword($password);
 
         $ok = $usuario->verifyUser();
@@ -27,7 +27,6 @@ class login_controller {
             $cart = new cart_model();
             $id = $cart->checkLastPending();
 
-            // var_dump($id['max(id)']);die;
 
             if (!empty($_SESSION['cart']) && $id['max(id)'] != null) {
                 $cart->reject_order($id);
@@ -47,13 +46,25 @@ class login_controller {
         $user = new login_model();
 
         $user->setName($_POST['name']);
-        $user->setUserName($_POST['username']);
+        $user->setUsername($_POST['username']);
         $user->setEmail($_POST['email']);
         $user->setAddress($_POST['address']);
         $user->setPostalCode($_POST['postalCode']);
         $user->setPassword($_POST['password']);
 
-        $user->insert_user();
+        $register = $user->insert_user();
+
+        if ($register === false) {
+
+            $obj = array();
+            $obj['message'] = "El nombre de usuario ya existe";
+            $obj['openModel'] = "<script type='text/javascript'>
+         $(document).ready(function(){
+         $('#loginModal').modal('show');
+         });
+         </script>";
+            return $obj;
+        }
     }
 
     function loginFailed() {
@@ -95,7 +106,7 @@ class login_controller {
         if ($_SESSION['usuario'] != "invitado" && $_SESSION['usuario'] != "admin") {
 
             $ordID = $cartMod->checkLastPending();
-            
+
             $sumaTotal = 0;
 
             if (!empty($ordID['max(id)'])) {
@@ -111,8 +122,8 @@ class login_controller {
                         $precio = $producto['FINALPRICE'];
                     } else {
                         $precio = $producto['PRICE'];
-                    } 
-                    
+                    }
+
                     $sumaTotal += $precio * $producto['nUnits'];
 
                     $data[$key]["TOTAL"] = $sumaTotal;

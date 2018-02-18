@@ -37,6 +37,7 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
     if ($_GET["controller"] == "log") {
         $controller = new home_controller();
         $loginFailed = "";
+        $failed = "";
 
         if ($_GET["action"] == "login") {
             $login = new login_controller();
@@ -61,11 +62,11 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
 
         if ($_GET['action'] == "register") {
             $register = new login_controller();
-            //$register ->
+            $failed = $register -> register();
+           
         }
-        // require_once "views/templates/header_template.phtml";
+        
         require_once "views/templates/header_template.phtml";
-        //header('location: index.php');
         $homeController->view();
     }
 

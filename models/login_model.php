@@ -3,10 +3,10 @@
 class login_model {
 
     private $db;
-    private $usuario;
+    private $name;
+    private $username;
     private $password;
     private $creationDate;
-    private $name;
     private $email;
     private $address;
     private $postalCode;
@@ -17,12 +17,12 @@ class login_model {
 
     /* GETTERS & SETTERS */
 
-    public function getUsuario() {
-        return $this->usuario;
+    public function getUsername() {
+        return $this->username;
     }
 
-    public function setUsuario($usuario) {
-        $this->usuario = $usuario;
+    public function setUsername($username) {
+        $this->username = $username;
     }
 
     public function getPassword() {
@@ -77,13 +77,36 @@ class login_model {
      * Extreu tots els usuaris de la taula
      * @return array Bidimensional de tots els usuaris de la taula
      */
-    public function verifyUser() {
+    public function insert_user() {
 
-        $encriptada = crypt($this->password, '$4$rounds=5000$contraseña$');
+        $cripted = crypt($this->password, '$4$rounds=5000$contraseña$');
         //die($encriptada);
+        //comprobar que no haya ningún usuario con ese nombre de usuario antes de insertar.
+        $sql = "SELECT USERNAME FROM `user` WHERE USERNAME = '{$this->username}'";
 
-        $consulta = "SELECT * FROM user WHERE USERNAME ='{$this->usuario}' AND PASSWORD = '{$encriptada}';";
+        $consulta = $this->db->query($sql);
+        $repeatedUsername = $consulta->fetch_assoc();
 
+        //var_dump($repeatedUsername);
+
+        if ($repeatedUsername['USERNAME'] == null) {
+            $sql2 = "INSERT INTO USER (USERNAME, PASSWORD, NAME,EMAIL,ADDRESS,POSTALCODE) VALUES ('{$this->username}','{$cripted}','{$this->name}','{$this->email}','{$this->address}','{$this->postalCode}');";
+
+            $consulta = $this->db->query($sql2);
+            if ($this->db->error)
+                return "$consulta<br>{$this->db->error}";
+            else {
+                return false;
+            }
+        } elseif ($repeatedUsername['USERNAME'] != null) {
+            return false;   
+        }
+    }
+
+    public function verifyUser() {
+        $cripted = crypt($this->password, '$4$rounds=5000$contraseña$');
+        //die($encriptada);
+        $consulta = "SELECT * FROM user WHERE USERNAME ='{$this->username}' AND PASSWORD = '{$cripted}';";
         $resultado = $this->db->query($consulta) or trigger_error(mysqli_error($this->db) . " " . $consulta);
         if ($resultado->num_rows > 0) {
             while ($row = $resultado->fetch_assoc()) {

@@ -15,8 +15,6 @@ class home_controller {
         $data['cart'] = $cart->checkCart();
         //echo "<pre> view" . print_r($data['cart'], 1) . "</pre>";
 
-
-
         $data['products'] = $this->getProducts();
 
         $data['categories'] = $this->getCategories();

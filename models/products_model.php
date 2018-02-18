@@ -208,7 +208,7 @@ class products_model {
 
     public function get_product_searcher($word) {
 
-        $query = "SELECT prod.*, img.URL FROM product prod join image img on prod.ID = img.product WHERE SHORTDESCRIPTION like '%$word%' or  LONGDESCRIPTION like '%$word%';";
+        $query = "SELECT prod.*, img.URL FROM product prod join image img on prod.ID = img.product WHERE SHORTDESCRIPTION like '%$word%';";
 
 
         $consulta = $this->db->query($query);

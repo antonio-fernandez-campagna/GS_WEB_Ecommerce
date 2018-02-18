@@ -135,7 +135,7 @@ if ($_SESSION['usuario'] != "invitado") {
 
 <a href="#" class="text-light" data-toggle="modal" data-target="#myModal2">
     <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
-    <span class="badge badge-dark">4</span>
+    <span class="badge badge-dark"><?php if(!empty($data['cart'])){ echo count($data['cart']);} else {echo '0';} ?> </span>
 </a>
 
 <!-- Modal carrito compra-->
@@ -243,39 +243,39 @@ if ($_SESSION['usuario'] != "invitado") {
                 <form method="POST" action="?controller=log&action=register" role="form">
                   <div class="form-group">
                     <label class="control-label" for="signupName">Nombre Completo</label>
-                    <input id="signupName" name="name" type="text" maxlength="50" placeholder="" class="form-control">
+                    <input name="name" type="text" maxlength="50" placeholder="" class="form-control">
                   </div>
 
                   <div class="form-group">
                     <label class="control-label" for="signupName">Nombre de usuario</label>
-                    <input id="signupName" name="username" type="text" maxlength="50" placeholder="" class="form-control">
+                    <input  name="username" type="text" maxlength="50" placeholder="" class="form-control">
                   </div>
 
                   <div class="form-group">
                     <label class="control-label" for="signupEmail">Email</label>
-                    <input id="signupEmail" name="email" type="email" maxlength="50" class="form-control">
+                    <input  name="email" type="email" maxlength="50" class="form-control">
                   </div>
 
                   <div class="form-group">
                     <label class="control-label" for="signupName">Direccion</label>
-                    <input id="signupName" name="address" type="text" maxlength="50" class="form-control">
+                    <input  name="address" type="text" maxlength="50" class="form-control">
                   </div>
 
                   <div class="form-group">
                     <label class="control-label" for="signupName">Código Postal</label>
-                    <input id="signupName" name="postalCode" type="number" maxlength="5" placeholder="" class="form-control">
+                    <input  name="postalCode" type="number" maxlength="5" placeholder="" class="form-control">
                   </div>
 
                   <div class="form-group">
                     <label class="control-label" for="signupPassword">Contraseña</label>
-                    <input id="signupPassword" type="password" maxlength="25" class="form-control" placeholder="Mínimo 8 caracteres" length="40">
+                    <input  type="password" maxlength="25" class="form-control" placeholder="Mínimo 8 caracteres" length="40">
                   </div>
                   <div class="form-group">
                     <label class="control-label" for="signupPasswordagain">Confirma contraseña</label>
-                    <input id="signupPasswordagain" name="password" type="password" maxlength="25" class="form-control">
+                    <input  name="password" type="password" maxlength="25" class="form-control">
                   </div>
                   <div class="form-group">
-                    <button id="signupSubmit" type="submit" class="btn btn-info btn-block">Registrarse</button>
+                    <button  type="submit" class="btn btn-info btn-block">Registrarse</button>
                   </div>
 
                 </form>
@@ -287,6 +287,11 @@ if ($_SESSION['usuario'] != "invitado") {
            if (!empty($loginFailed)) {
            echo "<span>{$loginFailed['message']}</span>";
           }
+          
+          if (!empty($failed)) {
+           echo "<span>{$failed['message']}</span>";
+          }
+          
          ?>
 
         <!-- Modal footer -->
