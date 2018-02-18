@@ -48,6 +48,7 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
             if (!$loged) {
 
                 $loginFailed = $login->loginFailed();
+                 require_once "views/templates/header_template.phtml";
             }
             if (!empty($data['cart'])) {
 
@@ -82,9 +83,17 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
 
             if ($_GET['action'] == "addToCart") {
                 $id = $_POST["id"];
+
+                if (!empty($_POST['nUnits'])) {
+                    $nUnits = $_POST["nUnits"];
+                    $cart->addItemToCart($id, $nUnits);
+                }
+
+
                 $cart->addItemToCart($id);
                 // muestro la pantalla principal para que cargue por primera vez el carrito (modal)
                 //header('location: index.php');
+
                 $homeController->view();
             }
 
@@ -99,7 +108,11 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
             if ($_GET['action'] == "deleteFromDB") {
 
                 $cart->deleteOrderItem();
-                $homeController->view();
+            }
+
+            if ($_GET['action'] == "deleteFromDB_final") {
+
+                $cart->deleteOrderItem_final();
             }
 
             if ($_GET['action'] == "finalCart") {
@@ -107,9 +120,9 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
                 $cart->finalCart_view();
             }
 
-
-            if ($_GET['action'] == "cartToDB") {
-                
+            if ($_GET['action'] == "finalbuy") {
+                ob_end_clean();
+                $cart->buyComplete();
             }
         }
     }
@@ -184,10 +197,9 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
 
     //Mostramos el default header
     $category = new categories_controller();
-    //$cart = new cart_controller();
-    //$data['cart'] = $cart->shoppingCart();
+    
     $data['categories'] = $category->getCategories();
-    //require_once "views/templates/header_template.phtml";
+    require_once "views/templates/header_template.phtml";
 
 
     $homeController = new home_controller();

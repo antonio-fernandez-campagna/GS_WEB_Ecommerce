@@ -7,8 +7,6 @@ require_once("models/promotions_model.php");
 require_once("controllers/categories_controller.php");
 require_once("controllers/login_controller.php");
 
-
-
 class cart_controller {
 
     public function shoppingCart() {
@@ -45,7 +43,7 @@ class cart_controller {
         $data['cart'] = $cart->checkCart();
         $data['categories'] = $category->getCategories();
 
-        echo "<pre>" .print_r($data['cart'],1). "</pre>";
+        //echo "<pre>" .print_r($data['cart'],1). "</pre>";
 
 
         include("views/finalCart_view.phtml");
@@ -54,14 +52,8 @@ class cart_controller {
     public function shoppingCartDB() {
 
         $product = new products_model();
-        //$id = $this->insertOrder();
-        //echo "<pre>" . print_r($id, 1) . "</pre>";
-        //die();
-        //echo $id;
 
         $data = $product->get_shopping_cart_db();
-
-
 
         foreach ($data as $key => $producto) {
             $bd = "yes";
@@ -76,6 +68,7 @@ class cart_controller {
 
         $addItem = new cart_model();
 
+        
         $item = array($id, $nUnits);
 
         $id_pending = $this->checkLastPending();
@@ -85,6 +78,9 @@ class cart_controller {
             if (empty($id_pending['max(id)'])) {
 
                 // insert order 
+              
+                $id_order = $addItem->insertOrder();
+                $addItem->insertOrderItemNoLoged($id_order, $nUnits, $id);
             } else {
 
                 $addItem->insertProduct($item, $id_pending);
@@ -100,33 +96,25 @@ class cart_controller {
                 $_SESSION['cart'][$id] = $nUnits;
             }
         }
+        
+        require_once 'views/templates/header_template.phtml';
     }
 
     public function deleteItemFromCart($id) {
 
-        //echo "<pre>" .print_r($_SESSION["cart"],1). "</pre>";
-        //die();
-        // no hace bien la comprobacion
+
         if (!empty($_SESSION['cart'])) {
-            echo "<pre>" . print_r("ee", 1) . "</pre>";
-            //die();
             unset($_SESSION['cart'][$id]);
             header("location:index.php");
         }
     }
 
-    // public function insertOrderItem($id,$data) {
-    // ultimo order delete mysql ta
-    //   $orderItem = new cart_model();
-    //    $orderItem->insertOrderItem($id,$data);
-    //}
 
     public function insertOrder() {
         $order = new cart_model();
         $id = $order->insertOrder();
 
         $data = $this->shoppingCart();
-        //unset($_SESSION['cart']);
 
         $order->insertOrderItem($id, $data);
 
@@ -135,10 +123,22 @@ class cart_controller {
 
     public function deleteOrderItem() {
         $orderitem = new cart_model();
+        $home = new home_controller();
+
         $id = $_GET['id'];
 
         $orderitem->deleteOrderItem($id);
-        header("location:index.php");
+
+        $home->view();
+    }
+
+    public function deleteOrderItem_final() {
+        $orderitem = new cart_model();
+        $id = $_GET['id'];
+
+        $orderitem->deleteOrderItem($id);
+
+        $this->finalCart_view();
     }
 
     public function checkLastPending() {
@@ -149,7 +149,13 @@ class cart_controller {
         return $id;
     }
 
+    public function buyComplete() {
+        $cart = new cart_model();
+        $home = new home_controller();
 
+        $cart->buyComplete();
+        $home->view();
+    }
 
 }
 

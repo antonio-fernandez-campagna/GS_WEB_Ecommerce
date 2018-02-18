@@ -11,10 +11,8 @@ class home_controller {
         $cart = new login_controller();
 
         $number_of_pages = $this->manyPages();
-        $data['cart'] = $cart->checkCart();
         
-        //echo "<pre>" .print_r($_SESSION['cart'],1). "</pre>";
-
+        $data['cart'] = $cart->checkCart();
 
         $data['products'] = $this->getProducts();
 
@@ -76,8 +74,9 @@ class home_controller {
 
     public function manyPages() {
         $row = new products_model();
-        $num_rows = $row->getNumRows();
         $results_per_page = 3;
+
+        $num_rows = $row->getNumRows($results_per_page);
 
 
         return ceil($num_rows / $results_per_page);

@@ -148,9 +148,12 @@ if ($_SESSION['usuario'] != "invitado") {
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title float-left" id="myModalLabel2">Carrito de la compra</h4>
             </div>
+            
+            <?php if($_SESSION['usuario'] != "invitado"){ ?> 
                    <div class="form-group">
                        <a href="?controller=cart&action=finalCart"><button id="signupSubmit" type="submit" class="btn btn-info btn-block mt-2">Ir a la cesta</button></a>
                   </div>
+            <?php } ?>
             <?php if(!empty($data['cart'])){  foreach ($data['cart'] as $item) { ?>
                 <li>
                     <span class="item">

@@ -19,7 +19,15 @@ class login_controller {
         if ($ok) {
             $_SESSION['usuario'] = $username;
 
+            $cart = new cart_model();
+            $id = $cart->checkLastPending();
 
+           // var_dump($id['max(id)']);die;
+
+            if (!empty($_SESSION['cart']) && $id['max(id)'] != null) {
+                $cart->reject_order($id);
+            }
+            
             return true;
         } else {
             return false;
@@ -42,7 +50,7 @@ class login_controller {
 
     function loginFailed() {
         $obj = array();
-        $obj['message'] = "Error";
+        $obj['message'] = "Usuario o contraseña incorrecta";
         $obj['openModel'] = "<script type='text/javascript'>
          $(document).ready(function(){
          $('#loginModal').modal('show');
@@ -75,7 +83,6 @@ class login_controller {
         }
 
         if ($_SESSION['usuario'] != "invitado" && $_SESSION['usuario'] != "admin") {
-
             $cart = new cart_controller();
             $data = $cart->shoppingCartDB();
             //echo "<pre>" . print_r($data, 1) . "</pre>";

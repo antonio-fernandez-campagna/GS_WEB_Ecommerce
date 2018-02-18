@@ -53,28 +53,7 @@
                                     <input type="range" id="price-max"  name="price-max" id="price-max" class="filterProduct range-price" value="1000" min="0" max="1000">
                                 </div>
 
-
-
-
-                              <!--<small class="text-uppercase text-muted"><b>Default Unchecked</b></small>
-                              <div class="form-group">
-                                  <div class="checkbox checbox-switch switch-danger">
-                                      <label>
-                                          <input type="checkbox" name="" />
-                                          <span></span>
-                                          Checkbox Label
-                                      </label>
-                                  </div>
-                              </div>
-
-                              <small class="text-uppercase text-muted"><b>Default Disabled</b></small>
-                              <div class="form-group">
-                                  <label class="checkbox-inline checbox-switch switch-danger">
-                                      <input type="checkbox" name="" disabled="" checked="" />
-                                      <span></span>
-                                      Checkbox Label
-                                  </label>
-                              </div> -->
+                             
                             </div>
                         </div>
                     </div>
@@ -116,7 +95,7 @@
                                 </small>
                                 <form action="?controller=cart&action=addToCart" method="POST">
 
-                                <button name="id" value="<?php echo $product['ID']?>" class="btn btn-secondary float-right btn-sm jeje">Comprar <?php echo $product['ID']?></button>
+                                <button name="id" value="<?php echo $product['ID']?>" class="btn btn-danger float-right btn-sm ">Comprar</button>
 
 
                                 </form>
@@ -135,39 +114,37 @@
 
               <div class="container">
                       <div class="row bg-light mt-2 pb-2" >
-                        <div class="col-6 h-100 border">
+                        <div class="col-6">
                           <img src="<?php echo $product['URL']?>" style="width:70%;" alt="producto" class="rounded">
                         </div>
-                        <div class="col-6 h-100 border ">
-                            <h3 class="mt-4 border"><?php echo $product['SHORTDESCRIPTION']?></h3>
-                            <div class="w-100"></div>
-                            <span class=""><strong>Descripción</strong></span>
-                            <p class=" border border-dark"><?php echo $product['LONGDESCRIPTION']?> </p>
-                            <div class="w-100"></div>
-                            <p class="">Precio: <?php echo $product['PRICE']?>€</p>
-                            <div class="w-100"></div>
-                            <p class=""><?php
-                              if ($product['STOCK'] == 0) { ?>
-                              <span style="color:red"> <?php echo "No quedan productos"; ?></span>
-                              <?php
-                            } elseif ($product['STOCK'] < 5) { ?>
-                                  <span style="color:orange"> <?php echo "Quedan pocos productos en stock"; ?></span>
-                                <?php } else{?>
-                                    <span style="color:green"> <?php echo "Hay productos en stock"; ?></span>
-                            </p>
-                          <?php } ?>
-                            <div class="w-100"></div>
-                            <span>Cantidad:</span> <input class="mb-4" type="number" value="1" min="1" max="<?php echo $product['STOCK']?>" id="number" style="width: 3em;">
-                            <div class="w-100"></div>
-                            <div class="row">
-                              <div class="col-6">
-                                <button type="button" name="button" class="btn btn-primary btn-block btn-lg mt-2">Añadir al carrito</button>
-                              </div>
-                              <div class="col-6">
-                                <button type="button" name="button" class="btn btn-primary btn-block btn-lg mt-2">Comprar</button>
-                              </div>
-                            </div>
+                        <div class="col-6">
+                            <h3 class="mt-4"><?php echo $product['SHORTDESCRIPTION']?></h3>
+
                         </div>
+
+                        <div class="col-12">
+                          <span class=""><strong>Descripción</strong></span>
+                          <p class=" border border-dark"><?php echo $product['LONGDESCRIPTION']?> </p>
+                          <p class="">Precio: <?php echo $product['PRICE']?>€</p>
+                          <p class=""><?php
+                            if ($product['STOCK'] == 0) { ?>
+                            <span style="color:red"> <?php echo "No quedan productos"; ?></span>
+                            <?php
+                          } elseif ($product['STOCK'] < 5) { ?>
+                                <span style="color:orange"> <?php echo "Quedan pocos productos en stock"; ?></span>
+                              <?php } ?>
+                          </p>
+                        <form action="?controller=cart&action=addToCart" method="POST">
+
+                            <span>Cantidad:</span> <input class="mb-2" type="number" name="nUnits" value="1" min="1" max="<?php echo $product['STOCK']?>" style="width: 3em;">
+                          
+                            <button type="submit" name="id" value="<?php echo $product['ID']?>" class="btn btn-danger btn-block btn-lg mt-2">Añadir al carrito</button>
+
+                        </form>
+                          
+                          
+                        </div>
+
                       </div>
                     </div>
 

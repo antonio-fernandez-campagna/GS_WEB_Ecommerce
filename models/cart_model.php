@@ -115,7 +115,7 @@ class cart_model {
             }
 
             $sql = "INSERT INTO orderitem (ORDERLINE, `ORDER`, PRODUCT, QUANTITY, PRICE)
-                    VALUES ('{$contador}','{$id}','{$item['ID']}', '{$item['nUnits']}', '{$price}')";
+                    VALUES ({$contador},{$id},{$item['ID']}, {$item['nUnits']}, {$price})";
 
             //die($sql);
             $result = $this->db->query($sql);
@@ -132,9 +132,6 @@ class cart_model {
     }
 
     public function insertOrder() {
-
-        //$user = $_SESSION['usuario'];
-        //die($user);
 
         $sql = "INSERT INTO `order` (SHIPPINGADDRESS, USER)
                     VALUES ('dirección ___', '{$_SESSION['usuario']}')";
@@ -186,7 +183,7 @@ class cart_model {
         $maxOrderLine = $consulta->fetch_assoc();
         $orderLine = $maxOrderLine['max(ORDERLINE)'] + 1;
 
-       // echo "<pre>" .print_r($id_pending,1). "</pre>";
+        // echo "<pre>" .print_r($id_pending,1). "</pre>";
 
 
         $sql2 = "SELECT prod.PRICE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod LEFT join promotion promo on prod.ID = promo.PRODUCT where prod.ID = {$item[0]}";
@@ -226,6 +223,66 @@ class cart_model {
             return false;
         }
     }
+
+    public function buyComplete() {
+
+        $sql = "SELECT MAX(ID) FROM `ORDER` WHERE PAYMENTINFO = 2 AND USER = '{$_SESSION['usuario']}'";
+
+        $consulta = $this->db->query($sql);
+        $id_order = $consulta->fetch_assoc();
+
+
+        $sql2 = "UPDATE `ORDER` SET PAYMENTINFO = 1 WHERE ID = '{$id_order['MAX(ID)']}'";
+
+        $consulta = $this->db->query($sql2);
+
+        if ($this->db->error)
+            return "$consulta<br>{$this->db->error}";
+        else {
+            return false;
+        }
+    }
+
+    public function insertOrderItemNoLoged($id_order, $nUnits, $id) {
+
+        $sql2 = "SELECT prod.PRICE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod LEFT join promotion promo on prod.ID = promo.PRODUCT where prod.ID = {$id}";
+
+        $consulta = $this->db->query($sql2);
+        $price = $consulta->fetch_assoc();
+
+        if (empty($price['FINALPRICE'])) {
+
+            $price = $price['PRICE'];
+        } else {
+
+            $price = $price['FINALPRICE'];
+        }
+
+        $sql = "INSERT INTO orderitem (ORDERLINE, `ORDER`, PRODUCT, QUANTITY, PRICE) VALUES (1,{$id_order},{$id}, {$nUnits}, {$price})";
+                    
+        if ($this->db->error)
+            return "$sql<br>{$this->db->error}";
+        else {
+            $result_id = $this->db->insert_id;
+        }
+    }
+    
+
+    
+      public function reject_order($id) {
+
+        $sql = "UPDATE `ORDER` SET PAYMENTINFO = 3 WHERE ID = '{$id['max(id)']} '";
+
+        $consulta = $this->db->query($sql);
+
+        if ($this->db->error)
+            return "$consulta<br>{$this->db->error}";
+        else {
+            return false;
+        }
+    }
+    
+    
 
 }
 
