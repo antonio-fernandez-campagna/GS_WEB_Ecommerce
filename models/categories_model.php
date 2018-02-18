@@ -1,7 +1,7 @@
 <?php
 class categories_model{
 
-private $db;
+public $db;
 private $categories;
 
 private $id;

@@ -74,7 +74,6 @@ class cart_controller {
                 // insert order 
 
                 $id_order = $addItem->insertOrder();
-                //echo "<pre> aaaaaaaaaaaa " . print_r($id_order, 1) . "</pre>";
 
                 $addItem->insertOrderItemNoLoged($id_order, $nUnits, $id);
             } else {
@@ -135,6 +134,19 @@ class cart_controller {
 
         $cart = new cart_model();
         $data = $cart->get_history_cart();
+        $dataOrdered = [];
+        foreach ($data as $producto) {
+            $date = $producto['DATE'];
+            if (array_key_exists($date, $dataOrdered)) {
+                $dataOrdered[$date][] = $producto;
+            } else {
+                $dataOrdered[$date] = [];
+                $dataOrdered[$date][] = $producto;
+            }
+        }
+
+        //echo "<pre>" . print_r($dataOrdered, 1) . "</pre>";
+
 
         include 'views/history_view.phtml';
     }

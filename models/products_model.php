@@ -188,13 +188,12 @@ class products_model {
         $consulta = $this->db->query($sql);
         $id = $consulta->fetch_assoc();
 
-        
-        
+
+
         $user = $_SESSION['usuario'];
 
         $query = "SELECT prod.ID ,prod.NAME, prod.SHORTDESCRIPTION, prod.STOCK, ord.ID as ID_ORDER, ordIt.PRODUCT as ID_PROD, ordIt.QUANTITY as nUnits, ordIt.PRICE, img.URL from `order` ord JOIN product prod JOIN orderitem ordIt JOIN user JOIN image img WHERE user.USERNAME = 'user' AND ord.ID = ordIt.`ORDER` AND img.PRODUCT = ordIt.PRODUCT AND ordIt.PRODUCT = prod.ID AND ord.PAYMENTINFO = 2 AND ord.ID = {$id['max(ID)']};";
         //die($query);
-
         //echo "<pre>".print_r($query, 1)."</pre>"; 
 
         $consulta = $this->db->query($query);
@@ -271,8 +270,15 @@ class products_model {
         }
         return $this->products;
     }
-    
-    
+
+    public function get_product__short_descriptions() {
+        $query = "SELECT SHORTDESCRIPTION as value, ID as data from product;";
+        $consulta = $this->db->query($query);
+        while ($filas = $consulta->fetch_assoc()) {
+            $this->products[] = $filas;
+        }
+        return $this->products;
+    }
 
 }
 

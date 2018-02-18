@@ -13,8 +13,13 @@ class login_controller {
     function login() {
         $usuario = new login_model();
 
-        $username = !empty($_POST['username']) ? $_POST['username'] : "";
-        $password = !empty($_POST['password']) ? $_POST['password'] : "";
+        $conexion = $usuario->db;
+        $user = mysqli_real_escape_string($conexion, $_POST['username']);
+        $contrasenya = mysqli_real_escape_string($conexion, $_POST['username']);
+
+
+        $username = !empty($user) ? $contrasenya : "";
+        $password = !empty($user) ? $contrasenya : "";
 
         $usuario->setUsername($username);
         $usuario->setPassword($password);

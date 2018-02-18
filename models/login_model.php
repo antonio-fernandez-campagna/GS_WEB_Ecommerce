@@ -2,7 +2,7 @@
 
 class login_model {
 
-    private $db;
+    public $db;
     private $name;
     private $username;
     private $password;
@@ -78,7 +78,7 @@ class login_model {
      * @return array Bidimensional de tots els usuaris de la taula
      */
     public function insert_user() {
-
+      
         $cripted = crypt($this->password, '$4$rounds=5000$contraseña$');
         //die($encriptada);
         //comprobar que no haya ningún usuario con ese nombre de usuario antes de insertar.
@@ -104,7 +104,9 @@ class login_model {
     }
 
     public function verifyUser() {
+        
         $cripted = crypt($this->password, '$4$rounds=5000$contraseña$');
+        
         //die($encriptada);
         $consulta = "SELECT * FROM user WHERE USERNAME ='{$this->username}' AND PASSWORD = '{$cripted}';";
         $resultado = $this->db->query($consulta) or trigger_error(mysqli_error($this->db) . " " . $consulta);

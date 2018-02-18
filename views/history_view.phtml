@@ -6,96 +6,106 @@
 
         <button type="submit" name="id" disabled class="btn btn-danger btn-block btn-lg mt-2 mb-6">historial de compras</button>
 
-        <table id="cart" class="table table-hover table-condensed">
-            <?php if (!empty($data)) { ?>
 
-                <thead>
-                    <tr>
-                        <th style="width:50%">Product</th>
-                        <th style="width:10%">Price</th>
-                        <th style="width:8%">Quantity</th>
-                        <th style="width:10%"></th>
-                    </tr>
-                </thead>
-                <tbody>
+        <?php if (!empty($data)) { ?>
 
+            <div class="row">
+                <div class="col-2">
+                    <h2>IMAGEN</h2>
+                </div>
+                <div class="col-6">
+                    <h2>PRODUCTO</h2>
+                </div>
+                <div class="col-2">
+                    <h2>PRECIO</h2>
+                </div>
+                <div class="col-2">
+                    <h2>CANTIDAD</h2>
+                </div>
 
+            </div>
 
-
-
-                    <?php
-                    foreach ($data as $item) { ?>
-
-                    <fieldset >    	
-                        <legend>Fieldset Title</legend>
-                        
-                        
-                        <div class="row">
-                            <div class="col-2">
-                                
-                                
-                            </div>
-                            
-                            
-                        </div>
-
-                        <tr>
-                            <td data-th="Product">
-                                <div class="row">
-                                    <div class="col-sm-4 hidden-xs"><img src="<?php echo $item['URL'] ?>"  style="width: 30%" class="img-responsive"/></div>
-                                    <div class="col-sm-6">
-                                        <h4 class="nomargin"><?php echo $item['NAME'] ?></h4>
-                                    </div>
-                                </div>
-                            </td>
-                            <td data-th="Price"> <?php
-                                if (!empty($item['FINALPRICE'])) {
-                                    echo $item['FINALPRICE'] . "€";
-                                } else {
-                                    echo $item['PRICE'] . "€";
-                                }
-                                ?>
-                            </td>
-                            <td data-th="Quantity">
-                                <div class="input-group">
-
-
-
-                                    <input type="text" class="form-control input-number bg-white" disabled style="width:20px" value="<?php echo $item['nUnits'] ?>">
-
-
-                                </div>
-
-                            </td>
-
-
-                        </tr>
-                    </fieldset>	
-
-
-                <?php }
+            <?php $contador = 4;
+            foreach ($dataOrdered as $key => $item) {
+                
+                $contador = $contador +1;
+                               
+                $color = "si";
+                if ($contador % 2 == 0) {
+                    $color = "no";
+                }
+                $date = $key;
                 ?>
 
-                </tbody>
-                <tfoot>
+                <fieldset > 
 
-                    <tr>
-                        <td><a href="?index.php" class="btn btn-warning"><i class="fa fa-angle-left"></i>Volver</a></td>
-                        <td colspan="2" class="hidden-xs"></td>
-                    </tr>
-                </tfoot>
-            <?php } else { ?>
+                    <?php if ($color == "si") { ?>
+                        <div class="bg-gris mt-2 mb-2">
 
-                <h4 class="nomargin">No has comprado nada</h4>
+                        <?php } ?>
 
-            <?php } ?>
+                        <?php if ($color == "no") { ?>
+                            <div class="mt-2 mb-2">
 
-        </table>
+                            <?php } ?>
+
+                                <legend class="bg-dark text-white" t><?php echo $date; ?></legend>
+
+                            <?php for ($i = 0; $i <= count($item) - 1; $i++) { ?>
+
+                                <div class="row">
+                                    <div class="col-2">
+
+                                        <div class="col-sm-4 hidden-xs"><img src="<?php echo $item[$i]['URL']; ?>"  style="width: 400%" class="img-responsive"/></div>
+
+                                    </div>
+                                    <div class="col-6">
+
+                                        <h5 class="nomargin"><?php echo $item[$i]['NAME']; ?></h5>
+
+                                    </div>
+
+                                    <div class="col-2">
+
+                                        <?php
+                                        if (!empty($item[$i]['FINALPRICE'])) {
+                                            echo $item[$i]['FINALPRICE'] . "€";
+                                        } else {
+                                            echo $item[$i]['PRICE'] . "€";
+                                        }
+                                        ?>
+                                    </div>
+                                    <div class="col-2">
+
+                                        <?php echo $item[$i]['nUnits'] ?>
+                                    </div>
+
+                                </div>
+                            <?php } ?>
+                        </div>
+
+                </fieldset>	
 
 
-    </div>
-    <!-- cierro div container -->
+            <?php }
+            ?>
 
-</body>
 
-</html>
+
+            <tr>
+                <td><a href="?index.php" class="btn btn-warning"><i class="fa fa-angle-left"></i>Volver</a></td>
+                <td colspan="2" class="hidden-xs"></td>
+            </tr>
+        <?php } else { ?>
+
+            <h4 class="nomargin">No has comprado nada</h4>
+
+        <?php } ?>
+
+    </table>
+
+
+</div>
+<!-- cierro div container -->
+
+<?php include 'views/templates/footer_template.phtml'; ?>

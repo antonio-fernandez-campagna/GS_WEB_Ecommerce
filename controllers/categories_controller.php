@@ -31,29 +31,34 @@ class categories_controller {
       }
      * */
 
-     public function categoryAdd_view(){
-       //Mostramos el default header
-       //$category = new categories_controller();
-       //$cart = new cart_controller();
-       //$data['cart'] = $cart->shoppingCart();
-      // $data['categories'] = $category->getCategories();
-      $categories = new categories_model();
-      $data = $categories-> get_parents_categories();
+    public function categoryAdd_view() {
+        //Mostramos el default header
+        //$category = new categories_controller();
+        //$cart = new cart_controller();
+        //$data['cart'] = $cart->shoppingCart();
+        // $data['categories'] = $category->getCategories();
+        $categories = new categories_model();
+        $data = $categories->get_parents_categories();
 
-       require_once "views/templates/header_template.phtml";
+        require_once "views/templates/header_template.phtml";
 
-       include("views/categoryAdd_view.phtml");
-     }
+        include("views/categoryAdd_view.phtml");
+    }
 
     public function insert_category() {
-       $categories = new categories_model();
-        $categories->setName($_POST['nombre']);
-        $categories->setParentCategory($_POST['parentcategory']);
-        //echo "<pre>".print_r($categories,1). "</pre>";
-        //die;
+        $categories = new categories_model();
+
+        $conexion = $categoies->db;
+
+
+        $categoryName = mysqli_real_escape_string($conexion, $_POST['nombre']);
+        $categoryParent = mysqli_real_escape_string($conexion, $_POST['parentcategory']);
+
+        $categories->setName($categoryName);
+        $categories->setParentCategory($categoryParent);
+
         $error = $categories->insert_category();
-      //  print_r("hola" .$error);
-        //die();
+   
     }
 
     function getCategories() {

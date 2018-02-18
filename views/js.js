@@ -46,9 +46,26 @@ $(document).ready(function () {
         });
 
     });
+    
+    var currencies = function () {
+        var products = null;
+        $.ajax({
+            'async': false,
+            'type': "GET",
+            'global': false,
+            'url': "controllers/autocomplete_controller.php",
+            'success': function (response) {
+                products = $.parseJSON(response);
+            }
+        });
+        return products;
+    }();
 
-    $(".buyProduct").click(function () {
-        $idProduct = $(this).attr("id");
-
+    $('#autocomplete').autocomplete({
+        lookup: currencies,
+        onSelect: function (suggestion) {
+            var thehtml = '<strong>Currency Name:</strong> ' + suggestion.value + ' <br> <strong>Symbol:</strong> ' + suggestion.data;
+            $('#outputcontent').html(thehtml);
+        }
     });
 });
