@@ -95,12 +95,28 @@ class login_controller {
         if ($_SESSION['usuario'] != "invitado" && $_SESSION['usuario'] != "admin") {
 
             $ordID = $cartMod->checkLastPending();
+            
+            $sumaTotal = 0;
 
             if (!empty($ordID['max(id)'])) {
 
                 $cart = new cart_controller();
                 $data = $cart->shoppingCartDB();
-                //echo "<pre>" . print_r($data, 1) . "</pre>";
+
+
+                foreach ($data as $key => $producto) {
+
+                    if ((!empty($producto['FINALPRICE']))) {
+
+                        $precio = $producto['FINALPRICE'];
+                    } else {
+                        $precio = $producto['PRICE'];
+                    } 
+                    
+                    $sumaTotal += $precio * $producto['nUnits'];
+
+                    $data[$key]["TOTAL"] = $sumaTotal;
+                }
 
                 return $data;
             }

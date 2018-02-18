@@ -878,10 +878,10 @@ input[type=range]:focus::-ms-fill-upper {
     vertical-align: middle;
 }
 @media screen and (max-width: 600px) {
-    table#cart tbody td .form-control{
+    /* table#cart tbody td .form-control{
 		width:20%;
 		display: inline !important;
-	}
+	} */ 
 	.actions .btn{
 		width:36%;
 		margin:1.5em 0;

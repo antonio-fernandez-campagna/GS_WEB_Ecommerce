@@ -45,8 +45,7 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
             if (!$loged) {
 
                 $loginFailed = $login->loginFailed();
-                        // require_once "views/templates/header_template.phtml";
-
+                // require_once "views/templates/header_template.phtml";
             }
             if (!empty($data['cart'])) {
 
@@ -64,8 +63,8 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
             $register = new login_controller();
             //$register ->
         }
-         // require_once "views/templates/header_template.phtml";
-         require_once "views/templates/header_template.phtml";
+        // require_once "views/templates/header_template.phtml";
+        require_once "views/templates/header_template.phtml";
         //header('location: index.php');
         $homeController->view();
     }
@@ -88,12 +87,25 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
                     $cart->addItemToCart($id, $nUnits);
                 }
 
-
                 $cart->addItemToCart($id);
                 // muestro la pantalla principal para que cargue por primera vez el carrito (modal)
                 //header('location: index.php');
 
                 $homeController->view();
+            }
+
+            if ($_GET['action'] == "add_1_ToCart") {
+                $id = $_GET["id"];
+       
+                $cart->add_1_ToCart($id);
+
+            }
+
+            if ($_GET['action'] == "remove_1_FromCart") {
+                $id = $_GET["id"];
+
+                $cart->remove_1_FromCart($id);
+       
             }
 
             if ($_GET['action'] == "deleteFromCart") {
@@ -122,7 +134,7 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
             if ($_GET['action'] == "finalbuy") {
                 //ob_end_clean();
                 $cart->buyComplete();
-                $cart -> purchased_view();
+                $cart->purchased_view();
             }
         }
     }
@@ -196,10 +208,10 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
 } else {
 
     //Mostramos el default header
-   // $category = new categories_controller();
-   // $cart = new cart_controller();
-   // $data['cart'] = $cart->shoppingCart();
-   // $data['categories'] = $category->getCategories();
+    // $category = new categories_controller();
+    // $cart = new cart_controller();
+    // $data['cart'] = $cart->shoppingCart();
+    // $data['categories'] = $category->getCategories();
     //require_once "views/templates/header_template.phtml";
 
 

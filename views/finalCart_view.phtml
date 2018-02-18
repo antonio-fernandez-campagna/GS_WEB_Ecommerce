@@ -28,7 +28,7 @@
                         <tr>
                             <td data-th="Product">
                                 <div class="row">
-                                    <div class="col-sm-6 hidden-xs"><img src="<?php echo $item['URL'] ?>"  style="width: 30%" class="img-responsive"/></div>
+                                    <div class="col-sm-4 hidden-xs"><img src="<?php echo $item['URL'] ?>"  style="width: 30%" class="img-responsive"/></div>
                                     <div class="col-sm-6">
                                         <h4 class="nomargin"><?php echo $item['NAME'] ?></h4>
                                     </div>
@@ -43,10 +43,36 @@
                                 ?>
                             </td>
                             <td data-th="Quantity">
-                                <?php echo $item['nUnits'] ?>
+                                <div class="input-group">
+
+                                    <a href="?controller=cart&action=remove_1_FromCart&id=<?php echo $item['ID'] ?>">
+
+                                        <button type="button" class="btn btn-default btn-number" <?php
+                                        if ($item['nUnits'] == 1) {
+                                            echo "disabled";
+                                        }
+                                        ?> data-type="minus">
+                                            <span class="glyphicon glyphicon-minus">-</span>
+                                        </button>
+                                    </a>
+
+                                    <input type="text" class="form-control input-number bg-white" disabled style="width:20px" value="<?php echo $item['nUnits'] ?>" min="1" max="<?php echo $item['STOCK'] ?>">
+
+                                    <a href="?controller=cart&action=add_1_ToCart&id=<?php echo $item['ID'] ?>">
+
+                                        <button type="button"  class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
+                                            <span class="glyphicon glyphicon-plus">+</span>
+                                        </button>
+                                    </a>
+
+
+
+                                </div>
+
+
                             </td>
 
-                            <?php if ($item['db'] == "yes") { ?> 
+                                <?php if ($item['db'] == "yes") { ?> 
                                 <td class="actions" data-th="">
 
                                     <a href="?controller=cart&action=deleteFromDB_final&id=<?php echo $item['ID'] ?>"><button class="btn btn-danger"><i class="fas fa-times"></i></button></a></span>
@@ -56,22 +82,26 @@
 
                         </tr>
 
-                    <?php }
-                    ?>
+                        <?php }
+                        ?>
 
                 </tbody>
                 <tfoot>
+                    <tr class="visible-xs">
+                        <td class="text-center"><strong>Total <?php echo $item['TOTAL'] ?> €</strong></td>
+                    </tr>
+
                     <tr>
                         <td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i>Volver</a></td>
                         <td colspan="2" class="hidden-xs"></td>
                         <td><a href="?controller=cart&action=finalbuy" class="btn btn-success btn-block">Finalizar compra <i class="fa fa-angle-right"></i></a></td>
                     </tr>
                 </tfoot>
-            <?php } else { ?>
+<?php } else { ?>
 
                 <h4 class="nomargin">No tienes productos en la cesta :(</h4>
 
-            <?php } ?>
+<?php } ?>
 
         </table>
 

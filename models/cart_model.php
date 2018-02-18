@@ -224,6 +224,50 @@ class cart_model {
         }
     }
 
+    public function add_1_Product($item, $id_pending) {
+
+        $sql1 = "SELECT product, QUANTITY FROM `orderitem` where PRODUCT = {$item[0]} and `order` = {$id_pending['max(id)']}";
+
+        //die($sql3);
+        $consulta = $this->db->query($sql1);
+        $prodId = $consulta->fetch_assoc();
+
+
+        $sql2 = "UPDATE orderitem SET QUANTITY = ({$prodId['QUANTITY']} + {$item[1]}) WHERE PRODUCT = {$item[0]} ";
+
+
+
+        $consulta = $this->db->query($sql2);
+
+        if ($this->db->error)
+            return "$consulta<br>{$this->db->error}";
+        else {
+            return false;
+        }
+    }
+    
+        public function remove_1_Product($item, $id_pending) {
+
+        $sql1 = "SELECT product, QUANTITY FROM `orderitem` where PRODUCT = {$item[0]} and `order` = {$id_pending['max(id)']}";
+
+        //die($sql3);
+        $consulta = $this->db->query($sql1);
+        $prodId = $consulta->fetch_assoc();
+
+
+        $sql2 = "UPDATE orderitem SET QUANTITY = ({$prodId['QUANTITY']} - {$item[1]}) WHERE PRODUCT = {$item[0]} ";
+
+
+
+        $consulta = $this->db->query($sql2);
+
+        if ($this->db->error)
+            return "$consulta<br>{$this->db->error}";
+        else {
+            return false;
+        }
+    }
+
     public function buyComplete() {
 
         $sql = "SELECT MAX(ID) FROM `ORDER` WHERE PAYMENTINFO = 2 AND USER = '{$_SESSION['usuario']}'";

@@ -192,7 +192,7 @@ class products_model {
         
         $user = $_SESSION['usuario'];
 
-        $query = "SELECT prod.ID ,prod.NAME, prod.SHORTDESCRIPTION, ord.ID as ID_ORDER, ordIt.PRODUCT as ID_PROD, ordIt.QUANTITY as nUnits, ordIt.PRICE, img.URL from `order` ord JOIN product prod JOIN orderitem ordIt JOIN user JOIN image img WHERE user.USERNAME = 'user' AND ord.ID = ordIt.`ORDER` AND img.PRODUCT = ordIt.PRODUCT AND ordIt.PRODUCT = prod.ID AND ord.PAYMENTINFO = 2 AND ord.ID = {$id['max(ID)']};";
+        $query = "SELECT prod.ID ,prod.NAME, prod.SHORTDESCRIPTION, prod.STOCK, ord.ID as ID_ORDER, ordIt.PRODUCT as ID_PROD, ordIt.QUANTITY as nUnits, ordIt.PRICE, img.URL from `order` ord JOIN product prod JOIN orderitem ordIt JOIN user JOIN image img WHERE user.USERNAME = 'user' AND ord.ID = ordIt.`ORDER` AND img.PRODUCT = ordIt.PRODUCT AND ordIt.PRODUCT = prod.ID AND ord.PAYMENTINFO = 2 AND ord.ID = {$id['max(ID)']};";
         //die($query);
 
         //echo "<pre>".print_r($query, 1)."</pre>"; 

@@ -60,7 +60,6 @@ class cart_controller {
             $bd = "yes";
             $data[$key]["db"] = $bd;
         }
-        //echo "<pre> cart" . print_r($data, 1) . "</pre>";
 
         return $data;
     }
@@ -104,6 +103,38 @@ class cart_controller {
 
 
         header('location: index.php');
+    }
+
+    public function add_1_ToCart($id, $nUnits = 1) {
+
+        $addItem = new cart_model();
+
+        $item = array($id, $nUnits);
+
+        $id_pending = $this->checkLastPending();
+
+        if ($_SESSION['usuario'] != "admin" && $_SESSION['usuario'] != "invitado") {
+
+            $addItem->add_1_Product($item, $id_pending);
+        }
+
+        $this->finalCart_view();
+    }
+
+    public function remove_1_FromCart($id, $nUnits = 1) {
+
+        $addItem = new cart_model();
+
+        $item = array($id, $nUnits);
+
+        $id_pending = $this->checkLastPending();
+
+        if ($_SESSION['usuario'] != "admin" && $_SESSION['usuario'] != "invitado") {
+
+            $addItem->remove_1_Product($item, $id_pending);
+        }
+
+        $this->finalCart_view();
     }
 
     public function deleteItemFromCart($id) {
