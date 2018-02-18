@@ -9,102 +9,121 @@
         <table id="cart" class="table table-hover table-condensed">
             <?php if (!empty($data['cart']) & $_SESSION['usuario'] != "invitado") { ?>
 
-                <thead>
-                    <tr>
-                        <th style="width:50%">Product</th>
-                        <th style="width:10%">Price</th>
-                        <th style="width:8%">Quantity</th>
-                        <th style="width:10%"></th>
-                    </tr>
-                </thead>
-                <tbody>
+                <div class="row">
+                    <div class="col-2">
+                        <h2>Imagen</h2>
+                    </div>
+                    <div class="col-3">
+                        <h2>Producto</h2>
+                    </div>
+                    <div class="col-2">
+                        <h2>Precio</h2>
+                    </div>
+                    <div class="col-2">
+                        <h2>Cantidad</h2>
+                    </div>
+                    <div class="col-2">
+                        <h2>Subtotal</h2>
+                    </div>
+                    <div class="col-1">
+                        <h3>Eliminar</h3>
+                    </div>
 
+                </div>
 
+                <?php
+                foreach ($data['cart'] as $item) {
+                    ?>
 
+                    <div class="row">
+                        <div class="col-2">
 
+                            <div class="col-sm-4 hidden-xs"><img src="<?php echo $item['URL'] ?>"  style="width: 400%" class="img-responsive"/></div>
 
-                    <?php
-                    foreach ($data['cart'] as $item) {
-                        ?>
+                        </div>
+                        <div class="col-3">
 
-                        <tr>
-                            <td data-th="Product">
-                                <div class="row">
-                                    <div class="col-sm-4 hidden-xs"><img src="<?php echo $item['URL'] ?>"  style="width: 30%" class="img-responsive"/></div>
-                                    <div class="col-sm-6">
-                                        <h4 class="nomargin"><?php echo $item['NAME'] ?></h4>
-                                    </div>
-                                </div>
-                            </td>
-                            <td data-th="Price"> <?php
-                                if (!empty($item['FINALPRICE'])) {
-                                    echo $item['FINALPRICE'] . "€";
-                                } else {
-                                    echo $item['PRICE'] . "€";
-                                }
-                                ?>
-                            </td>
-                            <td data-th="Quantity">
-                                <div class="input-group">
+                            <h5 class="nomargin"><?php echo $item['NAME'] ?></h5>
 
-                                    <a href="?controller=cart&action=remove_1_FromCart&id=<?php echo $item['ID'] ?>">
+                        </div>
 
-                                        <button type="button" class="btn btn-default btn-number" <?php
-                                        if ($item['nUnits'] == 1) {
-                                            echo "disabled";
-                                        }
-                                        ?> data-type="minus">
-                                            <span class="glyphicon glyphicon-minus">-</span>
-                                        </button>
-                                    </a>
+                        <div class="col-2">
 
-                                    <input type="text" class="form-control input-number bg-white" disabled style="width:20px" value="<?php echo $item['nUnits'] ?>" min="1" max="<?php echo $item['STOCK'] ?>">
+                            <?php
+                            if (!empty($item['FINALPRICE'])) {
+                                echo $item['FINALPRICE'] . "€";
+                            } else {
+                                echo $item['PRICE'] . "€";
+                            }
+                            ?>
+                        </div>
+                        <div class="col-2">
 
-                                    <a href="?controller=cart&action=add_1_ToCart&id=<?php echo $item['ID'] ?>">
+                            <div class="input-group">
 
-                                        <button type="button"  class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
-                                            <span class="glyphicon glyphicon-plus">+</span>
-                                        </button>
-                                    </a>
+                                <a href="?controller=cart&action=remove_1_FromCart&id=<?php echo $item['ID'] ?>">
 
+                                    <button type="button" class="btn btn-default btn-number" <?php
+                                    if ($item['nUnits'] == 1) {
+                                        echo "disabled";
+                                    }
+                                    ?> data-type="minus">
+                                        <span class="glyphicon glyphicon-minus">-</span>
+                                    </button>
+                                </a>
 
+                                <input type="text" class="form-control input-number bg-white" disabled style="width:20px" value="<?php echo $item['nUnits'] ?>" min="1" max="<?php echo $item['STOCK'] ?>">
 
-                                </div>
+                                <a href="?controller=cart&action=add_1_ToCart&id=<?php echo $item['ID'] ?>">
 
-                            </td>
+                                    <button type="button"  class="btn btn-default btn-number" data-type="plus" data-field="quant[1]">
+                                        <span class="glyphicon glyphicon-plus">+</span>
+                                    </button>
+                                </a>
 
+                            </div>
+                        </div>
+
+                        <div class="col-2 ">
+                            <?php echo $item['nUnits'] * $item['PRICE']; ?> €
+                        </div>
+
+                        <div class="col-1 ">
                             <?php if ($item['db'] == "yes") { ?> 
-                                <td class="actions" data-th="">
 
-                                    <a href="?controller=cart&action=deleteFromDB_final&id=<?php echo $item['ID'] ?>"><button class="btn btn-danger"><i class="fas fa-times"></i></button></a></span>
-                                </td>
+                                <a href="?controller=cart&action=deleteFromDB_final&id=<?php echo $item['ID'] ?>"><button class="btn btn-danger"><i class="fas fa-times"></i></button></a></span>
 
                             <?php } ?>
 
-                        </tr>
+                        </div>
 
-                    <?php }
-                    ?>
+                    </div>
 
-                </tbody>
-                <tfoot>
-                    <tr class="visible-xs">
-                        <td class="text-center"><strong>Total <?php echo $item['TOTAL'] ?> €</strong></td>
-                    </tr>
+                <?php }
+                ?>
 
-                    <tr>
-                        <td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i>Volver</a></td>
-                        <td colspan="2" class="hidden-xs"></td>
-                        <td><a href="?controller=cart&action=finalbuy" class="btn btn-success btn-block">Finalizar compra <i class="fa fa-angle-right"></i></a></td>
-                    </tr>
-                </tfoot>
+                <div class="row">
+                    <div class="col-2 float-right ml-10" >
+                        <hr>
+                        <strong>Total <?php echo $item['TOTAL'] ?> €</strong>
+                        <hr>
+                    </div>
+                </div>
+                <div class="row">
+
+                    <div class="col-6 float-left" >
+                        <a href="?controller=cart&action=emptyCart" class="btn btn-warning">Vaciar cesta</a>                    
+                    </div>
+                    <div class="col-3 float-right" >
+                        <a href="?controller=cart&action=finalbuy" class="btn btn-success btn-block">Finalizar compra <i class="fa fa-angle-right"></i></a>
+                    </div>
+                </div>
             <?php } else { ?>
 
                 <h4 class="nomargin">No tienes productos en la cesta :(</h4>
 
             <?php } ?>
 
-        </table>
 
 
     </div>

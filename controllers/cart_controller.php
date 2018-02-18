@@ -40,7 +40,6 @@ class cart_controller {
         $data['cart'] = $cart->checkCart();
         $data['categories'] = $category->getCategories();
 
-
         include("views/finalCart_view.phtml");
     }
 
@@ -214,6 +213,15 @@ class cart_controller {
 
 
         include('views/purchased_view.phtml');
+    }
+
+    public function empty_cart() {
+
+        $deleteOrder = new cart_model();
+        $deleteOrder->emptyCartDB();
+
+
+        header('location: index.php');
     }
 
 }

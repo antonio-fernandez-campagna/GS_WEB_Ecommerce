@@ -6,17 +6,9 @@ require_once("controllers/categories_controller.php");
 require_once("controllers/products_controller.php");
 require_once("controllers/login_controller.php");
 require_once("controllers/home_controller.php");
-require_once("controllers/products_controller.php");
 require_once("controllers/cart_controller.php");
 require_once("controllers/view_controller.php");
 require_once("controllers/promotion_controller.php");
-
-//$ej = new cart_model();
-//$ej->setPaymentInfo(2);
-//$ej->setStatus(1);
-//$ej->setShippingAddress("asdad");
-//$ej->setUser("user");
-//$id = $ej->insertOrder();
 
 ob_start();
 
@@ -85,6 +77,7 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
 
                 if (!empty($_POST['nUnits'])) {
                     $nUnits = $_POST["nUnits"];
+                    
                     $cart->addItemToCart($id, $nUnits);
                 }
 
@@ -142,6 +135,13 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
                 $cart->historyCart();
                 
             }
+            
+             if ($_GET['action'] == "emptyCart") {
+                $cart->empty_cart();
+                
+            }
+            
+            
         }
     }
 

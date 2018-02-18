@@ -245,8 +245,8 @@ class cart_model {
             return false;
         }
     }
-    
-        public function remove_1_Product($item, $id_pending) {
+
+    public function remove_1_Product($item, $id_pending) {
 
         $sql1 = "SELECT product, QUANTITY FROM `orderitem` where PRODUCT = {$item[0]} and `order` = {$id_pending['max(id)']}";
 
@@ -295,7 +295,6 @@ class cart_model {
         $sql = "SELECT prod.PRICE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod LEFT join promotion promo on prod.ID = promo.PRODUCT where prod.ID = {$id}";
 
 
-
         $consulta = $this->db->query($sql);
         $price = $consulta->fetch_assoc();
 
@@ -329,8 +328,8 @@ class cart_model {
             return false;
         }
     }
-    
-       public function get_history_cart() {
+
+    public function get_history_cart() {
 
         $sql = "SELECT DISTINCT prod.NAME, prod.SHORTDESCRIPTION, orderitem.QUANTITY as nUnits, orderitem.PRICE, ord.DATE, img.URL from product PROD JOIN orderitem on prod.ID = orderitem.PRODUCT JOIN `order` ord on orderitem.`ORDER` = ord.ID JOIN user on ord.USER = '{$_SESSION['usuario']}' JOIN image img on prod.ID = img.PRODUCT WHERE ord.PAYMENTINFO = 1 ORDER BY ord.DATE ASC";
 
@@ -340,6 +339,21 @@ class cart_model {
         }
 
         return $this->products;
+    }
+
+    public function emptyCartDB() {
+
+        $sql = "DELETE ORDERITEM from orderitem JOIN `order` on orderitem.`ORDER` = (SELECT MAX(ID) FROM `order` WHERE USER = '{$_SESSION['usuario']}');";
+        $consulta = $this->db->query($sql);
+
+        $sql2 = "DELETE FROM `ORDER` WHERE USER = '{$_SESSION['usuario']}' AND PAYMENTINFO = 2;";
+        $consulta = $this->db->query($sql2);
+
+        if ($this->db->error)
+            return "$consulta<br>{$this->db->error}";
+        else {
+            return false;
+        }
     }
 
 }
