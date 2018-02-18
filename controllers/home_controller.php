@@ -21,6 +21,7 @@ class home_controller {
         $data['categories'] = $this->getCategories();
 
         $data['promo'] = $promo->get_promos();
+    require_once "views/templates/header_template.phtml";
 
         require_once("views/home_view.phtml");
     }

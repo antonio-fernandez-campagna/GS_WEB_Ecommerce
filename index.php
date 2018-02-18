@@ -195,11 +195,11 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
 } else {
 
     //Mostramos el default header
-    $category = new categories_controller();
-    $cart = new cart_controller();
-    $data['cart'] = $cart->shoppingCart();
-    $data['categories'] = $category->getCategories();
-    require_once "views/templates/header_template.phtml";
+   // $category = new categories_controller();
+   // $cart = new cart_controller();
+   // $data['cart'] = $cart->shoppingCart();
+   // $data['categories'] = $category->getCategories();
+    //require_once "views/templates/header_template.phtml";
 
 
     $homeController = new home_controller();
