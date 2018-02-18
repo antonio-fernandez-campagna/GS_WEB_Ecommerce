@@ -13,7 +13,8 @@ class home_controller {
 //        $data['cart'] = $cart;
         //echo "<pre>" .print_r($data['cart'],1). "</pre>";
         //die();
-
+        echo 'aaaaaaaaaaa';
+        die();
         require_once("views/home_view.phtml");
     }
 

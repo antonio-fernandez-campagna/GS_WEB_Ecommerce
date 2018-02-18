@@ -22,12 +22,12 @@ class login_controller {
             $cart = new cart_model();
             $id = $cart->checkLastPending();
 
-           // var_dump($id['max(id)']);die;
+            // var_dump($id['max(id)']);die;
 
             if (!empty($_SESSION['cart']) && $id['max(id)'] != null) {
                 $cart->reject_order($id);
             }
-            
+
             return true;
         } else {
             return false;
@@ -70,6 +70,8 @@ class login_controller {
             if ($_SESSION['usuario'] == "invitado") {
 
                 $data = $cart->shoppingCart();
+                //echo "<pre>" . print_r($data, 1) . "</pre>";
+
                 return $data;
             } else {
                 $_SESSION['$id'] = $cartDb->insertOrder();

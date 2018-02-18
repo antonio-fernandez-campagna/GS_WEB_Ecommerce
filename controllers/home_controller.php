@@ -11,8 +11,10 @@ class home_controller {
         $cart = new login_controller();
 
         $number_of_pages = $this->manyPages();
-        
+
         $data['cart'] = $cart->checkCart();
+        echo "<pre>" . print_r($data['cart'], 1) . "</pre>";
+
 
         $data['products'] = $this->getProducts();
 

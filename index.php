@@ -26,15 +26,12 @@ if (empty($_SESSION['usuario'])) {
     $_SESSION['usuario'] = "invitado";
 }
 
-//echo "<pre>" .print_r($_SESSION['usuario'],1). "</pre>";die;
 
 $homeController = new home_controller();
-//$cart = new cart_controller();
 $category = new categories_controller();
 
-//$data['cart'] = $cart->shoppingCart();
 $data['categories'] = $category->getCategories();
-//$homeController->view();
+
 if (isset($_GET['controller']) && isset($_GET['action'])) {
 
     if ($_GET["controller"] == "log") {
@@ -48,7 +45,8 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
             if (!$loged) {
 
                 $loginFailed = $login->loginFailed();
-                 require_once "views/templates/header_template.phtml";
+                        // require_once "views/templates/header_template.phtml";
+
             }
             if (!empty($data['cart'])) {
 
@@ -66,7 +64,8 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
             $register = new login_controller();
             //$register ->
         }
-        // require_once "views/templates/header_template.phtml";
+         // require_once "views/templates/header_template.phtml";
+         require_once "views/templates/header_template.phtml";
         //header('location: index.php');
         $homeController->view();
     }
@@ -197,7 +196,8 @@ if (isset($_GET['controller']) && isset($_GET['action'])) {
 
     //Mostramos el default header
     $category = new categories_controller();
-    
+    $cart = new cart_controller();
+    $data['cart'] = $cart->shoppingCart();
     $data['categories'] = $category->getCategories();
     require_once "views/templates/header_template.phtml";
 

@@ -7,6 +7,7 @@ require_once("models/promotions_model.php");
 require_once("controllers/categories_controller.php");
 require_once("controllers/login_controller.php");
 
+
 class cart_controller {
 
     public function shoppingCart() {
@@ -96,6 +97,9 @@ class cart_controller {
                 $_SESSION['cart'][$id] = $nUnits;
             }
         }
+        
+                echo "<pre>" . print_r( $_SESSION['cart'], 1) . "</pre>";
+
         
         require_once 'views/templates/header_template.phtml';
     }
