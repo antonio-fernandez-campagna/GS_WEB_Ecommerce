@@ -1,4 +1,4 @@
-<?php // include 'views/templates/header_template.phtml'      ?>
+<?php // include 'views/templates/header_template.phtml'       ?>
 
 <body>
 
@@ -47,11 +47,11 @@
 
                                 <div data-role="rangeslider">
                                     <label for="price-min">Precio mínimo:</label>
-                                        <output class="price-min-output">0 €</output>
+                                    <output class="price-min-output">0 €</output>
                                     <input type="range"  id="price-min" name="price-min" id="price-min" class="filterProduct range-price" value="0" min="0" max="1000">
                                     <label for="price-max">precio máximo:</label>
-                                        <output class="price-max-output">3000 €</output>
-                                    <input type="range" id="price-max"  name="price-max" id="price-max" class="filterProduct range-price" value="1000" min="0" max="1000">
+                                    <output class="price-max-output">2000 €</output>
+                                    <input type="range" id="price-max"  name="price-max" id="price-max" class="filterProduct range-price" value="2000" min="0" max="2000">
                                 </div>
 
 
@@ -72,123 +72,127 @@
                     <div class="col-sm- col-md-4 col-lg-4 mt-4 ">
 
                         <div class="card">
-                            <a data-toggle="modal" href="#modal<?php echo $product['ID']; ?>"><img class="card-img-top" src="<?php echo $product['URL'];?>"></a>
+                            <a data-toggle="modal" href="#modal<?php echo $product['ID']; ?>"><img class="card-img-top" src="<?php echo $product['URL']; ?>"></a>
 
 
                             <div class="card-block">
 
-                                <h4 class="card-title mt-3"><?php echo $product['SHORTDESCRIPTION'];?></h4>
-                                  <div class="card-text">
+                                <h4 class="card-title mt-3"><?php echo $product['SHORTDESCRIPTION']; ?></h4>
+                                <div class="card-text">
                                     <?php
                                     if (!empty($product['FINALPRICE'])) {
-                                      echo $product['FINALPRICE']."€";
+                                        echo $product['FINALPRICE'] . "€";
                                     } else {
-                                      echo $product['PRICE']."€";
+                                        echo $product['PRICE'] . "€";
                                     }
                                     ?>
                                 </div>
 
 
 
-                                 <?php if ($product['STOCK'] == 0) { ?>
-                                        <small><span style="color:red"> <?php echo "No quedan productos"; ?></span></small>
-                                    <?php } elseif ($product['STOCK'] < 5) {
-                                        ?>
-                                       <small><span style="color:orange"> <?php echo "Quedan pocos en stock"; ?></span></small>
-                                    <?php } ?>
+                                <?php if ($product['STOCK'] == 0) { ?>
+                                    <small><span style="color:red"> <?php echo "No quedan productos"; ?></span></small>
+                                <?php } elseif ($product['STOCK'] < 5) {
+                                    ?>
+                                    <small><span style="color:orange"> <?php echo "Quedan pocos en stock"; ?></span></small>
+                                <?php } ?>
 
 
                             </div>
 
                             <?php if ($_SESSION['usuario'] != 'admin') { ?>
 
-                            <div class="card-footer">
+                                <div class="card-footer">
 
 
 
-                                <form action="?controller=cart&action=addToCart" method="POST">
+                                    <form action="?controller=cart&action=addToCart" method="POST">
 
-                                  <?php
-                                  if (!empty($product['DISCOUNTPERCENTAGE'])) { ?>
-                                    <div class="badge badge-warning">
-                                      <?php
-                                    echo $product['DISCOUNTPERCENTAGE']. "%" ;
-                                   ?> </div>
-                                 <?php } ?>
+                                        <?php if (!empty($product['DISCOUNTPERCENTAGE'])) { ?>
+                                            <div class="badge badge-warning">
+                                                <?php
+                                                echo $product['DISCOUNTPERCENTAGE'] . "%";
+                                                ?> </div>
+                                            <?php } ?>
 
-                                   
-                                  <button name="id" value="<?php echo $product['ID']?>" class="btn btn-danger float-right btn-sm ">Comprar</button>
 
-                                  
-                                  
-                                </form>
+                                        <?php if ($product['STOCK'] == 0) { ?>
 
-                            </div>
+                                            <button name="id" disabled value="<?php echo $product['ID'] ?>" class="btn btn-danger float-right btn-sm ">Comprar</button>
+
+                                        <?php } else { ?>
+                                            <button name="id" value="<?php echo $product['ID'] ?>" class="btn btn-danger float-right btn-sm ">Comprar</button>
+
+                                        <?php } ?>
+
+
+                                    </form>
+
+                                </div>
 
                             <?php } ?>
 
                         </div>
                         <!-- modal product profile -->
-        <div class="modal fade bd-example-modal-lg" id="modal<?php echo $product['ID']; ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
+                        <div class="modal fade bd-example-modal-lg" id="modal<?php echo $product['ID']; ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
 
-              <!-- product profile -->
+                                    <!-- product profile -->
 
-              <div class="container">
-                      <div class="row bg-light mt-2 pb-2" >
-                        <div class="col-6">
-                          <img src="<?php echo $product['URL']?>" style="width:70%;" alt="producto" class="rounded">
+                                    <div class="container">
+                                        <div class="row bg-light mt-2 pb-2" >
+                                            <div class="col-6">
+                                                <img src="<?php echo $product['URL'] ?>" style="width:70%;" alt="producto" class="rounded">
+                                            </div>
+                                            <div class="col-6">
+                                                <h3 class="mt-4"><?php echo $product['SHORTDESCRIPTION'] ?></h3>
+
+                                            </div>
+
+                                            <div class="col-12">
+                                                <span class=""><strong>Descripción</strong></span>
+                                                <p class=" border border-dark"><?php echo $product['LONGDESCRIPTION'] ?> </p>
+                                                <p class="">Precio: <?php echo $product['PRICE'] ?>€</p>
+                                                <p class=""><?php if ($product['STOCK'] == 0) { ?>
+                                                        <span style="color:red"> <?php echo "No quedan productos"; ?></span>
+                                                        <?php } elseif ($product['STOCK'] < 5) {
+                                                        ?>
+                                                        <span style="color:orange"> <?php echo "Quedan pocos productos en stock"; ?></span>
+                                                    <?php } ?>
+                                                </p>
+                                                <form action="?controller=cart&action=addToCart" method="POST">
+
+                                                    <span>Cantidad:</span> <input class="mb-2" type="number" name="nUnits" value="1" min="1" max="<?php echo $product['STOCK'] ?>" style="width: 3em;">
+
+                                                    <button type="submit" name="id" value="<?php echo $product['ID'] ?>" class="btn btn-danger btn-block btn-lg mt-2">Añadir al carrito</button>
+
+                                                </form>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- close product profile -->
+
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <h3 class="mt-4"><?php echo $product['SHORTDESCRIPTION']?></h3>
-
-                        </div>
-
-                        <div class="col-12">
-                          <span class=""><strong>Descripción</strong></span>
-                          <p class=" border border-dark"><?php echo $product['LONGDESCRIPTION']?> </p>
-                          <p class="">Precio: <?php echo $product['PRICE']?>€</p>
-                          <p class=""><?php
-                            if ($product['STOCK'] == 0) { ?>
-                            <span style="color:red"> <?php echo "No quedan productos"; ?></span>
-                            <?php
-                          } elseif ($product['STOCK'] < 5) { ?>
-                                <span style="color:orange"> <?php echo "Quedan pocos productos en stock"; ?></span>
-                              <?php } ?>
-                          </p>
-                        <form action="?controller=cart&action=addToCart" method="POST">
-
-                            <span>Cantidad:</span> <input class="mb-2" type="number" name="nUnits" value="1" min="1" max="<?php echo $product['STOCK']?>" style="width: 3em;">
-                          
-                            <button type="submit" name="id" value="<?php echo $product['ID']?>" class="btn btn-danger btn-block btn-lg mt-2">Añadir al carrito</button>
-
-                        </form>
-                          
-                          
-                        </div>
-
-                      </div>
+                        <!-- close modal product profile -->
                     </div>
+<?php } ?>
 
-              <!-- close product profile -->
 
             </div>
-          </div>
-        </div>
-        <!-- close modal product profile -->
-                    </div>
-                <?php } ?>
-
-
-            </div>
         </div>
 
-        <?php
-        //foreach ($page = 0; $page <= $number_of_pages; $page++) {
-        //echo '<a href="index.php?page= ' . $page . ' ">' . $page . '</a>';
-        //}
-        ?>
+<?php
+//foreach ($page = 0; $page <= $number_of_pages; $page++) {
+//echo '<a href="index.php?page= ' . $page . ' ">' . $page . '</a>';
+//}
+?>
     </div>
 
     <!-- sidebar -->

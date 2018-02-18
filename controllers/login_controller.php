@@ -81,8 +81,8 @@ class login_controller {
          });
          </script>";
         return $obj;
-        //var_dump($obj);
-        //  die;
+//var_dump($obj);
+//  die;
     }
 
     function checkCart() {
@@ -94,14 +94,14 @@ class login_controller {
             if ($_SESSION['usuario'] == "invitado") {
 
                 $data = $cart->shoppingCart();
-                //echo "<pre>" . print_r($data, 1) . "</pre>";
+//echo "<pre>" . print_r($data, 1) . "</pre>";
 
                 return $data;
             } else {
                 $_SESSION['$id'] = $cart->insertOrder();
 
                 $data = $cart->shoppingCartDB();
-                //echo "<pre>" . print_r($data, 1) . "</pre>";
+//echo "<pre>" . print_r($data, 1) . "</pre>";
 
 
                 return $data;

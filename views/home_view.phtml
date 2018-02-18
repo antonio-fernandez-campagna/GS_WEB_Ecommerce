@@ -1,196 +1,209 @@
 <body>
 
-    <div class="container text-center ">
+    <div class="container text-center minHeight ">
 
-  	      <!-- carousel promociones -->
+        <!-- carousel promociones -->
 
-      <?php if ($_SESSION['usuario'] != 'admin') { ?>
+        <?php if ($_SESSION['usuario'] != 'admin') { ?>
 
-      <div id="demo" class="carousel slide mt-4" data-ride="carousel" >
-        <ul class="carousel-indicators">
+            <div id="demo" class="carousel slide mt-4" data-ride="carousel" >
+                <ul class="carousel-indicators">
 
-        <?php $i = 0; foreach ($data['products'] as $product) {  ?>
+                    <?php $i = 0;
+                    foreach ($data['products'] as $product) {
+                        ?>
 
-          <li data-target="#demo" <?php if ($i == 0){echo 'class="active"';}?>  data-slide-to="<?php echo $i;?>"></li>
+                        <li data-target="#demo" <?php
+                            if ($i == 0) {
+                                echo 'class="active"';
+                            }
+                            ?>  data-slide-to="<?php echo $i; ?>"></li>
 
-        <?php $i++;} ?>
+        <?php $i++;
+    }
+    ?>
 
-            </ul>
-            <div class="carousel-inner pt-4">
+                </ul>
+                <div class="carousel-inner pt-4">
 
-            <?php $j = 0; foreach ($data['promo'] as $product) { ?>
-              <div class="carousel-item <?php  if($j == 0){ echo "active" ;} ?>">
-                <div class="imagen-carousel" style="background-color: white;">
-                  <img src="<?php echo $product['URL'];?>" class="img-fluid" style="width:20%; margin-left: 312px;">
+                         <?php $j = 0;
+                         foreach ($data['promo'] as $product) {
+                             ?>
+                        <div class="carousel-item <?php
+                             if ($j == 0) {
+                                 echo "active";
+                             }
+                             ?>">
+                            <div class="imagen-carousel" style="background-color: white;">
+                                <img src="<?php echo $product['URL']; ?>" class="img-fluid" style="width:20%; margin-left: 312px;">
+                            </div>
+                            <div class="carousel-caption" style="height: 223px; top: 0px; padding: 0; width: 1100px; left: 4px;">
+                                <div class="d-flex flex-colmn " id="carousel-promotion">
+                                    <div style="color:black;"><?php echo $product['SHORTDESCRIPTION']; ?></div>
+                                    <div class="col-3" style="color:black; "><?php echo $product['DISCOUNTPERCENTAGE']; ?>% DESCUENTO!</div>
+                                    <div class=""style="color:red; ">PRECIO FINAL: <?php echo $product['FINALPRICE']; ?>€</div>
+                                </div>
+
+                            </div>
+                        </div>
+
+        <?php $j++;
+    }
+    ?>
+
                 </div>
-                  <div class="carousel-caption" style="height: 223px; top: 0px; padding: 0; width: 1100px; left: 4px;">
-                    <div class="d-flex flex-colmn " id="carousel-promotion">
-                      <div style="color:black;"><?php echo $product['SHORTDESCRIPTION'];?></div>
-                      <div class="col-3" style="color:black; "><?php echo $product['DISCOUNTPERCENTAGE'];?>% DESCUENTO!</div>
-                      <div class=""style="color:red; ">PRECIO FINAL: <?php echo $product['FINALPRICE'];?>€</div>
-                    </div>
-
-                  </div>
-              </div>
-
-            <?php $j++;} ?>
-
+                <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                    tabindex<span class="carousel-control-prev-icon"></span>
+                </a>
+                <a class="carousel-control-next" href="#demo" data-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </a>
             </div>
-            <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                tabindex<span class="carousel-control-prev-icon"></span>
-            </a>
-            <a class="carousel-control-next" href="#demo" data-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </a>
-        </div>
 
-      <?php  } ?>
+                <?php } ?>
 
         <!-- fin carousel promociones -->
 
 
-
-        <div class="container minHeight">
             <div class="row">
-                <?php foreach ($data['products'] as $product) { ?>
+<?php foreach ($data['products'] as $product) { ?>
                     <div class="col-sm- col-md-4 col-lg-4 mt-4 ">
 
                         <div class="card">
-                            <a data-toggle="modal" href="#modal<?php echo $product['ID']; ?>"><img class="card-img-top" src="<?php echo $product['URL'];?>"></a>
+                            <a data-toggle="modal" href="#modal<?php echo $product['ID']; ?>"><img class="card-img-top" src="<?php echo $product['URL']; ?>"></a>
 
 
                             <div class="card-block">
 
-                                <h4 class="card-title mt-3"><?php echo $product['SHORTDESCRIPTION'];?></h4>
-                                  <div class="card-text">
-                                    <?php
-                                    if (!empty($product['FINALPRICE'])) {
-                                      echo $product['FINALPRICE']."€";
-                                    } else {
-                                      echo $product['PRICE']."€";
-                                    }
-                                    ?>
+                                <h4 class="card-title mt-3"><?php echo $product['SHORTDESCRIPTION']; ?></h4>
+                                <div class="card-text">
+    <?php
+    if (!empty($product['FINALPRICE'])) {
+        echo $product['FINALPRICE'] . "€";
+    } else {
+        echo $product['PRICE'] . "€";
+    }
+    ?>
                                 </div>
 
 
 
-                                 <?php if ($product['STOCK'] == 0) { ?>
-                                        <small><span style="color:red"> <?php echo "No quedan productos"; ?></span></small>
-                                    <?php } elseif ($product['STOCK'] < 5) {
-                                        ?>
-                                       <small><span style="color:orange"> <?php echo "Quedan pocos en stock"; ?></span></small>
-                                    <?php } ?>
+    <?php if ($product['STOCK'] == 0) { ?>
+                                    <small><span style="color:red"> <?php echo "No quedan productos"; ?></span></small>
+                            <?php } elseif ($product['STOCK'] < 5) {
+                                ?>
+                                    <small><span style="color:orange"> <?php echo "Quedan pocos en stock"; ?></span></small>
+    <?php } ?>
 
 
                             </div>
 
-                            <?php if ($_SESSION['usuario'] != 'admin') { ?>
+                                    <?php if ($_SESSION['usuario'] != 'admin') { ?>
 
-                            <div class="card-footer">
+                                <div class="card-footer">
 
 
 
-                                <form action="?controller=cart&action=addToCart" method="POST">
+                                    <form action="?controller=cart&action=addToCart" method="POST">
 
-                                  <?php
-                                  if (!empty($product['DISCOUNTPERCENTAGE'])) { ?>
-                                    <div class="badge badge-warning">
-                                      <?php
-                                    echo $product['DISCOUNTPERCENTAGE']. "%" ;
-                                   ?> </div>
-                                 <?php } ?>
+                                        <?php if (!empty($product['DISCOUNTPERCENTAGE'])) { ?>
+                                            <div class="badge badge-warning">
+            <?php
+            echo $product['DISCOUNTPERCENTAGE'] . "%";
+            ?> </div>
+        <?php } ?>
 
-                                   
-                                  <button name="id" value="<?php echo $product['ID']?>" class="btn btn-danger float-right btn-sm ">Comprar</button>
 
-                                  
-                                  
-                                </form>
+        <?php if ($product['STOCK'] == 0) { ?>
 
-                            </div>
+                                            <button name="id" disabled value="<?php echo $product['ID'] ?>" class="btn btn-danger float-right btn-sm ">Comprar</button>
 
-                            <?php } ?>
+        <?php } else { ?>
+                                            <button name="id" value="<?php echo $product['ID'] ?>" class="btn btn-danger float-right btn-sm ">Comprar</button>
+
+                                <?php } ?>
+
+
+
+                                    </form>
+
+                                </div>
+
+    <?php } ?>
 
                         </div>
                         <!-- modal product profile -->
-        <div class="modal fade bd-example-modal-lg" id="modal<?php echo $product['ID']; ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-          <div class="modal-dialog modal-lg">
-            <div class="modal-content">
+                        <div class="modal fade bd-example-modal-lg" id="modal<?php echo $product['ID']; ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
 
-              <!-- product profile -->
+                                    <!-- product profile -->
 
-              <div class="container">
-                      <div class="row bg-light mt-2 pb-2" >
-                        <div class="col-6">
-                          <img src="<?php echo $product['URL']?>" style="width:70%;" alt="producto" class="rounded">
+                                    <div class="container">
+                                        <div class="row bg-light mt-2 pb-2" >
+                                            <div class="col-6">
+                                                <img src="<?php echo $product['URL'] ?>" style="width:70%;" alt="producto" class="rounded">
+                                            </div>
+                                            <div class="col-6">
+                                                <h3 class="mt-4"><?php echo $product['SHORTDESCRIPTION'] ?></h3>
+
+                                            </div>
+
+                                            <div class="col-12">
+                                                <span class=""><strong>Descripción</strong></span>
+                                                <p class=" border border-dark"><?php echo $product['LONGDESCRIPTION'] ?> </p>
+                                                <p class="">Precio: <?php echo $product['PRICE'] ?>€</p>
+                                                <p class=""><?php if ($product['STOCK'] == 0) { ?>
+                                                        <span style="color:red"> <?php echo "No quedan productos"; ?></span>
+    <?php } elseif ($product['STOCK'] < 5) {
+        ?>
+                                                        <span style="color:orange"> <?php echo "Quedan pocos productos en stock"; ?></span>
+    <?php } ?>
+                                                </p>
+                                                <form action="?controller=cart&action=addToCart" method="POST">
+
+                                                    <span>Cantidad:</span> <input class="mb-2" type="number" name="nUnits" value="1" min="1" max="<?php echo $product['STOCK'] ?>" style="width: 3em;">
+
+                                                    <button type="submit" name="id" value="<?php echo $product['ID'] ?>" class="btn btn-danger btn-block btn-lg mt-2">Añadir al carrito</button>
+
+                                                </form>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- close product profile -->
+
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-6">
-                            <h3 class="mt-4"><?php echo $product['SHORTDESCRIPTION']?></h3>
-
-                        </div>
-
-                        <div class="col-12">
-                          <span class=""><strong>Descripción</strong></span>
-                          <p class=" border border-dark"><?php echo $product['LONGDESCRIPTION']?> </p>
-                          <p class="">Precio: <?php echo $product['PRICE']?>€</p>
-                          <p class=""><?php
-                            if ($product['STOCK'] == 0) { ?>
-                            <span style="color:red"> <?php echo "No quedan productos"; ?></span>
-                            <?php
-                          } elseif ($product['STOCK'] < 5) { ?>
-                                <span style="color:orange"> <?php echo "Quedan pocos productos en stock"; ?></span>
-                              <?php } ?>
-                          </p>
-                        <form action="?controller=cart&action=addToCart" method="POST">
-
-                            <span>Cantidad:</span> <input class="mb-2" type="number" name="nUnits" value="1" min="1" max="<?php echo $product['STOCK']?>" style="width: 3em;">
-                          
-                            <button type="submit" name="id" value="<?php echo $product['ID']?>" class="btn btn-danger btn-block btn-lg mt-2">Añadir al carrito</button>
-
-                        </form>
-                          
-                          
-                        </div>
-
-                      </div>
-                    </div>
-
-              <!-- close product profile -->
-
-            </div>
-          </div>
-        </div>
-        <!-- close modal product profile -->
+                        <!-- close modal product profile -->
                     </div>
                 <?php } ?>
 
 
             </div>
-        </div>
+
+            <ul class="pagination pagination-circle text-center pg-blue mb-0 justify-content-center mt-4 mb-4">
 
 
+            <?php for ($page = 1; $page <= $number_of_pages; $page++) { ?>
 
-        <nav class="my-4">
-          <ul class="pagination pagination-circle pg-blue mb-0">
+                    <?php if($_GET['page'] == $page){ ?>
+                    <li class='page-item active'><a href='index.php?page=<?php echo $page ?>' class="page-link"><?php echo $page ?></a></li>
 
-     
-              </li>
+                    <?php } else { ?> 
+                
+                    <li class='page-item '><a href='index.php?page=<?php echo $page ?>' class="page-link"><?php echo $page ?></a></li>
 
-              <?php
+            <?php }} ?>
 
-                  for ($page = 1; $page <= $number_of_pages; $page++){ ?>
-
-                  
-                      <li class='page-item'> <a href='index.php?page=<?php echo $page ?>' class="page-link"> <?php echo $page ?></a></li>
-
-                <?php  } ?>
-
-          </ul>
-        </nav>
+            </ul>
 
 
     </div>
-        <!-- cierro div container -->
 
 <?php include 'views/templates/footer_template.phtml'; ?>
 

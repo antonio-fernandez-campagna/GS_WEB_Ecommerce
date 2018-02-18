@@ -78,7 +78,7 @@ class home_controller {
         $row = new products_model();
         $results_per_page = 3;
 
-        $num_rows = $row->getNumRows($results_per_page);
+        $num_rows = $row->getNumRows();
 
 
         return ceil($num_rows / $results_per_page);
