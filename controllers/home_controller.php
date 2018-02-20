@@ -4,8 +4,11 @@ require_once("models/categories_model.php");
 require_once("models/products_model.php");
 require_once("models/promotions_model.php");
 
+// clase en la que se controla la página principal; paginación, promociones, productos destacados
+// y muestra las categorias 
 class home_controller {
 
+    // Función que muestra la página principal
     function view() {
         $promo = new promotions_model();
         $cart = new login_controller();
@@ -13,7 +16,6 @@ class home_controller {
         $number_of_pages = $this->manyPages();
 
         $data['cart'] = $cart->checkCart();
-        //echo "<pre> view" . print_r($data['cart'], 1) . "</pre>";
 
         $data['products'] = $this->getProducts();
 
@@ -25,12 +27,14 @@ class home_controller {
         require_once("views/home_view.phtml");
     }
 
+    // Función que muestra los productos destacados
     function getProducts() {
 
         $products = new products_model();
         return $products->get_products();
     }
-
+    
+    // Función que muestra las categorias
     function getCategories() {
 
         // Creamos el objeto de la clase categorias_model
@@ -74,9 +78,10 @@ class home_controller {
         return $orderedCategories;
     }
 
+    // función que muestra la paginación
     public function manyPages() {
         $row = new products_model();
-        $results_per_page = 3;
+        $results_per_page = 10;
 
         $num_rows = $row->getNumRows();
 

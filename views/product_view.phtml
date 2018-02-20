@@ -71,7 +71,7 @@
                 <?php foreach ($data['products'] as $product) { ?>
                     <div class="col-sm- col-md-4 col-lg-4 mt-4 ">
 
-                        <div class="card">
+                        <div class="card"  id="<?php echo $product['BRAND']; ?>">
                             <a data-toggle="modal" href="#modal<?php echo $product['ID']; ?>"><img class="card-img-top" src="<?php echo $product['URL']; ?>"></a>
 
 

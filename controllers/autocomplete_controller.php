@@ -3,8 +3,9 @@
 require_once("../db/db.php");
 require_once '../models/products_model.php';
 
-$handleProducts = new products_model();
+$product = new products_model();
 
-$allProducts = $handleProducts->get_product__short_descriptions();
+$allProducts = $product->get_product__short_descriptions();
 
+// hace un echo del array de los productos que recojo en anteriormente en formato JSON
 echo json_encode($allProducts, 1);

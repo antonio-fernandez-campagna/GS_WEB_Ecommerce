@@ -2,7 +2,7 @@
 
 class products_model {
 
-    private $db;
+    public $db;
     private $products;
     private $id;
     private $name;
@@ -19,7 +19,6 @@ class products_model {
         $this->products = array();
     }
 
-    /* GETTERS & SETTERS */
 
     public function getId() {
         return $this->id;
@@ -93,43 +92,28 @@ class products_model {
         $this->category = $category;
     }
 
-    public function pagination() {
-        $results_per_page = 3;
-
-        //determinate number of total pages available
-        $number_of_pages = ceil($number_of_results / $results_per_page);
-        //determinate which page number bisistor is currently on
-        //determine the sql LIMIT starrting number for the results on the displaying page
-        echo "$page_first_result = ($page-1)*$results_per_page";
-        $number_array = [];
-        for ($page = 1; $page < $results_per_page; $page ++) {
-            
-        }
-    }
-
-    /**
-     * Extreu totes les persones de la taula
-     * @return array Bidimensional de totes les persones
-     */
+    // Función que extrae los productos destacados o por subcategoria
     public function get_products($subCategory = "") {
 
+        // páginacion
         if (!isset($_GET['page'])) {
             $page = 1;
         } else {
             $page = $_GET['page'];
         }
 
-        $number_products_per_page = 3;
+        // determinaciones para saber desde donde hasta donde mostrar 
+        // según la página en la que estemos
+        $number_products_per_page = 10;
         $final_limit_product = $number_products_per_page * $page;
         $start_limit_product = $page == 1 ? 0 : $final_limit_product - $number_products_per_page;
 
         if (!empty($subCategory)) {
-            //$query = "SELECT * FROM product WHERE category = {$subCategory};";
+            // productos por subcategoria
             $query = "SELECT *, prod.ID, img.URL, promo.DISCOUNTPERCENTAGE, promo.ENDDATE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod join image img on prod.ID = img.product left join promotion promo on promo.product = prod.id WHERE prod.CATEGORY = {$subCategory};";
-            //die($query);
         } else {
+            // aquí hará la determinación de la páginacion ya que esto hace refencia a los productos destacados
             $query = "SELECT *, prod.ID, img.URL, promo.DISCOUNTPERCENTAGE, promo.ENDDATE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod join image img on prod.ID = img.product left join promotion promo on promo.product = prod.id WHERE prod.SPONSORED = 'Y' LIMIT {$start_limit_product},{$number_products_per_page};";
-            //$query = "SELECT prod.* FROM PRODUCT prod WHERE prod.SPONSORED = 'Y';";
         }
 
         $consulta = $this->db->query($query);
@@ -139,6 +123,7 @@ class products_model {
         return $this->products;
     }
 
+    // Función para saber el número de filas de destacado
     public function getNumRows() {
 
         $query = "select count(1) FROM product prod join image img on prod.ID = img.PRODUCT where SPONSORED = 'Y'";
@@ -150,20 +135,13 @@ class products_model {
         return $row[0];
     }
 
-    public function getProductProfile($id) {
 
-        $sql = "SELECT * FROM product WHERE id='$id'";
-
-        $result = $this->db->query($sql);
-        $fila = $result->fetch_assoc();
-        return $fila;
-        //echo "<pre>".print_r($fila, 1)."</pre>"; die;
-    }
-
+    // Función para mostrar el carrito de session cart
     public function get_shopping_cart() {
 
         if (!empty($_SESSION["cart"])) {
 
+            // separa por comas las KEYS del array (ahí estan las ID de los productos)
             $idProducts = implode(",", array_keys($_SESSION["cart"]));
 
             $query = "SELECT *, prod.ID, img.URL, promo.DISCOUNTPERCENTAGE, promo.ENDDATE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE
@@ -180,7 +158,18 @@ class products_model {
             return $this->products;
         }
     }
+    
+    // Función que devuelve los productos pasándole por parámetro la palabra
+     public function get_product_searcher($word) {
+        $query = "SELECT prod.*, img.URL FROM product prod join image img on prod.ID = img.product WHERE SHORTDESCRIPTION like '%$word%';";
+        $consulta = $this->db->query($query);
+        while ($filas = $consulta->fetch_assoc()) {
+            $this->products[] = $filas;
+        }
+        return $this->products;
+    }
 
+    // Función que recoge los productos de la BD
     public function get_shopping_cart_db() {
 
         $sql = "select max(ID) from `order` WHERE PAYMENTINFO = 2 & USER = 'user'";
@@ -205,30 +194,8 @@ class products_model {
         return $this->products;
     }
 
-    public function get_product_searcher($word) {
-
-        $query = "SELECT prod.*, img.URL FROM product prod join image img on prod.ID = img.product WHERE SHORTDESCRIPTION like '%$word%';";
-
-
-        $consulta = $this->db->query($query);
-        while ($filas = $consulta->fetch_assoc()) {
-            $this->products[] = $filas;
-        }
-
-
-        return $this->products;
-    }
-
-    public function get_filtered_products($strIds) {
-        $query = "SELECT prod.*, img.URL FROM product prod join image img on prod.ID = img.product WHERE BRAND in ({$strIds});";
-
-        $consulta = $this->db->query($query);
-        while ($filas = $consulta->fetch_assoc()) {
-            $this->products[] = $filas;
-        }
-        return $this->products;
-    }
-
+  
+    // función que recoge las marcas que están en las subcategorias
     public function get_brands($subCategory = "") {
 
         if (empty($subCategory)) {
@@ -244,6 +211,7 @@ class products_model {
         return $this->products;
     }
 
+    // Función para insertar  productos
     public function insert_product() {
 
         //echo $this->shortDescription;die;
@@ -261,6 +229,7 @@ class products_model {
         }
     }
 
+    // Función que devuelve todos los productos
     public function get_all_products() {
         $query = "SELECT ID, NAME from product;";
 
@@ -271,6 +240,7 @@ class products_model {
         return $this->products;
     }
 
+    // Función para el buscador, devuelve la descripcion corta y el ID todos los productos
     public function get_product__short_descriptions() {
         $query = "SELECT SHORTDESCRIPTION as value, ID as data from product;";
         $consulta = $this->db->query($query);

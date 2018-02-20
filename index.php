@@ -7,7 +7,6 @@ require_once("controllers/products_controller.php");
 require_once("controllers/login_controller.php");
 require_once("controllers/home_controller.php");
 require_once("controllers/cart_controller.php");
-require_once("controllers/view_controller.php");
 require_once("controllers/promotion_controller.php");
 
 ob_start();

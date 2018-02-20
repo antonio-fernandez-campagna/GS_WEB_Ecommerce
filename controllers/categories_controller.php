@@ -3,40 +3,14 @@
 //Llamada al modelo
 require_once("models/categories_model.php");
 
+
+// clase para las categorias, lista añade 
 class categories_controller {
-    /**
-     * Muestra pantalla 'add'
-     * @return No
-     */
-    /*
-      function add() {
-      require_once("views/products_add.phtml");
-      }
 
-     */
 
-    /**
-     * Mostra llistat
-     * @return No
-     */
-    /*
-      function view() {
-      $categories = new categories_model();
-
-      //Uso metodo del modelo de personas
-      $datos=$categories->get_categories();
-
-      //Llamado a la vista: mostrar la pantalla
-      require_once("views/home_view.phtml");
-      }
-     * */
-
+    // Función que llama a la vista de añadir categorias
     public function categoryAdd_view() {
-        //Mostramos el default header
-        //$category = new categories_controller();
-        //$cart = new cart_controller();
-        //$data['cart'] = $cart->shoppingCart();
-        // $data['categories'] = $category->getCategories();
+        
         $categories = new categories_model();
         $data = $categories->get_parents_categories();
 
@@ -45,12 +19,14 @@ class categories_controller {
         include("views/categoryAdd_view.phtml");
     }
 
+    
+    // Función que inserta categorias en la BD
     public function insert_category() {
         $categories = new categories_model();
 
         $conexion = $categoies->db;
 
-
+        // comprobaciíon de mysql injection
         $categoryName = mysqli_real_escape_string($conexion, $_POST['nombre']);
         $categoryParent = mysqli_real_escape_string($conexion, $_POST['parentcategory']);
 
@@ -61,6 +37,7 @@ class categories_controller {
    
     }
 
+    // Función que muestra las categorias
     function getCategories() {
 
         // Creamos el objeto de la clase categorias_model
@@ -100,8 +77,7 @@ class categories_controller {
             }
         }
 
-        //echo "<pre>" .print_r($orderedCategories,1). "</pre>";
-        //die();
+  
         return $orderedCategories;
     }
 

@@ -13,6 +13,7 @@ $(document).ready(function () {
         console.log("lenght" + $idBrands.length);
 
         $(".activated").each(function () {
+
             $idBrands.push($(this).attr("id"));
         });
 
@@ -25,10 +26,6 @@ $(document).ready(function () {
             $('.price-min-output').text($priceMin + " €");
             $('.price-max-output').text($priceMax + " €");
 
-
-            //console.log("Precio: " + $prodPrice + " PrecioMin: " + $priceMin + " PrecioMax: " + $priceMax);
-            //alert($prodPrice);
-            //console.log("lenght 2" + $idBrands.length);
 
             if (($prodPrice < $priceMin || $prodPrice > $priceMax)) {
                 $(this).parent().hide();
@@ -46,7 +43,10 @@ $(document).ready(function () {
         });
 
     });
-    
+
+    // guardo en la variable currencies el array de productos de autocomplete_controller.php haciendo
+    // una llamada vía AJAX 
+
     var currencies = function () {
         var products = null;
         $.ajax({
@@ -61,11 +61,32 @@ $(document).ready(function () {
         return products;
     }();
 
+    // utiliza una libreria para autocompletar las palabras que vayan pasando por el buscador
     $('#autocomplete').autocomplete({
         lookup: currencies,
-        onSelect: function (suggestion) {
-            var thehtml = '<strong>Currency Name:</strong> ' + suggestion.value + ' <br> <strong>Symbol:</strong> ' + suggestion.data;
-            $('#outputcontent').html(thehtml);
-        }
+
     });
+
+    $("#hoverCart").hover(function () {
+        $('.open-cart').modal({
+            show: true
+        });
+    });
+
+
+    $('.hover-menu-button').hover(function () {
+        $('.dropdown-menu').addClass('show');
+    }, function () {
+        $('.dropdown-menu').removeClass("show");
+    });
+
+
+    $('.img').hover(function () {
+        $(this).addClass('escale');
+    }, function () {
+        $(this).removeClass('escale');
+    });
+
+
+
 });

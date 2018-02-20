@@ -7,9 +7,10 @@ require_once("controllers/home_controller.php");
 //require_once("controllers/cart_controller.php");
 
 
-
+// clase que controla el Login, registro y comprueba el estado del cart
 class login_controller {
 
+    // Función para logearse
     function login() {
         $usuario = new login_model();
 
@@ -26,13 +27,15 @@ class login_controller {
 
         $ok = $usuario->verifyUser();
 
+         // si se ha logeado correctamente muestra la página principal y devuelve true, sino false y mostrará un intento 
+        // de inicio de sesión fallido
         if ($ok) {
             $_SESSION['usuario'] = $username;
 
             $cart = new cart_model();
             $id = $cart->checkLastPending();
 
-
+            // si hay algo en session cart y hay un order pendiente pone el orden estado rejected
             if (!empty($_SESSION['cart']) && $id['max(id)'] != null) {
                 $cart->reject_order($id);
             }
@@ -46,6 +49,7 @@ class login_controller {
         }
     }
 
+    // Función para registrarse
     function register() {
 
         $user = new login_model();
@@ -59,6 +63,7 @@ class login_controller {
 
         $register = $user->insert_user();
 
+        // si al registrarse el usuario ya existe no dejará registrarse
         if ($register === false) {
 
             $obj = array();
@@ -72,6 +77,7 @@ class login_controller {
         }
     }
 
+    // Función que abre la pantalla de login y muestra un error
     function loginFailed() {
         $obj = array();
         $obj['message'] = "Usuario o contraseña incorrecta";
@@ -81,45 +87,47 @@ class login_controller {
          });
          </script>";
         return $obj;
-//var_dump($obj);
-//  die;
     }
 
+    // Función para comprobar el estado del cart
     function checkCart() {
 
         $cart = new cart_controller();
         $cartMod = new cart_model();
 
+        // si hay algo en session cart
         if (!empty($_SESSION['cart'])) {
+            // y si el usuario no es invitado (es un usuario ya logeado)
+            // mostrará el cart desde session, si no, mostrará el cart desde la BD
             if ($_SESSION['usuario'] == "invitado") {
 
                 $data = $cart->shoppingCart();
-//echo "<pre>" . print_r($data, 1) . "</pre>";
 
                 return $data;
             } else {
                 $_SESSION['$id'] = $cart->insertOrder();
 
                 $data = $cart->shoppingCartDB();
-//echo "<pre>" . print_r($data, 1) . "</pre>";
 
 
                 return $data;
             }
         }
-
+        
+        // si el usuario esta logeado y hay un order pendiente mostrará el cart desde BD
         if ($_SESSION['usuario'] != "invitado" && $_SESSION['usuario'] != "admin") {
 
             $ordID = $cartMod->checkLastPending();
 
             $sumaTotal = 0;
 
+            // se comprueba que hay un order pendiente
             if (!empty($ordID['max(id)'])) {
 
                 $cart = new cart_controller();
                 $data = $cart->shoppingCartDB();
 
-
+                // se guarda el valor de precio en el array por si tiene una promoción aplicada
                 foreach ($data as $key => $producto) {
 
                     if ((!empty($producto['FINALPRICE']))) {

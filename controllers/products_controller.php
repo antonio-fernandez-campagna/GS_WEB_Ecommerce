@@ -4,26 +4,13 @@
 require_once("models/products_model.php");
 require_once("controllers/home_controller.php");
 
-
-
+// clase que controla aádir productos, la vista de productos (la del buscador o por subcategorias), y se mostrarán las categorias
 class products_controller {
 
-    /**
-     * Muestra pantalla 'add'
-     * @return No
-     */
-    function add() {
-        require_once("views/products_add.phtml");
-    }
-
-    /**
-     * Mostra llistat
-     * @return No
-     */
+    // Función muestra la vista de product_view.phtml
+    // se le pasa el id de la subcategoria y muestra los productos por esta subcategoria
     function view($subCategory) {
-        //$producto = new products_model();
 
-        //Uso metodo del modelo de personas
         $data['products'] = $this->getProducts($subCategory);
 
         $data['categories'] = $this->getCategories();
@@ -34,53 +21,60 @@ class products_controller {
         $brand = new products_model();
         $data['brands'] = $brand->get_brands($subCategory);
 
-        //echo "<pre>" .print_r($data['brands'],1). "</pre>";
-        //die();
         $category = new categories_controller();
         include("views/templates/header_template.phtml");
 
-        //Llamado a la vista: mostrar la pantalla
         require_once("views/product_view.phtml");
     }
 
-    public function productAdd_view(){
-     $brand = new products_model();
-     $product = new categories_model();
+    // función que muestra la página de añadir producto
+    public function productAdd_view() {
+        $brand = new products_model();
+        $product = new categories_model();
 
-     $data['brands'] = $brand->get_brands();
-     $data['categories'] = $product-> get_subCategories();
-     //echo "<pre>" .print_r($data['products'],1). "</pre>";
-     //die();
-     require_once "views/templates/header_template.phtml";
+        $data['brands'] = $brand->get_brands();
+        $data['categories'] = $product->get_subCategories();
+        require_once "views/templates/header_template.phtml";
 
-     include("views/productAdd_view.phtml");
+        include("views/productAdd_view.phtml");
     }
 
-    public function insertProduct(){
-      $product = new products_model();
+    // función que inserta productos y controla sql injection
+    public function insertProduct() {
+        $product = new products_model();
 
-      $product -> setName($_POST['name']);
-      $product -> setStock($_POST['stock']);
-      $product -> setPrice($_POST['price']);
-      $product -> setSponsored($_POST['promotionedRadio']);
-      $product -> setShortDescription($_POST['descShort']);
-      $product -> setLongDescription($_POST['descLong']);
-      $product -> setBrand($_POST['brand']);
-      $product -> setCategory($_POST['subCategory']);
+        $conexion = $product->db;
 
-      $product -> insert_product();
+        $name = mysqli_real_escape_string($conexion, $_POST['name']);
+        $stock = mysqli_real_escape_string($conexion, $_POST['stock']);
+        $price = mysqli_real_escape_string($conexion, $_POST['price']);
+        $promotioned = mysqli_real_escape_string($conexion, $_POST['promotionedRadio']);
+        $descS = mysqli_real_escape_string($conexion, $_POST['descShort']);
+        $descL = mysqli_real_escape_string($conexion, $_POST['descLong']);
+        $brand = mysqli_real_escape_string($conexion, $_POST['brand']);
+        $category = mysqli_real_escape_string($conexion, $_POST['subCategory']);
+
+        $product->setName($name);
+        $product->setStock($stock);
+        $product->setPrice($price);
+        $product->setSponsored($promotioned);
+        $product->setShortDescription($descS);
+        $product->setLongDescription($descL);
+        $product->setBrand($brand);
+        $product->setCategory($category);
+
+        $product->insert_product();
     }
 
-
-   function searchProduct($word) {
+    // función para buscar producto por palabra
+    function searchProduct($word) {
 
         $products = new products_model();
         $home = new home_controller();
         $cart = new cart_controller();
         $data['cart'] = $cart->shoppingCart();
+        
 
-
-        // /$data = array();
         $data['products'] = $products->get_product_searcher($word);
         $data['categories'] = $home->getCategories();
 
@@ -88,23 +82,14 @@ class products_controller {
         require_once("views/product_view.phtml");
     }
 
-
+    // Función para devolver los productos de una subcategoria pasada por parámetro
     function getProducts($subCategory) {
 
         $products = new products_model();
         return $products->get_products($subCategory);
     }
 
-    function profileProduct($id){
-
-      $product = new products_model();
-      $id = $_GET['id'];
-      $product = $product->getProductProfile($id);
-      return $product;
-
-    }
-
-
+    //Función para mostrar categorias
     function getCategories() {
 
         // Creamos el objeto de la clase categorias_model
@@ -144,19 +129,8 @@ class products_controller {
             }
         }
 
-        //echo "<pre>" .print_r($orderedCategories,1). "</pre>";
-        //die();
-
-
         return $orderedCategories;
     }
-    
-   // public function pagination(){
-        
-//        $algo = new products_model();
-//        $algo -> pagination(); 
-//        
-//    }
 
 }
 

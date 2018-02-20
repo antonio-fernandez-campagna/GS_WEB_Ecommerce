@@ -26,7 +26,7 @@
                     ?>
 
                 </ul>
-                <div class="carousel-inner pt-4">
+                <div class="carousel-inner ">
 
                     <?php
                     $j = 0;
@@ -40,9 +40,9 @@
                             <div class="imagen-carousel" style="background-color: white;">
                                 <img src="<?php echo $product['URL']; ?>" class="img-fluid" style="width:20%; margin-left: 312px;">
                             </div>
-                            <div class="carousel-caption" style="height: 223px; top: 0px; padding: 0; width: 1100px; left: 4px;">
+                            <div class="carousel-caption">
                                 <div class="d-flex flex-colmn " id="carousel-promotion">
-                                    <div style="color:black;"><?php echo $product['SHORTDESCRIPTION']; ?></div>
+                                    <div class="text-black"><?php echo $product['SHORTDESCRIPTION']; ?></div>
                                     <div class="col-3" style="color:black; "><?php echo $product['DISCOUNTPERCENTAGE']; ?>% DESCUENTO!</div>
                                     <div class=""style="color:red; ">PRECIO FINAL: <?php echo $product['FINALPRICE']; ?>€</div>
                                 </div>
@@ -74,7 +74,7 @@
                 <div class="col-sm- col-md-4 col-lg-4 mt-4 ">
 
                     <div class="card">
-                        <a data-toggle="modal" href="#modal<?php echo $product['ID']; ?>"><img class="card-img-top" src="<?php echo $product['URL']; ?>"></a>
+                        <a data-toggle="modal" href="#modal<?php echo $product['ID']; ?>"><img class="card-img-top img" src="<?php echo $product['URL']; ?>"></a>
 
 
                         <div class="card-block">

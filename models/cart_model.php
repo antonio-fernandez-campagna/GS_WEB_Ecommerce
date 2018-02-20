@@ -97,6 +97,7 @@ class cart_model {
         $this->db = Conectar::conexion();
     }
 
+    // Función que inserta un orderItem pasandole el id y el producto
     public function insertOrderItem($id, $data) {
 
         $contador = 1;
@@ -131,6 +132,7 @@ class cart_model {
         }
     }
 
+    // Función que inserta un order en estado pendiente
     public function insertOrder() {
 
         $sql = "INSERT INTO `order` (SHIPPINGADDRESS, USER)
@@ -144,6 +146,7 @@ class cart_model {
         }
     }
 
+    // Función que elimina un orderItem
     public function deleteOrderItem($id) {
 
         //$user = $_SESSION['usuario'];
@@ -160,6 +163,9 @@ class cart_model {
         }
     }
 
+    // Función que comprueba cual es el ID en estado pendiente 
+    // el max(id) era para comprobar bien, se puede quitar ya que solo habrá
+    // uno en estado pendiente
     public function checkLastPending() {
 
         //$user = $_SESSION['usuario'];
@@ -175,17 +181,19 @@ class cart_model {
         return $id;
     }
 
+    // Función que inserta un orderline, pasandole el item (id del producto y número de unidades) y el 
+    // ID en estado pendiente
     public function insertProduct($item, $id_pending) {
 
+        // se recoge el max orderline de ese usuario para poder insertar un orderline y que se sume 1
+        // al orderline que se vaya a insertar despuñes
         $sql = "SELECT max(ORDERLINE) FROM `orderitem` join `order` on user = '{$_SESSION['usuario']}'";
 
         $consulta = $this->db->query($sql);
         $maxOrderLine = $consulta->fetch_assoc();
         $orderLine = $maxOrderLine['max(ORDERLINE)'] + 1;
 
-        // echo "<pre>" .print_r($id_pending,1). "</pre>";
-
-
+        // se recoge el precio (por si tiene una promoción aplicada)
         $sql2 = "SELECT prod.PRICE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod LEFT join promotion promo on prod.ID = promo.PRODUCT where prod.ID = {$item[0]}";
 
         $consulta = $this->db->query($sql2);
@@ -199,14 +207,17 @@ class cart_model {
 
             $price = $price['FINALPRICE'];
         }
-
+        
+        // se secoge el id del producto y la cantidad del orderItem para que se pueda
+        // sumar la cantidad
+       
         $sql3 = "SELECT product, QUANTITY FROM `orderitem` where PRODUCT = {$item[0]} and `order` = {$id_pending['max(id)']}";
 
-        //die($sql3);
         $consulta = $this->db->query($sql3);
         $prodId = $consulta->fetch_assoc();
 
-        //echo "<pre>" .print_r($orderLine,1). "</pre>";
+        // se comprueba si el producto ya estaba, si no estaba se crea, y si estaba
+        // se suman las unidades
         if (empty($prodId)) {
             $sql4 = "INSERT into orderitem (ORDERLINE, `ORDER`, PRODUCT, QUANTITY, PRICE) VALUES "
                     . "({$orderLine}, {$id_pending['max(id)']}, {$item[0]}, {$item[1]}, {$price} )";
@@ -224,6 +235,7 @@ class cart_model {
         }
     }
 
+    // se añade un producto al orderline (se modifica desde la pantalla final de compra)
     public function add_1_Product($item, $id_pending) {
 
         $sql1 = "SELECT product, QUANTITY FROM `orderitem` where PRODUCT = {$item[0]} and `order` = {$id_pending['max(id)']}";
@@ -246,6 +258,7 @@ class cart_model {
         }
     }
 
+    // se quita un producto al orderline (se modifica desde la pantalla final de compra)
     public function remove_1_Product($item, $id_pending) {
 
         $sql1 = "SELECT product, QUANTITY FROM `orderitem` where PRODUCT = {$item[0]} and `order` = {$id_pending['max(id)']}";
@@ -268,6 +281,8 @@ class cart_model {
         }
     }
 
+    // Función para pasar de estado pendiente a Pagado (cuando el usuario le da
+    // a finalizar compra)
     public function buyComplete() {
 
         $sql = "SELECT MAX(ID) FROM `ORDER` WHERE PAYMENTINFO = 2 AND USER = '{$_SESSION['usuario']}'";
@@ -287,10 +302,8 @@ class cart_model {
         }
     }
 
+    // Función que inserta un orderItem después de haber logeado y no tener un Order creado
     public function insertOrderItemNoLoged($id_order, $nUnits, $id) {
-
-        // echo "<pre>" .print_r($id,1). "</pre>";
-
 
         $sql = "SELECT prod.PRICE, FORMAT((prod.PRICE * (1-(promo.DISCOUNTPERCENTAGE/100))),2) AS FINALPRICE FROM product prod LEFT join promotion promo on prod.ID = promo.PRODUCT where prod.ID = {$id}";
 
@@ -316,6 +329,7 @@ class cart_model {
         }
     }
 
+    // Función que marca el order en estado rechazado
     public function reject_order($id) {
 
         $sql = "UPDATE `ORDER` SET PAYMENTINFO = 3 WHERE ID = '{$id['max(id)']} '";
@@ -329,6 +343,7 @@ class cart_model {
         }
     }
 
+    // Función para mostrar el historial de compras
     public function get_history_cart() {
 
         $sql = "SELECT DISTINCT prod.NAME, prod.SHORTDESCRIPTION, orderitem.QUANTITY as nUnits, orderitem.PRICE, ord.DATE, img.URL from product PROD JOIN orderitem on prod.ID = orderitem.PRODUCT JOIN `order` ord on orderitem.`ORDER` = ord.ID JOIN user on ord.USER = '{$_SESSION['usuario']}' JOIN image img on prod.ID = img.PRODUCT WHERE ord.PAYMENTINFO = 1 ORDER BY ord.DATE ASC";
@@ -341,6 +356,7 @@ class cart_model {
         return $this->products;
     }
 
+    // función para vaciar el cart de BD
     public function emptyCartDB() {
 
         $sql = "DELETE ORDERITEM from orderitem JOIN `order` on orderitem.`ORDER` = (SELECT MAX(ID) FROM `order` WHERE USER = '{$_SESSION['usuario']}');";

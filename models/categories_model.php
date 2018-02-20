@@ -41,10 +41,7 @@ public function setParentCategory($parentCategory) {
 
 
 
-/**
-* Extreu totes les persones de la taula
-* @return array Bidimensional de totes les persones
-*/
+// Función que extrae todas las categorias
 public function get_categories(){
     $consulta=$this->db->query("SELECT * FROM category;");
 
@@ -55,16 +52,7 @@ public function get_categories(){
     return $this->categories;
 }
 
-public function lista_categorias(){
-    $consulta=$this->db->query("SELECT * FROM category;");
-
-
-    while($filas=$consulta->fetch_assoc()){
-        $this->categories[]=$filas;
-    }
-    return $this->categories;
-}
-
+// Función que inserta categorias
 public function insert_category() {
 
     if ($this->parentCategory == 'NULL') {
@@ -81,6 +69,7 @@ public function insert_category() {
      }
   }
 
+  // Función que extrae las categorias padre
   public function get_parents_categories(){
     $consulta=$this->db->query("SELECT * FROM category WHERE PARENTCATEGORY IS NULL;");
     while($filas=$consulta->fetch_assoc()){
@@ -89,6 +78,7 @@ public function insert_category() {
     return $this->categoria;
 }
 
+// Función que extrae las subcategorias
 public function get_subCategories(){
   $consulta=$this->db->query("SELECT * FROM category WHERE PARENTCATEGORY IS NOT NULL;");
   while($filas=$consulta->fetch_assoc()){

@@ -73,21 +73,16 @@ class login_model {
         $this->postalCode = $postalCode;
     }
 
-    /**
-     * Extreu tots els usuaris de la taula
-     * @return array Bidimensional de tots els usuaris de la taula
-     */
+    // Función que inserta un usuario en la bd y comprueba que no haya un usuario con ese mismo nombre de usuario
     public function insert_user() {
       
         $cripted = crypt($this->password, '$4$rounds=5000$contraseña$');
-        //die($encriptada);
+        
         //comprobar que no haya ningún usuario con ese nombre de usuario antes de insertar.
         $sql = "SELECT USERNAME FROM `user` WHERE USERNAME = '{$this->username}'";
 
         $consulta = $this->db->query($sql);
         $repeatedUsername = $consulta->fetch_assoc();
-
-        //var_dump($repeatedUsername);
 
         if ($repeatedUsername['USERNAME'] == null) {
             $sql2 = "INSERT INTO USER (USERNAME, PASSWORD, NAME,EMAIL,ADDRESS,POSTALCODE) VALUES ('{$this->username}','{$cripted}','{$this->name}','{$this->email}','{$this->address}','{$this->postalCode}');";
@@ -103,6 +98,7 @@ class login_model {
         }
     }
 
+    // Función para logear (comprueba que el usuario existe en la BD)
     public function verifyUser() {
         
         $cripted = crypt($this->password, '$4$rounds=5000$contraseña$');
