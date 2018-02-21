@@ -138,7 +138,7 @@
                     </div>
                     <!-- modal product profile -->
                     <div class="modal fade bd-example-modal-lg" id="modal<?php echo $product['ID']; ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg">
+                        <div class="modal-dialog modal-lg ">
                             <div class="modal-content">
 
                                 <!-- product profile -->
@@ -196,7 +196,7 @@
           <?php
                   for ($page = 1; $page <= $number_of_pages; $page++){ ?>
 
-                  
+
                       <li class='page-item'> <a href='index.php?page=<?php echo $page ?>' class="page-link"> <?php echo $page ?></a></li>
 
                 <?php  } ?>
@@ -207,5 +207,3 @@
     </div>
 
     <?php include 'views/templates/footer_template.phtml'; ?>
-
-

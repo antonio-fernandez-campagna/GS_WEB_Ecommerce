@@ -102,7 +102,7 @@ class products_model {
             $page = $_GET['page'];
         }
 
-        // determinaciones para saber desde donde hasta donde mostrar 
+        // determinaciones para saber desde donde hasta donde mostrar
         // según la página en la que estemos
         $number_products_per_page = 10;
         $final_limit_product = $number_products_per_page * $page;
@@ -158,7 +158,7 @@ class products_model {
             return $this->products;
         }
     }
-    
+
     // Función que devuelve los productos pasándole por parámetro la palabra
      public function get_product_searcher($word) {
         $query = "SELECT prod.*, img.URL FROM product prod join image img on prod.ID = img.product WHERE SHORTDESCRIPTION like '%$word%';";
@@ -183,7 +183,7 @@ class products_model {
 
         $query = "SELECT prod.ID ,prod.NAME, prod.SHORTDESCRIPTION, prod.STOCK, ord.ID as ID_ORDER, ordIt.PRODUCT as ID_PROD, ordIt.QUANTITY as nUnits, ordIt.PRICE, img.URL from `order` ord JOIN product prod JOIN orderitem ordIt JOIN user JOIN image img WHERE user.USERNAME = 'user' AND ord.ID = ordIt.`ORDER` AND img.PRODUCT = ordIt.PRODUCT AND ordIt.PRODUCT = prod.ID AND ord.PAYMENTINFO = 2 AND ord.ID = {$id['max(ID)']};";
         //die($query);
-        //echo "<pre>".print_r($query, 1)."</pre>"; 
+        //echo "<pre>".print_r($query, 1)."</pre>";
 
         $consulta = $this->db->query($query);
         while ($filas = $consulta->fetch_assoc()) {
@@ -194,7 +194,7 @@ class products_model {
         return $this->products;
     }
 
-  
+
     // función que recoge las marcas que están en las subcategorias
     public function get_brands($subCategory = "") {
 

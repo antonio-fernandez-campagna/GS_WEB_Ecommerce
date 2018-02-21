@@ -45,7 +45,7 @@ $(document).ready(function () {
     });
 
     // guardo en la variable currencies el array de productos de autocomplete_controller.php haciendo
-    // una llamada vía AJAX 
+    // una llamada vía AJAX
 
     var currencies = function () {
         var products = null;
@@ -73,6 +73,12 @@ $(document).ready(function () {
         });
     });
 
+/*
+    $("#salirModal").onmouseout(function{
+      $('.open-cart').modal({
+        show: false
+      })
+    }); */
 
     $('.hover-menu-button').hover(function () {
         $('.dropdown-menu').addClass('show');
@@ -86,7 +92,5 @@ $(document).ready(function () {
     }, function () {
         $(this).removeClass('escale');
     });
-
-
 
 });
