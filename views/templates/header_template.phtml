@@ -16,33 +16,102 @@
         <script src="views/js.js"></script>
         <script type="text/javascript">
 
-            // comprobar que la validación de las contraseñas es correcta 
+        function enableReg(){
+
+            // comprobar que la validación de las contraseñas es correcta
             // y no tenga espacios
+
+            // comprobar que el codigo postal tenga 5 numeros
+            function checkCP() {
+              var cp = document.getElementById("cp").value;
+
+                if(!document.getElementById("alert-cp")){
+
+                  if (cp.toString().length != 5) {
+                    var alert = document.createElement('div');
+                    var text = document.createTextNode("el código postal debe tener 5 números");
+                    alert.appendChild(text);
+                    alert.className = 'alert alert-danger mt-4 alert-cp';
+                    alert.id = "alert-cp";
+                    document.getElementById("appendCP").appendChild(alert);
+                    return true;
+                  }
+
+              } else {
+
+                if (cp.toString().length == 5){
+                  var alert = document.getElementById("alert-cp");
+                  alert.parentNode.removeChild(alert);
+                  return false;
+                }
+              }
+            }
+
             function checkPassWd() {
                 var passwd1 = document.getElementById("passwd1").value;
                 var passwd2 = document.getElementById("passwd2").value;
-
+                var error1 = true;
+                var error2 = true;
                 var check = passwd1.localeCompare(passwd2);
 
-                if (check != 0) {
-                    alert("Las contraseñas no son iguales");
+                if(!document.getElementById("alert-passwd")){
+                  if (check != 0) {
+                    var alert = document.createElement('div');
+                    var text = document.createTextNode("Las contraseñas no son iguales");
+                    alert.appendChild(text);
+                    alert.className = 'alert alert-danger mt-4';
+                    alert.id = "alert-passwd";
+                    document.getElementById("appendPasswd").appendChild(alert);
+                  }
+                } else {
+                  if (check == 0) {
+                    var alert = document.getElementById("alert-passwd");
+                    alert.parentNode.removeChild(alert);
+                    error1 = false;
+                  } else {
+                    console.log("false deberia salir");
+                    return false
+                  }
                 }
 
-                if (passwd1.indexOf(' ') > 0) {
-                    alert("La contraseña no puede contener espacios");
+                if (!document.getElementById("alert-passwd2")) {
+                  if (passwd1.indexOf(' ') > 0) {
+                    var alert2 = document.createElement('div');
+                    var text2 = document.createTextNode("La contraseña no puede contener espacios");
+                    alert2.appendChild(text2);
+                    alert2.className = 'alert alert-danger mt-4';
+                    alert2.id = "alert-passwd2";
+                    document.getElementById("appendPasswd").appendChild(alert2);
+                    error2 = false;
+                  }
+                } if (!passwd1.indexOf(' ') > 0) {
+                  var alert2 = document.getElementById("alert-passwd2");
+                  alert2.parentNode.removeChild(alert2);
+                  error2 = false;
+                } else {
+                  console.log("false deberia salir2");
+                  return false;
                 }
 
+                if(!(error1 && error2)){
+                  console.log("true");
+                  return true;
+                } else {
+                  console.log("false");
+                  return false;
+                }
             }
-            // comprobar que el codigo postal tenga 5 numeros
-            function checkCP() {
-                var cp = document.getElementById("cp").value;
 
-                if (cp.toString().length != 5) {
-                    alert("El código postal tiene que tener 5 números")
-                }
+            var cpError = checkCP();
+            var passwdError = checkPassWd();
 
-
+            if(checkCP() && checkPassWd() ){
+              alert("a")
             }
+
+
+
+          }
         </script>
     </head>
 
@@ -183,7 +252,7 @@
                                 <h4 class="modal-title float-left" id="myModalLabel2">Carrito de la compra</h4>
                             </div>
 
-                            <?php if ($_SESSION['usuario'] != "invitado") { ?> 
+                            <?php if ($_SESSION['usuario'] != "invitado") { ?>
                                 <div class="form-group">
                                     <a href="?controller=cart&action=finalCart"><button id="signupSubmit" type="submit" class="btn btn-info btn-block mt-2">Ir a la cesta</button></a>
                                 </div>
@@ -210,7 +279,7 @@
                                                 </span>
                                             </span>
                                             <span class="item-right">
-                                                <?php if ($item['db'] == "yes") { ?> 
+                                                <?php if ($item['db'] == "yes") { ?>
 
                                                     <a href="?controller=cart&action=deleteFromDB&id=<?php echo $item['ID'] ?>"><button class="btn btn-danger"><i class="fas fa-times"></i></button></a></span>
                                             <?php } else { ?>
@@ -299,18 +368,19 @@
                                                 <input  name="address" required type="text" maxlength="100" class="form-control">
                                             </div>
 
-                                            <div class="form-group">
+                                            <div class="form-group" id="appendCP">
                                                 <label class="control-label" for="signupName">Código Postal</label>
-                                                <input  name="postalCode" required type="number" id="cp"  onfocusout="checkCP();"  class="form-control">
+                                                <input  name="postalCode" required type="number" id="cp"  onfocusout="enableReg();"  class="form-control ">
                                             </div>
+
 
                                             <div class="form-group">
                                                 <label class="control-label" for="signupPassword">Contraseña</label>
                                                 <input  type="password" id="passwd1" required maxlength="25" class="form-control" placeholder="Mínimo 8 caracteres" length="40">
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group" id="appendPasswd">
                                                 <label class="control-label" for="signupPasswordagain">Confirma contraseña</label>
-                                                <input  name="password" id="passwd2" required type="password" onfocusout="checkPassWd();" maxlength="25" class="form-control">
+                                                <input  name="password" id="passwd2" required type="password" onfocusout="enableReg();" maxlength="25" class="form-control">
                                             </div>
                                             <div class="form-group">
                                                 <button  type="submit" class="btn btn-info btn-block" >Registrarse</button>
