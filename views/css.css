@@ -5,6 +5,11 @@ body{
     background-color: #C1C0B9;
 }
 
+html
+{
+   min-width: 400px;
+}
+
 .radio-promotioned{
     position: relative;
     width: 20%;
@@ -18,9 +23,10 @@ body{
 
 
 
+
 .minHeight{
     min-height: 900px;
-} 
+}
 
 #carousel-promotion{
     position: absolute;
@@ -126,7 +132,7 @@ body{
     width: 60px;
 }
 
-/* cambio color flechita slider */ 
+/* cambio color flechita slider */
 .carousel-control-prev-icon{
     background-color: black;
 }
@@ -907,7 +913,7 @@ input[type=range]:focus::-ms-fill-upper {
     /* table#cart tbody td .form-control{
                 width:20%;
                 display: inline !important;
-        } */ 
+        } */
     .actions .btn{
         width:36%;
         margin:1.5em 0;
@@ -935,7 +941,7 @@ input[type=range]:focus::-ms-fill-upper {
 
 }
 
-/* shopping cart*/ 
+/* shopping cart*/
 
 /* style searcher */
 ::selection { background: #a4dcec; }
@@ -956,10 +962,10 @@ input[type=range]:focus::-ms-fill-upper {
 }
 :-ms-input-placeholder { /* Internet Explorer 10+ */
     color: #ccc !important;
-    font-style: italic;  
+    font-style: italic;
 }
 
-strong { font-weight: bold; } 
+strong { font-weight: bold; }
 
 table { border-collapse: collapse; border-spacing: 0; }
 

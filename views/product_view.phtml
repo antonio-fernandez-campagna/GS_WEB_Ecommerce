@@ -69,7 +69,7 @@
         <div class="container ">
             <div class="row">
                 <?php foreach ($data['products'] as $product) { ?>
-                    <div class="col-sm- col-md-4 col-lg-4 mt-4 ">
+                    <div class="col-6 col-md-4 col-lg-4 mt-4">
 
                         <div class="card"  id="<?php echo $product['BRAND']; ?>">
                             <a data-toggle="modal" href="#modal<?php echo $product['ID']; ?>"><img class="card-img-top" src="<?php echo $product['URL']; ?>"></a>
@@ -182,17 +182,28 @@
                         </div>
                         <!-- close modal product profile -->
                     </div>
-<?php } ?>
+                  <?php } ?>
 
 
             </div>
         </div>
 
-<?php
-//foreach ($page = 0; $page <= $number_of_pages; $page++) {
-//echo '<a href="index.php?page= ' . $page . ' ">' . $page . '</a>';
-//}
-?>
+        <ul class="pagination pagination-circle text-center pg-blue mb-0 justify-content-center mt-4 mb-4">
+
+
+          <li class="page-item"><a class="page-link" href="index.php?page=1">Inicio</a></li>
+
+          <?php
+                  for ($page = 1; $page <= $number_of_pages; $page++){ ?>
+
+
+                      <li class='page-item'> <a href='index.php?page=<?php echo $page ?>' class="page-link"> <?php echo $page ?></a></li>
+
+                <?php  } ?>
+
+                <li class="page-item"><a class="page-link" href="index.php?pagina=<?php echo $number_of_pages?>">Final</a></li>
+
+        </ul>
     </div>
 
     <!-- sidebar -->
@@ -200,4 +211,3 @@
     <!-- cierro div bg -->
 
 <?php include 'views/templates/footer_template.phtml'; ?>
-

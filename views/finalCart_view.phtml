@@ -2,60 +2,52 @@
 
 <body>
 
-    <div class="container text-center bg-light">
+    <div class="text-center bg-light minWidth">
 
-        <a href="?controller=cart&action=history"><button type="submit" name="id" class="btn btn-danger btn-block btn-lg mt-2 mb-6">Ver historial de compras</button></a>
+      <h3>Progreso de compra</h3>
 
-        <table id="cart" class="table table-hover table-condensed">
+      <div class="progress mb-5 ml-4 mr-4">
+          <div class="progress-bar" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+
             <?php if (!empty($data['cart']) & $_SESSION['usuario'] != "invitado") { ?>
 
                 <div class="row">
-                    <div class="col-2">
+                    <div class="col-2 col-md-2">
                     </div>
-                    <div class="col-3">
-                        <h2>Producto</h2>
+                    <div class=" col-3 col-md-3">
+                        <h4>Producto</h4>
                     </div>
-                    <div class="col-2">
-                        <h2>Precio</h2>
+                    <div class="col-3 col-md-2">
+                        <h4>Cantidad</h4>
                     </div>
-                    <div class="col-2">
-                        <h2>Cantidad</h2>
+                    <div class="col-2 col-md-3">
+                        <h4>Subtotal</h4>
                     </div>
-                    <div class="col-2">
-                        <h2>Subtotal</h2>
+                    <div class="col-1 col-md-1">
                     </div>
-                    <div class="col-1">
-                    </div>
-
                 </div>
+                <hr>
+
+
 
                 <?php
                 foreach ($data['cart'] as $item) {
                     ?>
 
-                    <div class="row">
-                        <div class="col-2">
+                    <div class="row bg-white align-items-center">
+                        <div class="col-2 col-md-2">
 
-                            <div class="col-sm-4 hidden-xs"><img src="<?php echo $item['URL'] ?>"  style="width: 400%" class="img-responsive"/></div>
+                            <img src="<?php echo $item['URL'] ?>"  style="width: 100%" class="img-responsive"/>
 
                         </div>
-                        <div class="col-3">
+                        <div class="col-3 col-md-3">
 
                             <h5 class="nomargin"><?php echo $item['NAME'] ?></h5>
 
                         </div>
 
-                        <div class="col-2">
-
-                            <?php
-                            if (!empty($item['FINALPRICE'])) {
-                                echo $item['FINALPRICE'] . "€";
-                            } else {
-                                echo $item['PRICE'] . "€";
-                            }
-                            ?>
-                        </div>
-                        <div class="col-2">
+                        <div class="col-3 col-md-2">
 
                             <div class="input-group">
 
@@ -70,7 +62,7 @@
                                     </button>
                                 </a>
 
-                                <input type="text" class="form-control input-number bg-white" disabled style="width:20px" value="<?php echo $item['nUnits'] ?>" min="1" max="<?php echo $item['STOCK'] ?>">
+                                <input type="text" class="form-control input-number bg-white text-center" disabled  value="<?php echo $item['nUnits'] ?>" min="1" max="<?php echo $item['STOCK'] ?>">
 
                                 <a href="?controller=cart&action=add_1_ToCart&id=<?php echo $item['ID'] ?>">
 
@@ -82,11 +74,11 @@
                             </div>
                         </div>
 
-                        <div class="col-2 ">
-                            <?php echo $item['nUnits'] * $item['PRICE']; ?> €
+                        <div class="col-2 col-md-3">
+                            <h5><?php echo $item['nUnits'] * $item['PRICE']; ?> €</h5>
                         </div>
 
-                        <div class="col-1 ">
+                        <div class="col-1 col-xs-1">
                             <?php if ($item['db'] == "yes") { ?>
 
                                 <a href="?controller=cart&action=deleteFromDB_final&id=<?php echo $item['ID'] ?>"><button class="btn btn-danger"><i class="fas fa-times"></i></button></a></span>
@@ -97,22 +89,26 @@
 
                     </div>
 
+                    <hr>
+
                 <?php }
                 ?>
 
                 <div class="row">
-                    <div class="col-2 float-right ml-10" >
+                  <div class="col-8">
+
+                  </div>
+                    <div class="col-4 mb-2" >
                         <hr>
-                        <strong>Total <?php echo $item['TOTAL'] ?> €</strong>
+                        <h4><strong>Total <?php echo $item['TOTAL'] ?> €</strong></h4>
                         <hr>
                     </div>
                 </div>
                 <div class="row">
 
-                    <div class="col-6 float-left" >
-                        <a href="?controller=cart&action=emptyCart" class="btn btn-warning">Vaciar cesta</a>
+                    <div class="col-8" >
                     </div>
-                    <div class="col-3 float-right" >
+                    <div class="col-4 mb-2" >
                         <a href="?controller=cart&action=finalbuy" class="btn btn-success btn-block">Finalizar compra <i class="fa fa-angle-right"></i></a>
                     </div>
                 </div>

@@ -11,6 +11,11 @@ class products_controller {
     // se le pasa el id de la subcategoria y muestra los productos por esta subcategoria
     function view($subCategory) {
 
+        $home = new home_controller();
+
+        $number_of_pages = $home->manyPages();
+
+
         $data['products'] = $this->getProducts($subCategory);
 
         $data['categories'] = $this->getCategories();
@@ -73,7 +78,7 @@ class products_controller {
         $home = new home_controller();
         $cart = new cart_controller();
         $data['cart'] = $cart->shoppingCart();
-        
+
 
         $data['products'] = $products->get_product_searcher($word);
         $data['categories'] = $home->getCategories();

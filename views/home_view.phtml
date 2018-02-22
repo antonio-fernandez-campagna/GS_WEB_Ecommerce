@@ -6,6 +6,7 @@
 
         <?php if ($_SESSION['usuario'] != 'admin') { ?>
 
+
             <div id="demo" class="carousel slide mt-4" data-ride="carousel" >
                 <ul class="carousel-indicators">
 
@@ -37,11 +38,11 @@
                             echo "active";
                         }
                         ?>">
-                            <div class="imagen-carousel" style="background-color: white;">
+                            <div class="" style="background-color: white;">
                                 <img src="<?php echo $product['URL']; ?>" class="img-fluid" style="width:20%; margin-left: 312px;">
                             </div>
                             <div class="carousel-caption">
-                                <div class="d-flex flex-colmn " id="carousel-promotion">
+                                <div class="d-flex flex " id="carousel-promotion">
                                     <div class="text-black"><?php echo $product['SHORTDESCRIPTION']; ?></div>
                                     <div class="col-3" style="color:black; "><?php echo $product['DISCOUNTPERCENTAGE']; ?>% DESCUENTO!</div>
                                     <div class=""style="color:red; ">PRECIO FINAL: <?php echo $product['FINALPRICE']; ?>€</div>
@@ -71,10 +72,10 @@
 
         <div class="row">
             <?php foreach ($data['products'] as $product) { ?>
-                <div class="col-sm- col-md-4 col-lg-4 mt-4 ">
+                <div class="col-6 col-md-4 col-lg-4 mt-4 ">
 
                     <div class="card">
-                        <a data-toggle="modal" href="#modal<?php echo $product['ID']; ?>"><img class="card-img-top img" src="<?php echo $product['URL']; ?>"></a>
+                        <a data-toggle="modal" href="#modal<?php echo $product['ID']; ?>"><img class="card-img-top img img-thumbnail" src="<?php echo $product['URL']; ?>"></a>
 
 
                         <div class="card-block">
@@ -82,10 +83,14 @@
                             <h4 class="card-title mt-3"><?php echo $product['SHORTDESCRIPTION']; ?></h4>
                             <div class="card-text">
                                 <?php
-                                if (!empty($product['FINALPRICE'])) {
-                                    echo $product['FINALPRICE'] . "€";
-                                } else {
-                                    echo $product['PRICE'] . "€";
+                                if (!empty($product['FINALPRICE'])) { ?>
+
+                                  <del><?php echo $product['PRICE'] . "€";?></del>
+                                    <?php echo $product['FINALPRICE'] . "€";
+                                } else { ?>
+
+                                    <?php echo $product['PRICE'] . "€";
+
                                 }
                                 ?>
                             </div>
@@ -119,8 +124,10 @@
 
 
                                     <?php if ($product['STOCK'] == 0) { ?>
+                                      <span class="d-inline-block" data-toggle="popover" data-trigger="hover" data-content="No se puede comprar temporalmente">
+                                        <button name="id" disabled value="<?php echo $product['ID'] ?>" class="btn btn-danger float-right btn-sm"  style="pointer-events: none;" type="button">Comprar</button>
+                                      </span>
 
-                                        <button name="id" disabled value="<?php echo $product['ID'] ?>" class="btn btn-danger float-right btn-sm ">Comprar</button>
 
                                     <?php } else { ?>
                                         <button name="id" value="<?php echo $product['ID'] ?>" class="btn btn-danger float-right btn-sm ">Comprar</button>
@@ -146,16 +153,25 @@
                                 <div class="container">
                                     <div class="row bg-light mt-2 pb-2" >
                                         <div class="col-6">
-                                            <img src="<?php echo $product['URL'] ?>" style="width:70%;" alt="producto" class="rounded">
+                                            <img src="<?php echo $product['URL'] ?>" style="width:70%;" alt="producto" class="rounded ">
                                         </div>
                                         <div class="col-6">
                                             <h3 class="mt-4"><?php echo $product['SHORTDESCRIPTION'] ?></h3>
 
+
                                         </div>
 
                                         <div class="col-12">
-                                            <span class=""><strong>Descripción</strong></span>
-                                            <p class=" border border-dark"><?php echo $product['LONGDESCRIPTION'] ?> </p>
+
+                                            <button class="btn btn-link mt-4" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                                      Ver descripción
+                                            </button>
+
+                                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                                              <div class="card-body">
+                                                <p class=" border border-dark"><?php echo $product['LONGDESCRIPTION'] ?> </p>
+                                              </div>
+                                            </div>
                                             <p class="">Precio: <?php echo $product['PRICE'] ?>€</p>
                                             <p class=""><?php if ($product['STOCK'] == 0) { ?>
                                                     <span style="color:red"> <?php echo "No quedan productos"; ?></span>
@@ -193,6 +209,8 @@
         <ul class="pagination pagination-circle text-center pg-blue mb-0 justify-content-center mt-4 mb-4">
 
 
+          <li class="page-item"><a class="page-link" href="index.php?page=1">Inicio</a></li>
+
           <?php
                   for ($page = 1; $page <= $number_of_pages; $page++){ ?>
 
@@ -201,7 +219,10 @@
 
                 <?php  } ?>
 
+                <li class="page-item"><a class="page-link" href="index.php?pagina=<?php echo $number_of_pages?>">Final</a></li>
+
         </ul>
+
 
 
     </div>

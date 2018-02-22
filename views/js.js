@@ -72,6 +72,8 @@ $(document).ready(function () {
         });
     });
 
+    $('[data-toggle="popover"]').popover();
+
 /*
     $("#salirModal").onmouseout(function{
       $('.open-cart').modal({
@@ -108,7 +110,6 @@ function enableReg(item){
     var streetError = true;
 
     if (item.id == "nameUser") {
-      console.log("nameuser");
         var nameU = document.getElementById("nameUser").value;
 
           if(!document.getElementById("alert-name")){
@@ -189,7 +190,6 @@ function enableReg(item){
     if (item.id == "street") {
         var street = document.getElementById("street").value;
 
-        console.log("pene");
           if(!document.getElementById("alert-street")){
 
             if (street == "") {
