@@ -96,20 +96,64 @@ $(document).ready(function () {
 
 });
 
+function verify(item){
 
-function enableReg(item){
-
-    // comprobar que la validación de las contraseñas es correcta
-    // y no tenga espacios
-    var cpError = true;
-    var passwdError = true;
-    var passwdError2 = true;
-    var nameUserError = true;
-    var userError = true;
-    var emailError = true;
-    var streetError = true;
 
     if (item.id == "nameUser") {
+      var nameUserError = nameUser();
+    }
+
+    if (item.id == "user") {
+      var userError = user();
+    }
+
+    if (item.id == "email") {
+      var emailError = email();
+    }
+
+    if (item.id == "street") {
+      var streetError = street();
+    }
+
+    if(item.id == "cp"){
+      var cpError = cp();
+    }
+
+    if (item.id == "passwd1") {
+      var passwdError = passwd1();
+    }
+
+    if (item.id == "passwd2") {
+      var passwdError2 = passwd2();
+    }
+
+    console.log("cpError:  " + cpError + "  passEr1:  " +  passwdError + "  pass2:  " + passwdError2 + "  nameuser:  "  + nameUserError  + "  userError:  " +  userError + "  emailErr:  " + emailError + "  street: " + streetError);
+
+
+
+}
+
+function verifar(){
+
+  var alertName = document.getElementById("alert-name");
+  var alertUser = document.getElementById("alert-user");
+  var alertEmail = document.getElementById("alert-email");
+  var alertStreet = document.getElementById("alert-street");
+  var alertCp = document.getElementById("alert-cp");
+  var alertPasswd = document.getElementById("alert-passwd2");
+  var alertPasswd2 = document.getElementById("alert-passwd2");
+
+  if (alertName || alertUser || alertEmail || alertStreet || alertCp || alertPasswd || alertPasswd2) {
+    alert("Hay errorres en el formulario de registro");
+  } else {
+  //  window.location.replace("localhost/final/");
+  }
+
+}
+
+
+    function nameUser(){
+
         var nameU = document.getElementById("nameUser").value;
 
           if(!document.getElementById("alert-name")){
@@ -121,22 +165,35 @@ function enableReg(item){
               alert.className = 'alert alert-danger mt-4';
               alert.id = "alert-name";
               document.getElementById("appendName").appendChild(alert);
-              return true;
+            } else {
+              if (nameU != ""){
+                var alert = document.getElementById("alert-name");
+                if (alert) {
+                  alert.parentNode.removeChild(alert);
+                }
+                return  false;
+              } else {
+                return  true;
+              }
             }
 
         } else {
 
           if (nameU != ""){
+            console.log("3");
             var alert = document.getElementById("alert-name");
-            alert.parentNode.removeChild(alert);
-            nameUserError = false;
+            if (alert) {
+              alert.parentNode.removeChild(alert);
+            }
+            return  false;
           } else {
-            nameUserError = true;
+            return  true;
           }
         }
-    }
+  }
 
-    if (item.id == "user") {
+
+  function user(){
         var user = document.getElementById("user").value;
 
           if(!document.getElementById("alert-user")){
@@ -148,23 +205,35 @@ function enableReg(item){
               alert.className = 'alert alert-danger mt-4';
               alert.id = "alert-user";
               document.getElementById("appendUser").appendChild(alert);
-              return true;
+            } else {
+              if (user != ""){
+                var alert = document.getElementById("alert-user");
+                if (alert) {
+                alert.parentNode.removeChild(alert);
+              }
+                 return false;
+                console.log("false user");
+              } else {
+                return true;
+              }
             }
 
         } else {
 
           if (user != ""){
             var alert = document.getElementById("alert-user");
-            alert.parentNode.removeChild(alert);
-            nameUserError = false;
+            if (alert) {
+              alert.parentNode.removeChild(alert);
+            }
+            return false;
+            console.log("false user");
           } else {
-            nameUserError = true;
+            return true;
           }
         }
-    }
+}
 
-
-    if (item.id == "email") {
+  function email(){
         var email = document.getElementById("email").value;
 
         var emailValidation = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
@@ -177,17 +246,32 @@ function enableReg(item){
             alert.className = 'alert alert-danger mt-4';
             alert.id = "alert-email";
             document.getElementById("appendEmail").appendChild(alert);
+          } else {
+            if (email.match(emailValidation)) {
+              var alert = document.getElementById("alert-email");
+              if (alert) {
+              alert.parentNode.removeChild(alert);
+              }
+              return false;
+              console.log("false email");
+            } else {
+              return true;
+            }
           }
         } if (email.match(emailValidation)) {
           var alert = document.getElementById("alert-email");
+          if (alert) {
           alert.parentNode.removeChild(alert);
-          emailError = false;
+          }
+          return false;
+          console.log("false email");
         } else {
-          emailError = true;
+          return true;
         }
-    }
 
-    if (item.id == "street") {
+}
+
+function street(){
         var street = document.getElementById("street").value;
 
           if(!document.getElementById("alert-street")){
@@ -199,15 +283,28 @@ function enableReg(item){
               alert.className = 'alert alert-danger mt-4';
               alert.id = "alert-street";
               document.getElementById("appendStreet").appendChild(alert);
-              return true;
+            } else {
+              if (street != ""){
+                var alert = document.getElementById("alert-street");
+                if (alert) {
+                alert.parentNode.removeChild(alert);
+              }
+                return false;
+                console.log("false street");
+              } else {
+                return true;
+              }
             }
         } else {
           if (street != ""){
             var alert = document.getElementById("alert-street");
-            alert.parentNode.removeChild(alert);
-            streetError = false;
+            if (alert) {
+              alert.parentNode.removeChild(alert);
+            }
+            return false;
+            console.log("false street");
           } else {
-            streetError = true;
+            return true;
           }
         }
     }
@@ -215,7 +312,7 @@ function enableReg(item){
 
 
     // comprobar que el codigo postal tenga 5 numeros
-    if(item.id == "cp"){
+    function cp (){
       var cp = document.getElementById("cp").value;
 
         if(!document.getElementById("alert-cp")){
@@ -227,7 +324,17 @@ function enableReg(item){
             alert.className = 'alert alert-danger mt-4';
             alert.id = "alert-cp";
             document.getElementById("appendCP").appendChild(alert);
-            return true;
+          } else {
+            if (cp.toString().length == 5){
+              var alert = document.getElementById("alert-cp");
+              if (alert) {
+              alert.parentNode.removeChild(alert);
+              }
+              return false;
+              console.log("false cp");
+            } else {
+               return true;
+            }
           }
 
       } else {
@@ -235,38 +342,55 @@ function enableReg(item){
         if (cp.toString().length == 5){
           var alert = document.getElementById("alert-cp");
           alert.parentNode.removeChild(alert);
-          cpError = false;
+          return false;
+          console.log("false cp");
         } else {
-          cpError = true;
+          return true;
         }
       }
-    }
 
-    if (item.id == "passwd1") {
+  }
+
+
+function passwd1(){
         var passwd1 = document.getElementById("passwd1").value;
 
         var passwdValidation =  /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/;
 
+        console.log(passwd1);
+
         if (!document.getElementById("alert-passwd")) {
           if (!passwd1.match(passwdValidation)) {
-            var alert = document.createElement('div');
-            var text = document.createTextNode("La contraseña debe contener mayúsculas, minúsculas, números y carácteres especiales");
+            alert = document.createElement('div');
+            text = document.createTextNode("La contraseña debe contener mayúsculas, minúsculas, números y carácteres especiales");
             alert.appendChild(text);
             alert.className = 'alert alert-danger mt-4';
             alert.id = "alert-passwd";
             document.getElementById("appendPasswd").appendChild(alert);
+          } else {
+            if (passwd1.match(passwdValidation)) {
+              var alert = document.getElementById("alert-passwd");
+              if (alert) {
+              alert.parentNode.removeChild(alert);
+              }
+              return false;
+            } else {
+              return true;
+            }
           }
         } if (passwd1.match(passwdValidation)) {
-          console.log("vlida");
           var alert = document.getElementById("alert-passwd");
+          if (alert) {
           alert.parentNode.removeChild(alert);
-          passwdError = false;
+        }
+          return false;
         } else {
-          passwdError = true;
+          return true;
         }
     }
 
-    if (item.id == "passwd2") {
+
+function passwd2(){
 
       var passwd1 = document.getElementById("passwd1").value;
       var passwd2 = document.getElementById("passwd2").value;
@@ -281,21 +405,26 @@ function enableReg(item){
             alert.className = 'alert alert-danger mt-4';
             alert.id = "alert-passwd2";
             document.getElementById("appendPasswd2").appendChild(alert);
+          } else {
+            if (check == 0) {
+              var alert = document.getElementById("alert-passwd2");
+              if (alert) {
+              alert.parentNode.removeChild(alert);
+              }
+              return false;
+            } else {
+              return true;
+            }
           }
         } else {
           if (check == 0) {
             var alert = document.getElementById("alert-passwd2");
+            if (alert) {
             alert.parentNode.removeChild(alert);
-            passwdError2 = false;
+          }
+            return false;
           } else {
-            passwdError2 = true;
+            return true;
           }
         }
     }
-
-    if(!(cpError && passwdError && passwdError2 && nameUserError && userError && emailError && streetError)){
-      registr.disabled = false;
-    }
-
-
-  }

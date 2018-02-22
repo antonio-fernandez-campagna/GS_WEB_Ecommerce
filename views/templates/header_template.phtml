@@ -253,43 +253,43 @@
 
                                     </div>
                                     <div id="menu1" class="container tab-pane fade"><br>
-                                        <form method="POST" action="?controller=log&action=register" role="form">
+                                        <form>
                                             <div class="form-group" id="appendName">
                                                 <label class="control-label" for="signupName">Nombre Completo</label>
-                                                <input name="name" id="nameUser"  type="text" maxlength="50"  onfocusout="enableReg(this);" class="form-control">
+                                                <input name="name" id="nameUser"  type="text" maxlength="50"  onfocusout="verify(this);" class="form-control">
                                             </div>
 
                                             <div class="form-group" id="appendUser">
                                                 <label class="control-label" for="signupName">Nombre de usuario</label>
-                                                <input  name="username" id="user"  type="text" maxlength="50"  onfocusout="enableReg(this);" class="form-control">
+                                                <input  name="username" id="user"  type="text" maxlength="50"  onfocusout="verify(this);" class="form-control">
                                             </div>
 
                                             <div class="form-group" id="appendEmail">
                                                 <label class="control-label" for="signupEmail">Email</label>
-                                                <input  name="email" id="email"  type="email" maxlength="50" onfocusout="enableReg(this);" class="form-control">
+                                                <input  name="email" id="email"  type="email" maxlength="50" onfocusout="verify(this);" class="form-control">
                                             </div>
 
                                             <div class="form-group" id="appendStreet">
                                                 <label class="control-label" for="signupName">Direccion</label>
-                                                <input  name="address" id="street"  type="text" maxlength="100" onfocusout="enableReg(this);" class="form-control">
+                                                <input  name="address" id="street"  type="text" maxlength="100" onfocusout="verify(this);" class="form-control">
                                             </div>
 
                                             <div class="form-group" id="appendCP">
                                                 <label class="control-label" for="signupName">Código Postal</label>
-                                                <input  name="postalCode" type="number" id="cp"  onfocusout="enableReg(this);"  class="form-control ">
+                                                <input  name="postalCode" type="number" id="cp"  onfocusout="verify(this);"  class="form-control ">
                                             </div>
 
 
                                             <div class="form-group" id="appendPasswd">
                                                 <label class="control-label" for="signupPassword">Contraseña</label>
-                                                <input  type="password" id="passwd1"  maxlength="25" class="form-control" onfocusout="enableReg(this);" placeholder="Mínimo 8 caracteres" length="40">
+                                                <input  type="password" id="passwd1"  maxlength="25" class="form-control" onfocusout="verify(this);" placeholder="Mínimo 8 caracteres" length="40">
                                             </div>
                                             <div class="form-group" id="appendPasswd2">
                                                 <label class="control-label" for="signupPasswordagain">Confirma contraseña</label>
-                                                <input  name="password" id="passwd2"  type="password" onfocusout="enableReg(this);" maxlength="25" class="form-control">
+                                                <input  name="password" id="passwd2"  type="password" onfocusout="verify(this);" maxlength="25" class="form-control">
                                             </div>
                                             <div class="form-group">
-                                                <button  type="submit" class="btn btn-primary btn-block" >Registrarse</button>
+                                                <button  type="submit" id="registrBut" class="btn btn-primary btn-block" onclick="verificar()">Registrarse</button>
                                             </div>
 
                                         </form>
