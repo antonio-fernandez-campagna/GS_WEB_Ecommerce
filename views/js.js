@@ -245,13 +245,7 @@ function enableReg(item){
     if (item.id == "passwd1") {
         var passwd1 = document.getElementById("passwd1").value;
 
-        var passwdValidation = /^(?=.\d)(?=.[a-z])(?=.*[A-Z]).{8,20}$/;
-
-        console.log("maricon");
-
-        if (passwd1.match(passwdValidation)) {
-          console.log("passwd1");
-        }
+        var passwdValidation =  /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/;
 
         if (!document.getElementById("alert-passwd")) {
           if (!passwd1.match(passwdValidation)) {
