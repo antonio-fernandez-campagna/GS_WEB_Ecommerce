@@ -2,6 +2,10 @@
 
     <div class="container text-center minHeight ">
 
+      <ol class="breadcrumb mt-4">
+        <li class="breadcrumb-item active">Home</li>
+      </ol>
+
         <!-- carousel promociones -->
 
         <?php if ($_SESSION['usuario'] != 'admin') { ?>
@@ -38,14 +42,14 @@
                             echo "active";
                         }
                         ?>">
-                            <div class="" style="background-color: white;">
-                                <img src="<?php echo $product['URL']; ?>" class="img-fluid" style="width:20%; margin-left: 312px;">
+                            <div class="bg-white">
+                                <img src="<?php echo $product['URL']; ?>" class="img-fluid width20 ml312">
                             </div>
                             <div class="carousel-caption">
                                 <div class="d-flex flex " id="carousel-promotion">
                                     <div class="text-black"><?php echo $product['SHORTDESCRIPTION']; ?></div>
-                                    <div class="col-3" style="color:black; "><?php echo $product['DISCOUNTPERCENTAGE']; ?>% DESCUENTO!</div>
-                                    <div class=""style="color:red; ">PRECIO FINAL: <?php echo $product['FINALPRICE']; ?>€</div>
+                                    <div class="col-3 text-black"><?php echo $product['DISCOUNTPERCENTAGE']; ?>% DESCUENTO!</div>
+                                    <div class="text-red">PRECIO FINAL: <?php echo $product['FINALPRICE']; ?>€</div>
                                 </div>
 
                             </div>
@@ -75,7 +79,7 @@
                 <div class="col-6 col-md-4 col-lg-4 mt-4 ">
 
                     <div class="card">
-                        <a data-toggle="modal" href="#modal<?php echo $product['ID']; ?>"><img class="card-img-top img img-thumbnail" src="<?php echo $product['URL']; ?>"></a>
+                        <a data-toggle="modal" href="#modal<?php echo $product['ID']; ?>"><img class="card-img-top img" src="<?php echo $product['URL']; ?>"></a>
 
 
                         <div class="card-block">
@@ -98,10 +102,10 @@
 
 
                             <?php if ($product['STOCK'] == 0) { ?>
-                                <small><span style="color:red"> <?php echo "No quedan productos"; ?></span></small>
+                                <small><span class="text-red"> <?php echo "No quedan productos"; ?></span></small>
                             <?php } elseif ($product['STOCK'] < 5) {
                                 ?>
-                                <small><span style="color:orange"> <?php echo "Quedan pocos en stock"; ?></span></small>
+                                <small><span class="text-orange"> <?php echo "Quedan pocos en stock"; ?></span></small>
                             <?php } ?>
 
 
@@ -125,7 +129,7 @@
 
                                     <?php if ($product['STOCK'] == 0) { ?>
                                       <span class="d-inline-block" data-toggle="popover" data-trigger="hover" data-content="No se puede comprar temporalmente">
-                                        <button name="id" disabled value="<?php echo $product['ID'] ?>" class="btn btn-danger float-right btn-sm"  style="pointer-events: none;" type="button">Comprar</button>
+                                        <button name="id" disabled value="<?php echo $product['ID'] ?>" class="btn btn-danger float-right btn-sm pointer-events-none"  type="button">Comprar</button>
                                       </span>
 
 
@@ -153,7 +157,7 @@
                                 <div class="container">
                                     <div class="row bg-light mt-2 pb-2" >
                                         <div class="col-6">
-                                            <img src="<?php echo $product['URL'] ?>" style="width:70%;" alt="producto" class="rounded ">
+                                            <img src="<?php echo $product['URL'] ?>" class="width70" alt="producto" class="rounded ">
                                         </div>
                                         <div class="col-6">
                                             <h3 class="mt-4"><?php echo $product['SHORTDESCRIPTION'] ?></h3>
@@ -164,7 +168,7 @@
                                         <div class="col-12">
 
                                             <button class="btn btn-link mt-4" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                      Ver descripción
+                                                      Ocultar / Ver descripción completa
                                             </button>
 
                                             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
@@ -174,15 +178,15 @@
                                             </div>
                                             <p class="">Precio: <?php echo $product['PRICE'] ?>€</p>
                                             <p class=""><?php if ($product['STOCK'] == 0) { ?>
-                                                    <span style="color:red"> <?php echo "No quedan productos"; ?></span>
+                                                    <span class="text-red"> <?php echo "No quedan productos"; ?></span>
                                                 <?php } elseif ($product['STOCK'] < 5) {
                                                     ?>
-                                                    <span style="color:orange"> <?php echo "Quedan pocos productos en stock"; ?></span>
+                                                    <span class="text-orange"> <?php echo "Quedan pocos productos en stock"; ?></span>
                                                 <?php } ?>
                                             </p>
                                             <form action="?controller=cart&action=addToCart" method="POST">
 
-                                                <span>Cantidad:</span> <input class="mb-2" type="number" name="nUnits" value="1" min="1" max="<?php echo $product['STOCK'] ?>" style="width: 3em;">
+                                                <span>Cantidad:</span> <input class="mb-2 width3em" type="number" name="nUnits" value="1" min="1" max="<?php echo $product['STOCK'] ?>">
 
                                                 <button type="submit" name="id" value="<?php echo $product['ID'] ?>" class="btn btn-danger btn-block btn-lg mt-2">Añadir al carrito</button>
 

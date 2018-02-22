@@ -27,10 +27,10 @@
 
     <?php if ($_SESSION['usuario'] == "admin") { ?>
 
-        <nav class="navbar navbar-expand  navbar-light bg-dark" style="border-bottom:2px solid red">
+        <nav class="navbar navbar-expand  navbar-light bg-dark border-top-red">
 
         <?php } else { ?>
-            <nav class="navbar navbar-expand  navbar-light bg-primary" style="border-bottom:2px solid red">
+            <nav class="navbar navbar-expand  navbar-light bg-primary border-top-red" >
 
             <?php } ?>
 
@@ -50,7 +50,7 @@
                         $nameCategory = $categoria["NAME"];
                         ?>
                         <div class="col-md-4 dropdown-mega--column">
-                            <h4 style="color:black" class="dropdown-mega--menu-header" id="<?php echo $idCategory; ?>"><?php echo $nameCategory; ?></h4>
+                            <h4 class="dropdown-mega--menu-header text-white" id="<?php echo $idCategory; ?>"><?php echo $nameCategory; ?></h4>
                             <div class="list-group" >
 
                                 <?php
@@ -101,7 +101,7 @@
 
                 <div class="dropdown" >
                     <button class="btn btn-secondary dropdown-toggle mr-2" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fa fa-user-circle  mr-1 ml-1" aria-hidden="true" ></i>  <?php echo "<span style=\"font-size:15px;\">Hola, {$_SESSION['usuario']}  </span>"; ?>
+                        <i class="fa fa-user-circle  mr-1 ml-1" aria-hidden="true" ></i> <span class="font-user">Hola, <?php echo $_SESSION['usuario'] ?></span>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 
@@ -117,9 +117,8 @@
                         <?php } else { ?>
 
 
-                            <a class="dropdown-item disableClick" style="pointer-events: none;" href="#"><i class="fas fa-user mr-2"></i></i>Editar Perfil</a>
+                            <a class="dropdown-item disableClick pointer-events-none" href="#"><i class="fas fa-user mr-2"></i></i>Editar Perfil</a>
                             <a class="dropdown-item bg-light" href="?controller=log&action=logout"><i class="fas fa-sign-out-alt mr-2"></i>Logout</a>
-
 
                         <?php } ?>  </div></div> <?php } ?>
 
@@ -159,16 +158,16 @@
                                 <h5 class="text-center mb-2">Progreso de compra</h5>
 
                                 <div class="progress mb-5 ml-2 mr-2">
-                                    <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="progress-bar width25" role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                 </div>
-                                
+
                                 <?php foreach ($data['cart'] as $item) {
                                     ?>
                                 <div>
                                 <li>
                                         <span class="item">
                                             <span class="item-left">
-                                                <img src="<?php echo $item['URL'] ?>" style="width:20%" alt="" />
+                                                <img src="<?php echo $item['URL'] ?>" class="width20" />
                                                 <span class="item-info"><br>
                                                     <span class="bg-light"><?php echo $item['NAME'] ?></span><br>
                                                     <span class="bg-light">Número de Unidades: <?php echo $item['nUnits'] ?></span><br>
@@ -208,6 +207,8 @@
                     <!-- modal-dialog -->
                 </div>
                 <!-- modal -->
+              </div>
+            </div>
 
             <?php } ?>
 
@@ -246,7 +247,7 @@
                                                        placeholder='Contraseña' />
                                             </div>
                                             <div class="form-group">
-                                                <button id="signupSubmit" type="submit" class="btn btn-info btn-block">LOGIN</button>
+                                                <button id="signupSubmit" type="submit" class="btn btn-primary btn-block">LOGIN</button>
                                             </div>
                                         </form>
 
@@ -288,7 +289,7 @@
                                                 <input  name="password" id="passwd2" required type="password" onfocusout="enableReg();" maxlength="25" class="form-control">
                                             </div>
                                             <div class="form-group">
-                                                <button  type="submit" class="btn btn-info btn-block" >Registrarse</button>
+                                                <button  type="submit" class="btn btn-primary btn-block" >Registrarse</button>
                                             </div>
 
                                         </form>
@@ -313,6 +314,8 @@
 
                         </div>
                     </div>
+                  </div>
+                </div>
 
 
                     </nav>

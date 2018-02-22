@@ -4,6 +4,12 @@
 
     <div class="container minHeight">
 
+      <ol class="breadcrumb mt-4">
+        <li class="breadcrumb-item"><a href="index.php">Home</a></li>
+        <li class="breadcrumb-item"><a href="#">Catgoria</a></li>
+        <li class="breadcrumb-item active">Subcategoria</li>
+      </ol>
+
         <div class="text-center">
             <button type="button" class="btn btn-demo bg-danger text-white" data-toggle="modal" data-target="#myModal">
                 FILTRAR <i class="fas fa-filter"></i>
@@ -91,10 +97,10 @@
 
 
                                 <?php if ($product['STOCK'] == 0) { ?>
-                                    <small><span style="color:red"> <?php echo "No quedan productos"; ?></span></small>
+                                    <small><span class="text-red"> <?php echo "No quedan productos"; ?></span></small>
                                 <?php } elseif ($product['STOCK'] < 5) {
                                     ?>
-                                    <small><span style="color:orange"> <?php echo "Quedan pocos en stock"; ?></span></small>
+                                    <small><span class="text-orange"> <?php echo "Quedan pocos en stock"; ?></span></small>
                                 <?php } ?>
 
 
@@ -143,7 +149,7 @@
                                     <div class="container">
                                         <div class="row bg-light mt-2 pb-2" >
                                             <div class="col-6">
-                                                <img src="<?php echo $product['URL'] ?>" style="width:70%;" alt="producto" class="rounded">
+                                                <img src="<?php echo $product['URL'] ?>" class="width70" alt="producto" class="rounded">
                                             </div>
                                             <div class="col-6">
                                                 <h3 class="mt-4"><?php echo $product['SHORTDESCRIPTION'] ?></h3>
@@ -155,15 +161,15 @@
                                                 <p class=" border border-dark"><?php echo $product['LONGDESCRIPTION'] ?> </p>
                                                 <p class="">Precio: <?php echo $product['PRICE'] ?>€</p>
                                                 <p class=""><?php if ($product['STOCK'] == 0) { ?>
-                                                        <span style="color:red"> <?php echo "No quedan productos"; ?></span>
+                                                        <span class="text-red"> <?php echo "No quedan productos"; ?></span>
                                                         <?php } elseif ($product['STOCK'] < 5) {
                                                         ?>
-                                                        <span style="color:orange"> <?php echo "Quedan pocos productos en stock"; ?></span>
+                                                        <span class="text-orange"> <?php echo "Quedan pocos productos en stock"; ?></span>
                                                     <?php } ?>
                                                 </p>
                                                 <form action="?controller=cart&action=addToCart" method="POST">
 
-                                                    <span>Cantidad:</span> <input class="mb-2" type="number" name="nUnits" value="1" min="1" max="<?php echo $product['STOCK'] ?>" style="width: 3em;">
+                                                    <span>Cantidad:</span> <input class="mb-2 width3em" type="number" name="nUnits" value="1" min="1" max="<?php echo $product['STOCK'] ?>">
 
                                                     <button type="submit" name="id" value="<?php echo $product['ID'] ?>" class="btn btn-danger btn-block btn-lg mt-2">Añadir al carrito</button>
 

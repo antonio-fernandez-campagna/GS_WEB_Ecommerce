@@ -18,10 +18,8 @@ html
 
 .escale{
    transition: all .2s ease-in-out;
-   transform: scale(1.05);
+   transform: scale(1.1);
 }
-
-
 
 
 .minHeight{
@@ -45,9 +43,6 @@ html
     height: 60px;
 }
 
-.navbar{
-    border-top: 0px solid red;
-}
 
 .prueba{
     margin-left: 0;
@@ -82,6 +77,11 @@ html
     list-style-type: none;
 }
 
+/* navbar border */
+.border-top-red{
+  border-bottom:2px solid red !important;
+}
+
 
 
 /* colors */
@@ -93,26 +93,108 @@ html
     background-color: #D8D8D8;
 }
 
-.bg-danger{
-    background-color: #C50000;
-}
-
 .bg-red{
     background-color: #E70000;
 }
 
 .bg-light{
-    background-color: #F1F1F1;
+    background-color: #F1F1F1 !important;
 }
 
-.bg-white{
-    background-color: #FFFDEF;
+.bg-less-light{
+  background-color: #e1e1e1;
 }
-
 
 .bg-primary{
     background-color: #111F4D !important;
 }
+
+/* btn colors primary*/
+
+.btn-primary{
+  background-color: red !important;
+  background-color: red !important;
+  border-color: red !important
+}
+
+.btn-primary.focus, .btn-primary:focus {
+  box-shadow: 0 0 0 .2rem rgba(255, 0, 0, .5) !important;
+}
+
+.btn-primary.disabled, .btn-primary:disabled {
+  background-color: red !important;
+  border-color: red !important
+}
+
+.btn-primary:not([disabled]):not(.disabled).active, .btn-primary:not([disabled]):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+  color: red !important;
+  background-color: red !important;
+  border-color: red !important
+}
+
+.btn-primary:not([disabled]):not(.disabled).active:focus, .btn-primary:not([disabled]):not(.disabled):active:focus, .show>.btn-primary.dropdown-toggle:focus {
+  box-shadow: 5 5 5 .2rem rgba(255, 0, 0, .5) !important
+}
+
+
+/* text-black */
+
+.text-black{
+  color:black !important;
+}
+
+.text-red{
+  color:red;
+}
+
+.text-orange{
+  color:orange;
+}
+
+/* font size user name */
+
+.font-user{
+  font-size:15px;
+}
+
+/* points ever none */
+
+.pointer-events-none{
+  pointer-events: none;
+}
+
+/* width % */
+
+.width100{
+  width: 100%;
+}
+
+.width75{
+  width: 75%;
+}
+
+.width70{
+  width: 70%;
+}
+
+.width25{
+  width: 25%;
+}
+
+.width20{
+  width: 20%;
+}
+
+.width3em{
+  width: 3em;
+}
+
+/* margin left 312 px */
+
+.ml312{
+  margin-left: 312px;
+}
+
 
 #body-row {
     margin-left:0;
