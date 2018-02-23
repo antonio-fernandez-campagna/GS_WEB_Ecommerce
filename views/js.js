@@ -1,6 +1,8 @@
 $(document).ready(function () {
 
+// función para poner "activated" de clase a .filterProduct para posteriormente filtrar
     $(".filterProduct").change(function () {
+      // si la clase filterProduct tiene la clase "activated" se la quita, sino, se la pone
         if ($(this).hasClass("activated")) {
             $(this).removeClass("activated");
         } else {
@@ -9,31 +11,32 @@ $(document).ready(function () {
             }
 
         }
+
         $idBrands = [];
 
+        // los que tienen la clase "activated" los pondrá en un array
         $(".activated").each(function () {
 
             $idBrands.push($(this).attr("id"));
         });
 
+        // función para filtrar y recoger los valores de los precios
         $(".card").each(function () {
+          // guardamos los precios en variables
             $prodPrice = parseInt($(this).find(".card-text").text());
             $priceMin = $("#price-min").val();
             $priceMax = $("#price-max").val();
 
-
+            // mostramos el valor del slider
             $('.price-min-output').text($priceMin + " €");
             $('.price-max-output').text($priceMax + " €");
 
-
+            // si el producto no está en el rango de precio lo esconde
             if (($prodPrice < $priceMin || $prodPrice > $priceMax)) {
                 $(this).parent().hide();
             } else {
-                //console.log("Precio: " + $idBrands[0] + " PrecioMin: " + $priceMin + " PrecioMax: " + $priceMax);
-
+              // si hay algo en el array de marcas y el id del card no está en el array lo esconde, sino, lo muestra
                 if ($idBrands.length && jQuery.inArray($(this).attr("id"), $idBrands) === -1) {
-                    //alert($prodPrice);
-
                     $(this).parent().hide();
                 } else {
                     $(this).parent().show();
@@ -66,6 +69,7 @@ $(document).ready(function () {
 
     });
 
+    // función para al hacer hover sobre el carrito abra el modal del carrito
     $("#hoverCart").hover(function () {
         $('.open-cart').modal({
             show: true
@@ -88,6 +92,9 @@ $(document).ready(function () {
     });
  */
 
+ // función para que al pasar el ratón por encima de la imagen la agrande
+ // le añade la clase si el ratón está encima, sino se la quita,
+ // la clase escale hace una transicion para aumentar el tamaño de la imagen
     $('.img').hover(function () {
         $(this).addClass('escale');
     }, function () {
@@ -96,6 +103,28 @@ $(document).ready(function () {
 
 });
 
+
+var img1Src = "imgs/img1.jpg";
+var img2Src = "imgs/img2.jpg";
+var img3Src = "imgs/img3.jpg";
+
+function changeImage(src){
+  document.getElementById("myImage").src = src;
+}
+
+var clicks = 0;
+
+function badgeNumber(){
+  var number = document.getElementById("badgeN");
+  clicks ++;
+
+  number.innerHTML = clicks;
+}
+
+
+
+// función para verificar los errores de los inputs
+// cada función se ejecuta al hacer FOCUSOVER y el id del input llama a su respectiva función para que fitre
 function verify(item){
 
 
@@ -133,7 +162,8 @@ function verify(item){
 
 }
 
-function verifar(){
+// función para verificar los campos
+function verificar(){
 
   var alertName = document.getElementById("alert-name");
   var alertUser = document.getElementById("alert-user");
@@ -146,7 +176,7 @@ function verifar(){
   if (alertName || alertUser || alertEmail || alertStreet || alertCp || alertPasswd || alertPasswd2) {
     alert("Hay errorres en el formulario de registro");
   } else {
-  //  window.location.replace("localhost/final/");
+    window.location.replace("http://localhost/FINAL-proyecto/FINAL/");
   }
 
 }
@@ -156,6 +186,8 @@ function verifar(){
 
         var nameU = document.getElementById("nameUser").value;
 
+        // si no existe la alerta mira si el nombre está vacío crea la alerta, sino, mira si el nombre no está vacia
+        // y quitaría la alerta en caso de que el campo no esté vacio
           if(!document.getElementById("alert-name")){
 
             if (nameU == "") {
@@ -180,7 +212,6 @@ function verifar(){
         } else {
 
           if (nameU != ""){
-            console.log("3");
             var alert = document.getElementById("alert-name");
             if (alert) {
               alert.parentNode.removeChild(alert);
@@ -192,10 +223,12 @@ function verifar(){
         }
   }
 
-
+// función para comprobar que el campo username no está vacio
   function user(){
         var user = document.getElementById("user").value;
 
+        // si no existe la alerta mira si el user está vacío crea la alerta, sino, mira si el user no está vacia
+        // y quitaría la alerta en caso de que el campo no esté vacio
           if(!document.getElementById("alert-user")){
 
             if (user == "") {
@@ -212,7 +245,6 @@ function verifar(){
                 alert.parentNode.removeChild(alert);
               }
                  return false;
-                console.log("false user");
               } else {
                 return true;
               }
@@ -226,18 +258,20 @@ function verifar(){
               alert.parentNode.removeChild(alert);
             }
             return false;
-            console.log("false user");
           } else {
             return true;
           }
         }
 }
 
+// función para verficar que el campo email tiene formato de email
   function email(){
         var email = document.getElementById("email").value;
 
         var emailValidation = /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
 
+        // si no existe la alerta mira si el email está vacío crea la alerta, sino, mira si el email tiene formato de email
+        // y quitaría la alerta en caso de que el campo tenga formato de email y se haya creado la alerta
         if (!document.getElementById("alert-email")) {
           if (!email.match(emailValidation)) {
             var alert = document.createElement('div');
@@ -274,6 +308,8 @@ function verifar(){
 function street(){
         var street = document.getElementById("street").value;
 
+        // si no existe la alerta mira si la dirección está vacío crea la alerta, sino, mira si la dirección no está vacia
+        // y quitaría la alerta en caso de que el campo no esté vacio
           if(!document.getElementById("alert-street")){
 
             if (street == "") {
@@ -315,6 +351,9 @@ function street(){
     function cp (){
       var cp = document.getElementById("cp").value;
 
+      // si no existe la alerta mira si el codigo postal no tiene 5 números crea la alerta, sino, mira si el codigo postal tiene 5 numeros
+      // y quitaría la alerta en caso de que el código postal tenga 5 números
+
         if(!document.getElementById("alert-cp")){
 
           if (cp.toString().length != 5) {
@@ -351,14 +390,15 @@ function street(){
 
   }
 
-
+// función para comproar que la contraseña tenga al menos 8 caracteres, de los cuales 1 caracter especial,
+// 1 caracter númerico, 1 mnúscula y 1 mayúscula
 function passwd1(){
         var passwd1 = document.getElementById("passwd1").value;
 
         var passwdValidation =  /^(?=.*[\d])(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$%^&*])[\w!@#$%^&*]{8,}$/;
 
-        console.log(passwd1);
-
+        // se mira si la alerta está creada, si no está creada comprueba si la contraseña tiene formato de la contraseña requerida
+        // si no tiene el formatio requerido crea la alerta, si cumple la condición en caso de que se hibieses creado la alerta la quita,
         if (!document.getElementById("alert-passwd")) {
           if (!passwd1.match(passwdValidation)) {
             alert = document.createElement('div');
@@ -389,7 +429,7 @@ function passwd1(){
         }
     }
 
-
+// fución para comprobar que las 2 contraseñas introducidas son iguales
 function passwd2(){
 
       var passwd1 = document.getElementById("passwd1").value;
@@ -397,6 +437,8 @@ function passwd2(){
 
       var check = passwd1.localeCompare(passwd2);
 
+      // se comprueba que no se haya creado la alerta, si la contraseña no coincide crea la alert.
+      //  En caso de que conincida pero se haya creado la alerta anteriormente la quita.
         if(!document.getElementById("alert-passwd2")){
           if (check != 0) {
             var alert = document.createElement('div');

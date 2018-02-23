@@ -163,7 +163,7 @@ class cart_model {
         }
     }
 
-    // Función que comprueba cual es el ID en estado pendiente 
+    // Función que comprueba cual es el ID en estado pendiente
     // el max(id) era para comprobar bien, se puede quitar ya que solo habrá
     // uno en estado pendiente
     public function checkLastPending() {
@@ -181,7 +181,7 @@ class cart_model {
         return $id;
     }
 
-    // Función que inserta un orderline, pasandole el item (id del producto y número de unidades) y el 
+    // Función que inserta un orderline, pasandole el item (id del producto y número de unidades) y el
     // ID en estado pendiente
     public function insertProduct($item, $id_pending) {
 
@@ -207,10 +207,10 @@ class cart_model {
 
             $price = $price['FINALPRICE'];
         }
-        
+
         // se secoge el id del producto y la cantidad del orderItem para que se pueda
         // sumar la cantidad
-       
+
         $sql3 = "SELECT product, QUANTITY FROM `orderitem` where PRODUCT = {$item[0]} and `order` = {$id_pending['max(id)']}";
 
         $consulta = $this->db->query($sql3);
@@ -346,7 +346,7 @@ class cart_model {
     // Función para mostrar el historial de compras
     public function get_history_cart() {
 
-        $sql = "SELECT DISTINCT prod.NAME, prod.SHORTDESCRIPTION, orderitem.QUANTITY as nUnits, orderitem.PRICE, ord.DATE, img.URL from product PROD JOIN orderitem on prod.ID = orderitem.PRODUCT JOIN `order` ord on orderitem.`ORDER` = ord.ID JOIN user on ord.USER = '{$_SESSION['usuario']}' JOIN image img on prod.ID = img.PRODUCT WHERE ord.PAYMENTINFO = 1 ORDER BY ord.DATE ASC";
+        $sql = "SELECT DISTINCT prod.NAME, prod.SHORTDESCRIPTION, orderitem.QUANTITY as nUnits, orderitem.PRICE, ord.DATE, img.URL from product PROD JOIN orderitem on prod.ID = orderitem.PRODUCT JOIN `order` ord on orderitem.`ORDER` = ord.ID JOIN user on ord.USER = '{$_SESSION['usuario']}' JOIN image img on prod.ID = img.PRODUCT WHERE ord.PAYMENTINFO = 1 ORDER BY ord.DATE DESC";
 
         $consulta = $this->db->query($sql);
         while ($filas = $consulta->fetch_assoc()) {

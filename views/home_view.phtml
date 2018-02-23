@@ -47,9 +47,9 @@
                             </div>
                             <div class="carousel-caption">
                                 <div class="d-flex flex " id="carousel-promotion">
-                                    <div class="text-black"><?php echo $product['SHORTDESCRIPTION']; ?></div>
+                                    <div class="col-4 text-black"><?php echo $product['SHORTDESCRIPTION']; ?></div>
                                     <div class="col-3 text-black"><?php echo $product['DISCOUNTPERCENTAGE']; ?>% DESCUENTO!</div>
-                                    <div class="text-red">PRECIO FINAL: <?php echo $product['FINALPRICE']; ?>€</div>
+                                    <div class="col-2 text-red">PRECIO FINAL: <?php echo $product['FINALPRICE']; ?>€</div>
                                 </div>
 
                             </div>
@@ -134,7 +134,7 @@
 
 
                                     <?php } else { ?>
-                                        <button name="id" value="<?php echo $product['ID'] ?>" class="btn btn-danger float-right btn-sm ">Comprar</button>
+                                        <button name="id" value="<?php echo $product['ID'] ?>" class="btn btn-danger float-right btn-sm" onclick="badgeNumber()">Comprar</button>
 
                                     <?php } ?>
 
@@ -157,11 +157,13 @@
                                 <div class="container">
                                     <div class="row bg-light mt-2 pb-2" >
                                         <div class="col-6">
-                                            <img src="<?php echo $product['URL'] ?>" class="width70" alt="producto" class="rounded ">
+                                            <img src="<?php echo $product['URL'] ?>" class="width70" alt="producto" class="rounded" id="myImage">
                                         </div>
                                         <div class="col-6">
-                                            <h3 class="mt-4"><?php echo $product['SHORTDESCRIPTION'] ?></h3>
-
+                                            <h3  class="mt-4"><?php echo $product['SHORTDESCRIPTION'] ?></h3>
+                                            <img src="imgs/img1.jpg" class="width20 border border-dark" onmouseover="changeImage(img1Src)" alt="producto" class="rounded ">
+                                            <img src="imgs/img2.jpg" class="width20 border border-dark" onmouseover="changeImage(img2Src)" alt="producto" class="rounded ">
+                                            <img src="imgs/img3.jpg" class="width20 border border-dark" onmouseover="changeImage(img3Src)" alt="producto" class="rounded ">
 
                                         </div>
 
@@ -188,7 +190,7 @@
 
                                                 <span>Cantidad:</span> <input class="mb-2 width3em" type="number" name="nUnits" value="1" min="1" max="<?php echo $product['STOCK'] ?>">
 
-                                                <button type="submit" name="id" value="<?php echo $product['ID'] ?>" class="btn btn-danger btn-block btn-lg mt-2">Añadir al carrito</button>
+                                                <button type="submit" name="id" value="<?php echo $product['ID'] ?>" class="btn btn-red btn-block btn-lg mt-2">Añadir al carrito</button>
 
                                             </form>
 
